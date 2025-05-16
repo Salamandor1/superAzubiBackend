@@ -20,9 +20,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: petsdb
-      POSTGRES_USER: petsuser
-      POSTGRES_PASSWORD: petspassword
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
