@@ -1,13 +1,17 @@
-# Basis-Image: OpenJDK + Maven
-FROM mcr.microsoft.com/devcontainers/java:1-21-bullseye
+# Base image with Java 21 and Maven
+FROM maven:3.9.4-eclipse-temurin-21
 
-# Installiere Maven Wrapper (optional)
-RUN apt-get update && apt-get install -y curl unzip
+# Create working directory
+WORKDIR /workspace/super_azubi_pets
 
-# Falls du `mvnw` verwendest
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
+# Optional: Pre-load dependencies (speeds up start)
+# COPY ../super_azubi_pets/pom.xml .
+# RUN mvn dependency:go-offline
 
-# Arbeitsverzeichnis
-WORKDIR /workspace
+# Copy source code (optional if mounting in volume)
+# COPY . .
+
+# Set JAVA env vars if needed
+ENV JAVA_HOME=/usr/local/openjdk-21
+
+CMD ["bash"]

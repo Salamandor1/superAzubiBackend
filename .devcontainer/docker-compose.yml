@@ -7,24 +7,27 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace:cached
-    command: sleep infinity
+    working_dir: /workspace/super_azubi_pets
     ports:
       - "8080:8080"
     depends_on:
       - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass
 
   db:
-    image: postgres:15
-    container_name: postgres
-    restart: always
-    ports:
-      - "5432:5432"
+    image: postgres:latest
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  postgres-data:
+
