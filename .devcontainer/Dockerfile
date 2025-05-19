@@ -1,17 +1,10 @@
-# Base image with Java 21 and Maven
-FROM maven:3.9.4-eclipse-temurin-21
+FROM mcr.microsoft.com/devcontainers/java:1-21-bullseye
 
-# Create working directory
-WORKDIR /workspace/super_azubi_pets
+ARG INSTALL_MAVEN="true"
+ARG MAVEN_VERSION=""
 
-# Optional: Pre-load dependencies (speeds up start)
-# COPY ../super_azubi_pets/pom.xml .
-# RUN mvn dependency:go-offline
+ARG INSTALL_GRADLE="false"
+ARG GRADLE_VERSION=""
 
-# Copy source code (optional if mounting in volume)
-# COPY . .
-
-# Set JAVA env vars if needed
-ENV JAVA_HOME=/usr/local/openjdk-21
-
-CMD ["bash"]
+RUN if [ "${INSTALL_MAVEN}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/sdkman/bin/sdkman-init.sh && sdk install maven \"${MAVEN_VERSION}\""; fi \
+    && if [ "${INSTALL_GRADLE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/sdkman/bin/sdkman-init.sh && sdk install gradle \"${GRADLE_VERSION}\""; fi
