@@ -1,0 +1,60 @@
+version: '3.8'
+
+volumes:
+  data-postgres:
+  pgadmin-data:
+
+services:
+  app:
+    container_name: superazubijava
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #dns:
+    #  - 8.8.8.8
+    environment:
+      # NOTE: POSTGRES_DB/USER/PASSWORD should match values in db container
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: pass
+        POSTGRES_DB: postgres
+        POSTGRES_HOSTNAME: postgreshost
+
+    volumes:
+      - ../..:/workspaces:cached
+    
+    command: sleep infinity
+
+    network_mode: service:db
+
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    #dns:
+    #  - 8.8.8.8
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    environment:
+      # NOTE: POSTGRES_DB/USER/PASSWORD should match values in app container
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: postgres
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    #dns:
+    #  - 8.8.8.8
+    restart: unless-stopped
+    depends_on:
+        - db
+    ports:
+        - 5555:80
+    environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.admin
+        PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+        - pgadmin-data:/var/lib/pgadmin
+

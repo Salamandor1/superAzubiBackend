@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://git.cancom.dev/mase-training/development/azubi-projekte/super-azubi-pets/super-azubi-pets.git
+git remote add origin https://git.cancom.dev/mase-training/development/azubi-projekte/super_azubi_pets/super_azubi_pets.git
 git branch -M master
 git push -uf origin master
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://git.cancom.dev/mase-training/development/azubi-projekte/super-azubi-pets/super-azubi-pets/-/settings/integrations)
+- [ ] [Set up project integrations](https://git.cancom.dev/mase-training/development/azubi-projekte/super_azubi_pets/super_azubi_pets/-/settings/integrations)
 
 ## Collaborate with your team
 

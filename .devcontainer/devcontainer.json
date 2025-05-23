@@ -1,27 +1,27 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
-	"name": "Java",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
-
-	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "false"
+  "name": "Java 21 + Spring Boot + PostgreSQL",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind"
+	],
+  "forwardPorts": [8080, 5432],
+  //"postCreateCommand": "mvn clean install",
+  "customizations": {
+		"vscode": {
+			"extensions": [
+				"johnpapa.vscode-peacock",
+				"eamodio.gitlens",
+				"vscjava.vscode-java-pack"
+			],
+			"settings": {
+				"peacock.remoteColor": "#ff69b4",
+				"editor.formatOnSave": true,
+				"java.saveActions.organizeImports": true
+			}
 		}
-	}
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  }
 }
