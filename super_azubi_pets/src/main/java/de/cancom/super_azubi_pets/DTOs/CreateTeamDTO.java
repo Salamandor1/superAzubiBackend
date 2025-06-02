@@ -1,22 +1,17 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-public class TeamDTO {
-    private Long teamID;
+public class CreateTeamDTO {
     private int hearts;
     private int wins;
     private int rounds;
 
-    public TeamDTO() {
+    public CreateTeamDTO() {
     }
 
-    public TeamDTO(int hearts, int wins, int rounds) {
+    public CreateTeamDTO(int hearts, int wins, int rounds) {
         this.hearts = hearts;
         this.wins = wins;
         this.rounds = rounds;
-    }
-
-    public Long getTeamID() {
-        return this.teamID;
     }
 
     public int getHearts() {
@@ -29,11 +24,6 @@ public class TeamDTO {
 
     public int getRounds() {
         return this.rounds;
-    }
-
-    // maybe not needed, but could be relevant for testing
-    public void setTeamID(Long teamID) {
-        this.teamID = teamID;
     }
 
     public void setHearts(int hearts) {
