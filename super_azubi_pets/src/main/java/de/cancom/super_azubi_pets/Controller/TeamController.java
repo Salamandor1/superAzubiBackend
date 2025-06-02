@@ -38,6 +38,7 @@ public class TeamController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // POST /teams
     @PostMapping
     public ResponseEntity<Long> createTeam(@RequestBody CreateTeamDTO dto) {
         Team savedTeam = teamService.addTeam(dto);
