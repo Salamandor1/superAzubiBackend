@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.cancom.super_azubi_pets.DTOs.CreateTeamDTO;
+import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
@@ -27,7 +27,7 @@ public class TeamService {
     }
 
     // Create
-    public Team addTeam(CreateTeamDTO dto) {
+    public Team addTeam(CreateAndUpdateTeamDTO dto) {
         try {
             Team newTeam = new Team(dto.getHearts(), dto.getWins(), dto.getRounds());
             return teamRepo.save(newTeam);
@@ -38,16 +38,14 @@ public class TeamService {
     }
 
     // Update
-    public Team updateTeam(Long id, Team updatedData) {
+    public Team updateTeam(Long id, CreateAndUpdateTeamDTO dto) {
         Optional<Team> optionalTeam = teamRepo.findById(id);
 
         if (optionalTeam.isPresent()) {
             Team existingTeam = optionalTeam.get();
-
-            existingTeam.setHearts(updatedData.getHearts());
-            existingTeam.setWins(updatedData.getWins());
-            existingTeam.setRounds(updatedData.getRounds());
-
+            existingTeam.setHearts(dto.getHearts());
+            existingTeam.setWins(dto.getWins());
+            existingTeam.setRounds(dto.getRounds());
             return teamRepo.save(existingTeam);
         } else {
             throw new RuntimeException("Team with ID " + id + " not found.");
