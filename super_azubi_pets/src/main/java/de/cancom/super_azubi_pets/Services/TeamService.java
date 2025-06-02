@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.cancom.super_azubi_pets.DTOs.CreateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
@@ -21,14 +22,15 @@ public class TeamService {
     }
 
     // Read
-    public Optional<Team> getTeambyId(Long Id) {
+    public Optional<Team> getTeamById(Long Id) {
         return teamRepo.findById(Id);
     }
 
     // Create
-    public Team addTeam(Team team) {
+    public Team addTeam(CreateTeamDTO dto) {
         try {
-            return teamRepo.save(team);
+            Team newTeam = new Team(dto.getHearts(), dto.getWins(), dto.getRounds());
+            return teamRepo.save(newTeam);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Could not save team", e);

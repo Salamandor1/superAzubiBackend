@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.cancom.super_azubi_pets.DTOs.CreateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Services.TeamService;
 
@@ -32,16 +33,15 @@ public class TeamController {
     // GET /teams/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
-        return teamService.getTeambyId(id)
+        return teamService.getTeamById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /teams
     @PostMapping
-    public ResponseEntity<Team> addTeam(@RequestBody Team team) {
-        Team created = teamService.addTeam(team);
-        return ResponseEntity.ok(created);
+    public ResponseEntity<Long> createTeam(@RequestBody CreateTeamDTO dto) {
+        Team savedTeam = teamService.addTeam(dto);
+        return ResponseEntity.ok(savedTeam.getTeamID());
     }
 
     // PUT /teams/{id}
