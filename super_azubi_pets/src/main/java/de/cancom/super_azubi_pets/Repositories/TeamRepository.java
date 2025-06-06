@@ -1,6 +1,7 @@
 package de.cancom.super_azubi_pets.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import de.cancom.super_azubi_pets.Models.Team;
 
@@ -13,7 +14,7 @@ import de.cancom.super_azubi_pets.Models.Team;
  * existsById(Long id) //checks if object exists
  * count() //returns how many objects of this type are in the table
  */
-
+@Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
 }
