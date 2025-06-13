@@ -1,72 +1,81 @@
 package de.cancom.super_azubi_pets.Models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import de.cancom.super_azubi_pets.DatabaseConnection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 
 /**
  * Represents an animal in the Super Azubi Pets game.
  * This class retrieves animal data from the database based on the provided ID.
  */
+@Entity
+@Table(name = "animals")
 public class Animal {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long animalId;
+    
 
     private String animalName;
     private int hearts;
     private int attack;
     private String ability;
-    private int id;
 
+    public Animal() {
+    }
 
     /**
-     * Creates the animal requested by ID by retrieving the data such as name etc. from the database
-     * 
-     * @param id ID of the animal to be loaded could, for example, be randomly generated beforehand
-     * @throws SQLException f something goes wrong in the database, e.g. if the ID does not exist
+     * Constructor to create an Animal object with a specific ID.
+     * This constructor retrieves the animal's data from the database.
+     * @param animalName
+     * @param hearts
+     * @param attack
+     * @param ability
      */
-    public Animal(int id) throws SQLException{
-
-        this.id = id;
-        String sql = "SELECT * FROM animals WHERE id = ?";
-
-        //uses the DatabaseConnection class to get a connection to the database
-        try(Connection connection = DatabaseConnection.getConnection()){
-            
-            // Prepare the SQL statement to prevent SQL injection
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()){
-                this.animalName = rs.getString("name");
-                this.hearts = rs.getInt("hearts");
-                this.attack = rs.getInt("attack");
-            } else {
-                throw new SQLException("Animal with ID " + id + " not found.");
-            }
-
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Animal(String animalName, int hearts, int attack, String ability) {
+        this.animalName = animalName;
+        this.hearts = hearts;
+        this.attack = attack;
+        this.ability = ability;
     }
 
-
-
-     //Getter-Setter methods for the attributes
-    public String getAnimalName() {
-        return animalName;
+    //Getters and Setters
+    public String getAnimalName(){
+        return this.animalName;
     }
     public int getHearts() {
-        return hearts;
+        return this.hearts;
     }
     public int getAttack() {
-        return attack;
+        return this.attack;
     }
     public String getAbility() {
-        return ability;
+        return this.ability;
     }
-    public int getId() {
-        return id;
+    public Long getAnimalId() {
+        return this.animalId;
     }
+
+    
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
+    }
+    public void setHearts(int hearts) {
+        this.hearts = hearts;
+    }
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+    public void setAnimalId(Long animalId) {
+        this.animalId = animalId;
+    }
+   
+
 }
