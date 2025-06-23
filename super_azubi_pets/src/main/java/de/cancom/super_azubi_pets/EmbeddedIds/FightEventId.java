@@ -17,7 +17,7 @@ public class FightEventId implements Serializable {
         this.index = index;
     }
 
-    public Long getFighttId() {
+    public Long getFightId() {
         return this.fightId;
     }
 
