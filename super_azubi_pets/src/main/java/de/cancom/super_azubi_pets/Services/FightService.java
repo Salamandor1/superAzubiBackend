@@ -22,7 +22,7 @@ public class FightService {
     private FightRepository fightRepo;
 
     // Create
-    public Fight CreateAndUpdateFight(CreateAndUpdateFightDTO dto) {
+    public Fight createFight(CreateAndUpdateFightDTO dto) {
         Team team1 = teamRepo.findById(dto.getTeam1Id())
                 .orElseThrow(() -> new RuntimeException("Team 1 not found"));
 

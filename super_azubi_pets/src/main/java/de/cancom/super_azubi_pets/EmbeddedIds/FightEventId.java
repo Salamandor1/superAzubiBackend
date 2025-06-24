@@ -1,6 +1,7 @@
 package de.cancom.super_azubi_pets.EmbeddedIds;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 
@@ -31,6 +32,21 @@ public class FightEventId implements Serializable {
 
     public void setIndex(Long index) {
         this.index = index;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        FightEventId that = (FightEventId) o;
+        return Objects.equals(fightId, that.fightId) && Objects.equals(index, that.index);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fightId, index);
     }
 
 }
