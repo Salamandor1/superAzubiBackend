@@ -1,5 +1,7 @@
 package de.cancom.super_azubi_pets.Models;
 
+import java.util.ArrayList;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,8 @@ public class Team {
     private int hearts;
     private int wins;
     private int rounds;
+
+    private ArrayList<Animal> animals;
 
     public Team() {
     }
@@ -41,6 +45,10 @@ public class Team {
         return this.rounds;
     }
 
+    public ArrayList<Animal> getAnimals() {
+        return this.animals;
+    }
+
     // maybe not needed, but could be relevant for testing
     public void setTeamID(Long teamID) {
         this.teamID = teamID;
@@ -56,6 +64,10 @@ public class Team {
 
     public void setRounds(int rounds) {
         this.rounds = rounds;
+    }
+
+    public void setAnimals(ArrayList<Animal> animals) {
+        this.animals = animals;
     }
 
 }
