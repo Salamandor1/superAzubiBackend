@@ -27,7 +27,7 @@ public class FightController {
     // Create
     @PostMapping
     public ResponseEntity<Fight> createFight(@RequestBody CreateAndUpdateFightDTO dto) {
-        Fight newFight = fightService.CreateAndUpdateFight(dto);
+        Fight newFight = fightService.createFight(dto);
         return ResponseEntity.ok(newFight);
     }
 

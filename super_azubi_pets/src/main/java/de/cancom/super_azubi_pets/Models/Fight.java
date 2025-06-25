@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,7 @@ import jakarta.persistence.Table;
 public class Fight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fight_id")
     private Long fightID;
 
     @ManyToOne
