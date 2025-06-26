@@ -1,9 +1,6 @@
-package de.cancom.super_azubi_pets.Services;
+package de.cancom.super_azubi_pets.Models;
 
-import de.cancom.super_azubi_pets.Models.Animal;
-import de.cancom.super_azubi_pets.Models.Team;
-
-public enum FightEventTypeService {
+public enum FightEventType {
 
     ATTACK("Both most front animals fight each other, dealing damage simultaneously.") {
         @Override
@@ -128,7 +125,7 @@ public enum FightEventTypeService {
         } // resolve
     }; // END_GAME
 
-    private FightEventTypeService(String description) {
+    private FightEventType(String description) {
         this.description = description;
     } // constructor
 
