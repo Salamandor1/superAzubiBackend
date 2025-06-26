@@ -10,6 +10,7 @@ import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightEventDTO;
 import de.cancom.super_azubi_pets.EmbeddedIds.FightEventId;
 import de.cancom.super_azubi_pets.Models.Fight;
 import de.cancom.super_azubi_pets.Models.FightEvent;
+import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.FightEventRepository;
 import de.cancom.super_azubi_pets.Repositories.FightRepository;
 
@@ -60,4 +61,32 @@ public class FightEventService {
             throw new RuntimeException("FightEvent not found");
         }
     }
+
+    // under construction
+    // actual fight-logic
+    public String resolveFightEvent() {
+        Fight fight = new Fight(new Team(), new Team()); // placeholder - need to be changed
+
+        Team playerTeam = fight.getTeam1();
+        Team npcTeam = fight.getTeam2();
+
+        // repeats logic until a winner is declared or round 20 is reached
+        int round = 1;
+        FightEventTypeService event;
+        String log = "";
+        while (playerTeam.getAnimals().size() != 0 && npcTeam.getAnimals().size() != 0 && round <= 20) {
+            event = FightEventTypeService.ATTACK;
+            log += event.resolve(playerTeam, npcTeam) + "\n";
+            event = FightEventTypeService.DIE;
+            log += event.resolve(playerTeam, npcTeam) + "\n";
+            event = FightEventTypeService.MOVE;
+            log += event.resolve(playerTeam, npcTeam) + "\n";
+            round++;
+        } // while
+        event = FightEventTypeService.END_FIGHT;
+        log += event.resolve(playerTeam, npcTeam) + "\n";
+        event = FightEventTypeService.END_GAME;
+        log += event.resolve(playerTeam, npcTeam);
+        return log;
+    } // resolveFightEvent
 }
