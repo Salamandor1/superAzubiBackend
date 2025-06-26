@@ -65,9 +65,7 @@ public class FightEventService {
 
     // under construction
     // actual fight-logic
-    public String resolveFightEvent() {
-        Fight fight = new Fight(new Team(), new Team()); // placeholder - need to be changed
-
+    public String resolveFightEvent(Fight fight) {
         Team playerTeam = fight.getTeam1();
         Team npcTeam = fight.getTeam2();
 
@@ -84,6 +82,7 @@ public class FightEventService {
             log += event.resolve(playerTeam, npcTeam) + "\n";
             round++;
         } // while
+
         event = FightEventType.END_FIGHT;
         log += event.resolve(playerTeam, npcTeam) + "\n";
         event = FightEventType.END_GAME;
