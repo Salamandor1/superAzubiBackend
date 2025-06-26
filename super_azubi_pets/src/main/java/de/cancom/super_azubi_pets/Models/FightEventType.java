@@ -114,7 +114,7 @@ public enum FightEventType {
         } // resolve
     }, // END_FIGHT
 
-    END_GAME("Checks if player has hearts left, otherwise ends the game") {
+    END_GAME("Checks if player has hearts left, otherwise gives impules to end the current game.") {
         @Override
         public String resolve(Team playerTeam, Team npcTeam) {
             if (playerTeam.getHearts() > 0) {
