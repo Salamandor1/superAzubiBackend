@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "team")
@@ -18,6 +19,7 @@ public class Team {
     private int wins;
     private int rounds;
 
+    @Transient
     private ArrayList<Animal> animals;
 
     public Team() {
