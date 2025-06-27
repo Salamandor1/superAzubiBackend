@@ -19,7 +19,7 @@ public class Animal {
     private Long animalId;
 
     private String animalName;
-    private int hearts;
+    private int health;
     private int attack;
     private String ability;
 
@@ -35,9 +35,9 @@ public class Animal {
      * @param attack
      * @param ability
      */
-    public Animal(String animalName, int hearts, int attack, String ability) {
+    public Animal(String animalName, int health, int attack, String ability) {
         this.animalName = animalName;
-        this.hearts = hearts;
+        this.health = health;
         this.attack = attack;
         this.ability = ability;
     }
@@ -52,7 +52,7 @@ public class Animal {
     public Animal(Animal animal) {
         this.animalId = animal.getAnimalId();
         this.animalName = animal.getAnimalName();
-        this.hearts = animal.getHearts();
+        this.health = animal.getHearts();
         this.attack = animal.getAttack();
         this.ability = animal.getAbility();
     }
