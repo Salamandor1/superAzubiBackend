@@ -31,7 +31,7 @@ public class Animal {
      * This constructor retrieves the animal's data from the database.
      * 
      * @param animalName
-     * @param hearts
+     * @param health
      * @param attack
      * @param ability
      */
@@ -63,7 +63,7 @@ public class Animal {
     }
 
     public int getHearts() {
-        return this.hearts;
+        return this.health;
     }
 
     public int getAttack() {
@@ -83,7 +83,7 @@ public class Animal {
     }
 
     public void setHearts(int hearts) {
-        this.hearts = hearts;
+        this.health = hearts;
     }
 
     public void setAttack(int attack) {
