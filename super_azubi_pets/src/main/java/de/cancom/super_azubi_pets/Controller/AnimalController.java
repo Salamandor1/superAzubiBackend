@@ -3,10 +3,15 @@ package de.cancom.super_azubi_pets.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateAnimal;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 
@@ -17,19 +22,28 @@ public class AnimalController {
     @Autowired
     AnimalRepository repository;
 
+    @GetMapping("/{id}")
     public ResponseEntity<Animal> getAinmal(@PathVariable Long id) {
         return new ResponseEntity<Animal>(repository.findById(id)
                 .orElse(null), HttpStatus.OK);
     }
 
-    public ResponseEntity<Animal> createAnimal(Animal animal) {
-        Animal savedAnimal = repository.save(animal);
+    @PostMapping
+    public ResponseEntity<Animal> createAnimal(@RequestBody CreateAndUpdateAnimal animal) {
+        Animal savedAnimal = repository
+                .save(new Animal(animal.getAnimalName(), animal.getHearts(), animal.getAttack(), animal.getAbility()));
         return new ResponseEntity<Animal>(savedAnimal, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Void> deleteAnimal(@PathVariable Long id) {
         repository.deleteById(id);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllAnimal() {
+        repository.deleteAll();
+        return ResponseEntity.ok("Deleted all animal entrys");
     }
 
     public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, Animal animal) {
