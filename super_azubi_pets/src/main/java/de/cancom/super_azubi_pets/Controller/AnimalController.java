@@ -3,41 +3,65 @@ package de.cancom.super_azubi_pets.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.cancom.super_azubi_pets.Models.Animal;
-import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
+import de.cancom.super_azubi_pets.Services.AnimalService;
 
 @RestController
 @RequestMapping("/animals")
 public class AnimalController {
 
     @Autowired
-    AnimalRepository repository;
+    private AnimalService animalService;
 
-    public ResponseEntity<Animal> getAinmal(@PathVariable Long id) {
-        return new ResponseEntity<Animal>(repository.findById(id)
-                .orElse(null), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Animal> createAnimal(Animal animal) {
-        Animal savedAnimal = repository.save(animal);
-        return new ResponseEntity<Animal>(savedAnimal, HttpStatus.CREATED);
-    }
-
-    public ResponseEntity<Void> deleteAnimal(@PathVariable Long id) {
-        repository.deleteById(id);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-    }
-
-    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, Animal animal) {
-        if (!repository.existsById(id)) {
-            return new ResponseEntity<Animal>(HttpStatus.NOT_FOUND);
+    // get
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAinmal(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<Animal>(animalService.getAnimalById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Das Tier kgibts nicht du Fisch", HttpStatus.BAD_REQUEST);
         }
-        animal.setAnimalId(id);
-        Animal updatedAnimal = repository.save(animal);
-        return new ResponseEntity<Animal>(updatedAnimal, HttpStatus.OK);
+    }
+
+    // create
+    @PostMapping
+    public ResponseEntity<?> createAnimal(Animal animal) {
+        try {
+            Animal savedAnimal = animalService.createAnimal(animal);
+            return new ResponseEntity<Animal>(savedAnimal, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Das Tier konnte nicht gebohren werden :(", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // delete
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAnimal(@PathVariable Long id) {
+        try {
+            animalService.deleteAnimal(id);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Das Tier gibts nicht, kann also nicht gelöscht werden",
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // update
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAnimal(@PathVariable Long id, Animal animal) {
+        try {
+            Animal updatedAnimal = animalService.updateAnimal(id, animal);
+            return new ResponseEntity<Animal>(updatedAnimal, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Das Tier mag seine alten Daten lieber", HttpStatus.BAD_REQUEST);
+        }
     }
 }
