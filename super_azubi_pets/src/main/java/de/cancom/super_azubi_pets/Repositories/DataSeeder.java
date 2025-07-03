@@ -24,6 +24,12 @@ public class DataSeeder implements CommandLineRunner {
 
     private void loadInitialAnimals() {
 
+        List<Animal> animalsToDelete = animalRepository.findAll();
+
+        for (Animal animal : animalsToDelete) {
+            animalRepository.deleteById(animal.getAnimalId());
+        }
+
         List<Animal> standardAnimals = new ArrayList<>();
         standardAnimals.add(new Animal("Pferd", 2, 2, ""));
         standardAnimals.add(new Animal("Thaddäus", 5, 2, ""));
