@@ -21,8 +21,8 @@ public enum FightEventType {
         private String attack(Animal attacker, Animal defender) {
             String text = "";
             int dmg = attacker.getAttack();
-            int health = defender.getHearts();
-            defender.setHearts(health - dmg);
+            int health = defender.getHealth();
+            defender.setHealth(health - dmg);
             text = attacker.getAnimalName() + "verursacht " + dmg + " an " + defender.getAnimalName() + ".";
             return text;
         } // attack
@@ -53,7 +53,7 @@ public enum FightEventType {
         } // resolve
 
         private boolean isHealth0(Animal animal) {
-            return animal.getHearts() <= 0;
+            return animal.getHealth() <= 0;
         } // isHealth0
     }, // DIE
 
@@ -72,7 +72,7 @@ public enum FightEventType {
 
         private void removeAnimals(Team team) {
             for (Animal animal : team.getAnimals()) {
-                if (animal.getHearts() <= 0) {
+                if (animal.getHealth() <= 0) {
                     team.getAnimals().remove(animal);
                 } // if
             } // for

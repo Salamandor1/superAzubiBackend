@@ -38,7 +38,7 @@ public class TeamAnimal {
     public TeamAnimal(Animal baseAnimal, int level, int pos) {
         this.baseAnimal = baseAnimal;
         setPos(pos);
-        setHealth(baseAnimal.getHearts());
+        setHealth(baseAnimal.getHealth());
         setAttack(baseAnimal.getAttack());
         setLevel(level);
     }

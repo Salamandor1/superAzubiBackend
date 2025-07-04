@@ -27,7 +27,7 @@ public class TeamAnimalService {
                 .orElseThrow(() -> new RuntimeException("Base Animal does not exist"));
 
         TeamAnimal newTeamAnimal = new TeamAnimal(baseAnimal, dto.getLevel(), dto.getPos());
-        newTeamAnimal.setHealth(baseAnimal.getHearts());
+        newTeamAnimal.setHealth(baseAnimal.getHealth());
         newTeamAnimal.setAttack(baseAnimal.getAttack());
         newTeamAnimal.setLevel(dto.getLevel());
 

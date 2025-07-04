@@ -52,7 +52,7 @@ public class Animal {
     public Animal(Animal animal) {
         this.animalId = animal.getAnimalId();
         this.animalName = animal.getAnimalName();
-        this.health = animal.getHearts();
+        this.health = animal.getHealth();
         this.attack = animal.getAttack();
         this.ability = animal.getAbility();
     }
@@ -62,7 +62,7 @@ public class Animal {
         return this.animalName;
     }
 
-    public int getHearts() {
+    public int getHealth() {
         return this.health;
     }
 
@@ -82,8 +82,8 @@ public class Animal {
         this.animalName = animalName;
     }
 
-    public void setHearts(int hearts) {
-        this.health = hearts;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public void setAttack(int attack) {
