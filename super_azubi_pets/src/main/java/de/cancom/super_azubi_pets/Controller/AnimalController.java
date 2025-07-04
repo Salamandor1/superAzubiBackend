@@ -22,12 +22,12 @@ public class AnimalController {
     private AnimalService animalService;
 
     // get
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getAinmal(@PathVariable Long id) {
+    @GetMapping("/{name}")
+    public ResponseEntity<?> getAinmal(@PathVariable String name) {
         try {
-            return new ResponseEntity<Animal>(animalService.getAnimalById(id), HttpStatus.OK);
+            return new ResponseEntity<Animal>(animalService.getAnimalById(name), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Das Tier kgibts nicht du Fisch", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Das Tier gibts nicht, du Fisch.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -38,15 +38,16 @@ public class AnimalController {
             Animal savedAnimal = animalService.createAnimal(animal);
             return new ResponseEntity<Animal>(savedAnimal, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Das Tier konnte nicht gebohren werden :(", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Das Tier konnte nicht geboren werden :( *sad noises*",
+                    HttpStatus.BAD_REQUEST);
         }
     }
 
     // delete
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteAnimal(@PathVariable Long id) {
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity<?> deleteAnimal(@PathVariable String name) {
         try {
-            animalService.deleteAnimal(id);
+            animalService.deleteAnimal(name);
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<String>("Das Tier gibts nicht, kann also nicht gelöscht werden",
@@ -55,10 +56,10 @@ public class AnimalController {
     }
 
     // update
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateAnimal(@PathVariable Long id, Animal animal) {
+    @PutMapping("/{name}")
+    public ResponseEntity<?> updateAnimal(@PathVariable Animal animal) {
         try {
-            Animal updatedAnimal = animalService.updateAnimal(id, animal);
+            Animal updatedAnimal = animalService.updateAnimal(animal);
             return new ResponseEntity<Animal>(updatedAnimal, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Das Tier mag seine alten Daten lieber", HttpStatus.BAD_REQUEST);

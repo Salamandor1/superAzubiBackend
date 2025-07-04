@@ -2,20 +2,20 @@ package de.cancom.super_azubi_pets.DTOs;
 
 public class CreateAndUpdateTeamAnimalDTO {
 
-    private Long baseAnimalID;
+    private String baseAnimalID;
     private int level;
     private int pos;
 
     public CreateAndUpdateTeamAnimalDTO() {
     }
 
-    public CreateAndUpdateTeamAnimalDTO(Long baseAnimalID, int level, int pos) {
+    public CreateAndUpdateTeamAnimalDTO(String baseAnimalID, int level, int pos) {
         this.baseAnimalID = baseAnimalID;
         this.level = level;
         this.pos = pos;
     }
 
-    public void setBaseAnimalID(Long baseAnimalID) {
+    public void setBaseAnimalID(String baseAnimalID) {
         this.baseAnimalID = baseAnimalID;
     }
 
@@ -27,7 +27,7 @@ public class CreateAndUpdateTeamAnimalDTO {
         this.pos = pos;
     }
 
-    public Long getBaseAnimalID() {
+    public String getBaseAnimalID() {
         return baseAnimalID;
     }
 

@@ -88,8 +88,8 @@ public class TeamAnimal {
         }
     }
 
-    public Long getAnimalId() {
-        return baseAnimal.getAnimalId();
+    public String getAnimalId() {
+        return baseAnimal.getAnimalName();
     }
 
     public int getPos() {
