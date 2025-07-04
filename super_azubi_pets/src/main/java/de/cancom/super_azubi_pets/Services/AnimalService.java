@@ -16,27 +16,28 @@ public class AnimalService {
         this.animalRepository = animalRepository;
     }
 
-    public Animal getAnimalById(Long id) {
-        return animalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal with ID " + id + " not found."));
+    public Animal getAnimalById(String name) {
+        return animalRepository.findById(name)
+                .orElseThrow(() -> new RuntimeException("Animal with ID " + name + " not found."));
     }
 
     public Animal createAnimal(Animal animal) {
         return animalRepository.save(animal);
     }
 
-    public void deleteAnimal(Long id) {
-        if (!animalRepository.existsById(id)) {
-            throw new RuntimeException("Animal with ID " + id + " not found.");
+    public void deleteAnimal(String name) {
+        if (!animalRepository.existsById(name)) {
+            throw new RuntimeException("Animal with ID " + name + " not found.");
         }
-        animalRepository.deleteById(id);
+        animalRepository.deleteById(name);
     }
 
-    public Animal updateAnimal(Long id, Animal animal) {
-        if (!animalRepository.existsById(id)) {
-            throw new RuntimeException("Animal with ID " + id + " not found.");
+    public Animal updateAnimal(Animal animal) {
+        String name = animal.getAnimalName();
+        if (!animalRepository.existsById(name)) {
+            throw new RuntimeException("Animal with ID " + name + " not found.");
         }
-        animal.setAnimalId(id);
+        deleteAnimal(animal.getAnimalName());
         return animalRepository.save(animal);
     }
 }

@@ -16,9 +16,8 @@ public class Animal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long animalId;
-
     private String animalName;
+
     private int health;
     private int attack;
     private String ability;
@@ -50,9 +49,8 @@ public class Animal {
      * @param animal
      */
     public Animal(Animal animal) {
-        this.animalId = animal.getAnimalId();
         this.animalName = animal.getAnimalName();
-        this.health = animal.getHearts();
+        this.health = animal.getHealth();
         this.attack = animal.getAttack();
         this.ability = animal.getAbility();
     }
@@ -62,7 +60,7 @@ public class Animal {
         return this.animalName;
     }
 
-    public int getHearts() {
+    public int getHealth() {
         return this.health;
     }
 
@@ -74,16 +72,12 @@ public class Animal {
         return this.ability;
     }
 
-    public Long getAnimalId() {
-        return this.animalId;
-    }
-
     public void setAnimalName(String animalName) {
         this.animalName = animalName;
     }
 
-    public void setHearts(int hearts) {
-        this.health = hearts;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public void setAttack(int attack) {
@@ -92,10 +86,6 @@ public class Animal {
 
     public void setAbility(String ability) {
         this.ability = ability;
-    }
-
-    public void setAnimalId(Long animalId) {
-        this.animalId = animalId;
     }
 
 }
