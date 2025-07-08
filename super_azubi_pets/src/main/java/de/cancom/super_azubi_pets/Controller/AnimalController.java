@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class AnimalController {
 
     // get
     @GetMapping("/{name}")
-    public ResponseEntity<?> getAinmal(@PathVariable String name) {
+    public ResponseEntity<?> getAninmal(@PathVariable String name) {
         try {
             return new ResponseEntity<Animal>(animalService.getAnimalById(name), HttpStatus.OK);
         } catch (Exception e) {
@@ -33,11 +34,12 @@ public class AnimalController {
 
     // create
     @PostMapping
-    public ResponseEntity<?> createAnimal(Animal animal) {
+    public ResponseEntity<?> createAnimal(@RequestBody Animal animal) {
         try {
             Animal savedAnimal = animalService.createAnimal(animal);
             return new ResponseEntity<Animal>(savedAnimal, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<String>("Das Tier konnte nicht geboren werden :( *sad noises*",
                     HttpStatus.BAD_REQUEST);
         }
@@ -57,7 +59,7 @@ public class AnimalController {
 
     // update
     @PutMapping("/{name}")
-    public ResponseEntity<?> updateAnimal(@PathVariable Animal animal) {
+    public ResponseEntity<?> updateAnimal(@RequestBody Animal animal) {
         try {
             Animal updatedAnimal = animalService.updateAnimal(animal);
             return new ResponseEntity<Animal>(updatedAnimal, HttpStatus.OK);
@@ -65,4 +67,14 @@ public class AnimalController {
             return new ResponseEntity<String>("Das Tier mag seine alten Daten lieber", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/random")
+    public ResponseEntity<?> getFiveRandomAnimals() {
+        try {
+            return new ResponseEntity<>(animalService.getFiveRandomAnimals(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Konnte keine zufälligen Tiere laden", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
