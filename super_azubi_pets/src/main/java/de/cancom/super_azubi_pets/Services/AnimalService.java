@@ -1,5 +1,7 @@
 package de.cancom.super_azubi_pets.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,4 +42,9 @@ public class AnimalService {
         deleteAnimal(animal.getAnimalName());
         return animalRepository.save(animal);
     }
+
+    public List<Animal> getFiveRandomAnimals() {
+        return animalRepository.findFiveRandomAnimals();
+    }
+
 }

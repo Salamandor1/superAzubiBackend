@@ -1,6 +1,9 @@
 package de.cancom.super_azubi_pets.Repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import de.cancom.super_azubi_pets.Models.Animal;
@@ -18,4 +21,8 @@ import de.cancom.super_azubi_pets.Models.Animal;
 public interface AnimalRepository extends JpaRepository<Animal, String> {
     // Additional custom query methods can be defined here if needed
     // For example, to find an animal by its name
+
+    @Query(value = "SELECT * FROM animals ORDER BY RANDOM() LIMIT 5", nativeQuery = true)
+    List<Animal> findFiveRandomAnimals();
+
 }
