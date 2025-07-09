@@ -22,5 +22,5 @@ public class LogController {
     @GetMapping("/{playerTeamID}/{npcTeamID}")
     public ResponseEntity<LogResponseDTO> getLogById(@PathVariable Long playerTeamID, @PathVariable Long npcTeamID) {
         return ResponseEntity.ok(logService.getLogByID(new LogQueryDTO(playerTeamID, npcTeamID)));
-    }
+    } 
 }

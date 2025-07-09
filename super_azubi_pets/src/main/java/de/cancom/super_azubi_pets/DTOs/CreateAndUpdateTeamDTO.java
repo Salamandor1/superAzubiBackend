@@ -2,19 +2,19 @@ package de.cancom.super_azubi_pets.DTOs;
 
 import java.util.ArrayList;
 
-import de.cancom.super_azubi_pets.Models.Animal;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 
 public class CreateAndUpdateTeamDTO {
     private int hearts;
     private int wins;
     private int rounds;
 
-    private ArrayList<Animal> animals;
+    private ArrayList<TeamAnimal> animals;
 
     public CreateAndUpdateTeamDTO() {
     }
 
-    public CreateAndUpdateTeamDTO(int hearts, int wins, int rounds, ArrayList<Animal> animals) {
+    public CreateAndUpdateTeamDTO(int hearts, int wins, int rounds, ArrayList<TeamAnimal> animals) {
         this.hearts = hearts;
         this.wins = wins;
         this.rounds = rounds;
@@ -33,7 +33,7 @@ public class CreateAndUpdateTeamDTO {
         return this.rounds;
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public ArrayList<TeamAnimal> getAnimals() {
         return this.animals;
     }
 
@@ -49,7 +49,7 @@ public class CreateAndUpdateTeamDTO {
         this.rounds = rounds;
     }
 
-    public void setAnimals(ArrayList<Animal> animalIDs) {
+    public void setAnimals(ArrayList<TeamAnimal> animalIDs) {
         this.animals = animalIDs;
     }
 }
