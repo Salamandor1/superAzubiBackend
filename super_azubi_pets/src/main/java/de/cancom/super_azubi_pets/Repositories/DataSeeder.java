@@ -24,11 +24,7 @@ public class DataSeeder implements CommandLineRunner {
 
     private void loadInitialAnimals() {
 
-        List<Animal> animalsToDelete = animalRepository.findAll();
-
-        for (Animal animal : animalsToDelete) {
-            animalRepository.deleteById(animal.getAnimalId());
-        }
+        animalRepository.deleteAll();
 
         List<Animal> standardAnimals = new ArrayList<>();
         standardAnimals.add(new Animal("Pferd", 2, 2, ""));
@@ -52,12 +48,8 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Biene", 5, 2, ""));
         standardAnimals.add(new Animal("Fisch", 2, 4, ""));
 
-        for (int i = 0; i < standardAnimals.size(); i++) {
-            long animalid = i + 1;
-
-            Animal currentAnimal = standardAnimals.get(i);
-            currentAnimal.setAnimalId(animalid);
-            animalRepository.save(currentAnimal);
+        for (Animal animal : standardAnimals) {
+            animalRepository.save(animal);
         }
     }
 }
