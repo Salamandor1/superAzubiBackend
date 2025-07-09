@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
+import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
@@ -15,6 +17,9 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepo;
+
+    @Autowired
+    private TeamAnimalRepository teamAnimalRepository;
 
     // Read
     public List<Team> getAllTeams() {
@@ -30,6 +35,9 @@ public class TeamService {
     public Team addTeam(CreateAndUpdateTeamDTO dto) {
         try {
             Team newTeam = new Team(dto.getHearts(), dto.getWins(), dto.getRounds());
+            for (TeamAnimal newTeamAnimal : dto.getAnimals()) {
+                teamAnimalRepository.save(newTeamAnimal);
+            }
             return teamRepo.save(newTeam);
         } catch (Exception e) {
             e.printStackTrace();

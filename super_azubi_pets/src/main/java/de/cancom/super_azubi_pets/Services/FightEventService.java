@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightDTO;
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightEventDTO;
+import de.cancom.super_azubi_pets.DTOs.LogQueryDTO;
 import de.cancom.super_azubi_pets.EmbeddedIds.FightEventId;
 import de.cancom.super_azubi_pets.Models.Fight;
 import de.cancom.super_azubi_pets.Models.FightEvent;
@@ -70,10 +70,10 @@ public class FightEventService {
 
     // under construction
     // actual fight-logic
-    public String resolveFight(CreateAndUpdateFightDTO dto) {
-        Team playerTeam = teamRepo.findById(dto.getTeam1Id())
+    public String resolveFight(LogQueryDTO dto) {
+        Team playerTeam = teamRepo.findById(dto.getPlayerTeamID())
                 .orElseThrow(() -> new RuntimeException("Team not found."));
-        Team npcTeam = teamRepo.findById(dto.getTeam2Id())
+        Team npcTeam = teamRepo.findById(dto.getNpcTeamID())
                 .orElseThrow(() -> new RuntimeException("Team not found."));
 
         // repeats logic until a winner is declared or round 20 is reached

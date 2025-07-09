@@ -5,8 +5,8 @@ public enum FightEventType {
     ATTACK("Both most front animals fight each other, dealing damage simultaneously.") {
         @Override
         public String resolve(Team playerTeam, Team npcTeam) {
-            Animal playerAnimal = playerTeam.getAnimals().get(0);
-            Animal npcAnimal = npcTeam.getAnimals().get(0);
+            TeamAnimal playerAnimal = playerTeam.getAnimals().get(0);
+            TeamAnimal npcAnimal = npcTeam.getAnimals().get(0);
 
             String text = "";
             // playerAnimal attacks npcAnimal
@@ -18,12 +18,12 @@ public enum FightEventType {
             return text;
         } // resolve
 
-        private String attack(Animal attacker, Animal defender) {
+        private String attack(TeamAnimal attacker, TeamAnimal defender) {
             String text = "";
             int dmg = attacker.getAttack();
             int health = defender.getHealth();
             defender.setHealth(health - dmg);
-            text = attacker.getAnimalName() + "verursacht " + dmg + " an " + defender.getAnimalName() + ".";
+            text = attacker.getName() + "verursacht " + dmg + " an " + defender.getName() + ".";
             return text;
         } // attack
 
@@ -32,27 +32,27 @@ public enum FightEventType {
     DIE("If one of the frontmost animals health drops to 0 (or below), they will die.") {
         @Override
         public String resolve(Team playerTeam, Team npcTeam) {
-            Animal playerAnimal = playerTeam.getAnimals().get(0);
-            Animal npcAnimal = npcTeam.getAnimals().get(0);
+            TeamAnimal playerAnimal = playerTeam.getAnimals().get(0);
+            TeamAnimal npcAnimal = npcTeam.getAnimals().get(0);
 
             String text = "";
 
             // checks for playerAnimal
             if (isHealth0(playerAnimal)) {
-                text += playerAnimal.getAnimalName() + " wurde besiegt.\n";
+                text += playerAnimal.getName() + " wurde besiegt.\n";
                 playerAnimal = null;
             } // if
 
             // checks for npcAnimal
             if (isHealth0(npcAnimal)) {
-                text += npcAnimal.getAnimalName() + " wurde besiegt.\n";
+                text += npcAnimal.getName() + " wurde besiegt.\n";
                 npcAnimal = null;
             } // if
 
             return text;
         } // resolve
 
-        private boolean isHealth0(Animal animal) {
+        private boolean isHealth0(TeamAnimal animal) {
             return animal.getHealth() <= 0;
         } // isHealth0
     }, // DIE
@@ -71,7 +71,7 @@ public enum FightEventType {
         } // resolve
 
         private void removeAnimals(Team team) {
-            for (Animal animal : team.getAnimals()) {
+            for (TeamAnimal animal : team.getAnimals()) {
                 if (animal.getHealth() <= 0) {
                     team.getAnimals().remove(animal);
                 } // if

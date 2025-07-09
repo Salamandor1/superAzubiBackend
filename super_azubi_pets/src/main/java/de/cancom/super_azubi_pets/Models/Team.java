@@ -1,6 +1,7 @@
 package de.cancom.super_azubi_pets.Models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Team {
     private int rounds;
 
     @OneToMany
-    private ArrayList<Animal> animals;
+    private ArrayList<TeamAnimal> animals;
 
     public Team() {
     }
@@ -47,7 +48,7 @@ public class Team {
         return this.rounds;
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public ArrayList<TeamAnimal> getAnimals() {
         return this.animals;
     }
 
@@ -68,8 +69,8 @@ public class Team {
         this.rounds = rounds;
     }
 
-    public void setAnimals(ArrayList<Animal> animals) {
-        this.animals = animals;
+    public void setAnimals(List<TeamAnimal> animals) {
+        this.animals = new ArrayList<>(animals);
     }
 
 }
