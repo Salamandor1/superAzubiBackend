@@ -22,7 +22,7 @@ public class CreateAndUpdateGameDTO {
         return rounds;
     }
 
-    public CreateAndUpdateGameTeamDTO getTeam() {
+    public CreateAndUpdateGameTeamDTO getTeamDTO() {
         return teamDTO;
     }
 

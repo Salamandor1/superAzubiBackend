@@ -22,6 +22,9 @@ public class TeamAnimalService {
 
     // Create
     public TeamAnimal createTeamAnimal(CreateAndUpdateTeamAnimalDTO dto) {
+        if (dto == null) {
+            return null;
+        }
         TeamAnimal newTeamAnimal = new TeamAnimal();
         newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimal().getAnimalName()));
         newTeamAnimal.setAttack(dto.getAttack());

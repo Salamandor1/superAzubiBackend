@@ -1,8 +1,9 @@
-package de.cancom.super_azubi_pets.Models;
+package de.cancom.super_azubi_pets.Archive;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

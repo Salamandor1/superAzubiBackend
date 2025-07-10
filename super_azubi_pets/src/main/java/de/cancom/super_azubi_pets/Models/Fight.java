@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models;
 
+import de.cancom.super_azubi_pets.Archive.Team;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

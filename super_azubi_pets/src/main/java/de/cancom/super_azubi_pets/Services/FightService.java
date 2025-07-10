@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.cancom.super_azubi_pets.Archive.Team;
+import de.cancom.super_azubi_pets.Archive.TeamRepository;
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightDTO;
 import de.cancom.super_azubi_pets.Models.Fight;
-import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.FightRepository;
-import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
 public class FightService {
@@ -71,4 +71,34 @@ public class FightService {
             throw new RuntimeException("Fight with ID " + id + " not found.");
         }
     }
+
+    // under construction
+    // actual fight-logic
+    // public String resolveFight(LogQueryDTO dto) {
+    // Team playerTeam = teamRepo.findById(dto.getPlayerTeamID())
+    // .orElseThrow(() -> new RuntimeException("Team not found."));
+    // Team npcTeam = teamRepo.findById(dto.getNpcTeamID())
+    // .orElseThrow(() -> new RuntimeException("Team not found."));
+
+    // // repeats logic until a winner is declared or round 20 is reached
+    // int round = 1;
+    // FightEventType event;
+    // String log = "";
+    // while (playerTeam.getAnimals().size() != 0 && npcTeam.getAnimals().size() !=
+    // 0 && round <= 20) {
+    // event = FightEventType.ATTACK;
+    // log += event.resolve(playerTeam, npcTeam) + "\n";
+    // event = FightEventType.DIE;
+    // log += event.resolve(playerTeam, npcTeam) + "\n";
+    // event = FightEventType.MOVE;
+    // log += event.resolve(playerTeam, npcTeam) + "\n";
+    // round++;
+    // } // while
+
+    // event = FightEventType.END_FIGHT;
+    // log += event.resolve(playerTeam, npcTeam) + "\n";
+    // event = FightEventType.END_GAME;
+    // log += event.resolve(playerTeam, npcTeam);
+    // return log;
+    // } // resolveFightEvent
 }

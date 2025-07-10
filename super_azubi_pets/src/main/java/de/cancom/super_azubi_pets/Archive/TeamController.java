@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.Controller;
+package de.cancom.super_azubi_pets.Archive;
 
 import java.util.List;
 
@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
-import de.cancom.super_azubi_pets.Models.Team;
-import de.cancom.super_azubi_pets.Services.TeamService;
 
 @RestController
 @RequestMapping("/teams")

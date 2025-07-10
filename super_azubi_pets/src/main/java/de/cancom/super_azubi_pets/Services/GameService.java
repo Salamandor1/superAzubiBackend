@@ -29,7 +29,7 @@ public class GameService {
         newGame.setWins(dto.getWins());
 
         // create GameTeam via GameTeamService from DTO
-        GameTeam team = teamService.createTeam(dto.getTeam());
+        GameTeam team = teamService.createTeam(dto.getTeamDTO());
         newGame.setTeam(team);
 
         return gameRepo.save(newGame);
@@ -52,7 +52,7 @@ public class GameService {
         game.setHearts(dto.getHearts());
         game.setWins(dto.getWins());
         game.setRounds(dto.getRounds());
-        game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeam()));
+        game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeamDTO()));
 
         return gameRepo.save(game);
     }

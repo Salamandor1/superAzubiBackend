@@ -1,6 +1,6 @@
-package de.cancom.super_azubi_pets.Models;
+package de.cancom.super_azubi_pets.Archive;
 
-import de.cancom.super_azubi_pets.EmbeddedIds.FightEventId;
+import de.cancom.super_azubi_pets.Models.Fight;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

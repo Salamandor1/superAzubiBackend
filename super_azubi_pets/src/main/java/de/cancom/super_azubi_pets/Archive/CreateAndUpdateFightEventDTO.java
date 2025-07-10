@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.DTOs;
+package de.cancom.super_azubi_pets.Archive;
 
 public class CreateAndUpdateFightEventDTO {
     private Long fightId;

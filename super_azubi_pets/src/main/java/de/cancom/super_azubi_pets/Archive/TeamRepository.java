@@ -1,9 +1,7 @@
-package de.cancom.super_azubi_pets.Repositories;
+package de.cancom.super_azubi_pets.Archive;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import de.cancom.super_azubi_pets.Models.Team;
 
 /**
  * Methods granted automatically:

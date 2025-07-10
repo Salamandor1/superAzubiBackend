@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightDTO;
-import de.cancom.super_azubi_pets.DTOs.LogQueryDTO;
-import de.cancom.super_azubi_pets.DTOs.LogResponseDTO;
 import de.cancom.super_azubi_pets.Models.Fight;
-import de.cancom.super_azubi_pets.Services.FightEventService;
 import de.cancom.super_azubi_pets.Services.FightService;
 
 @RestController
@@ -27,9 +24,6 @@ public class FightController {
     @Autowired
     private FightService fightService;
 
-    @Autowired
-    private FightEventService fightEventService;
-
     // Create
     @PostMapping
     public ResponseEntity<Fight> createFight(@RequestBody CreateAndUpdateFightDTO dto) {
@@ -37,13 +31,14 @@ public class FightController {
         return ResponseEntity.ok(newFight);
     }
 
-    // Create & Resolve fight
-    @PostMapping("/resolve/")
-    public ResponseEntity<LogResponseDTO> createAndResolveFight(@RequestBody LogQueryDTO dto) {
-        String log = fightEventService.resolveFight(dto);
-        LogResponseDTO logResponse = new LogResponseDTO(log);
-        return ResponseEntity.ok(logResponse);
-    }
+    // // Create & Resolve fight
+    // @PostMapping("/resolve/")
+    // public ResponseEntity<LogResponseDTO> createAndResolveFight(@RequestBody
+    // LogQueryDTO dto) {
+    // String log = fightService.resolveFight(dto);
+    // LogResponseDTO logResponse = new LogResponseDTO(log);
+    // return ResponseEntity.ok(logResponse);
+    // }
 
     // Get all fights
     @GetMapping

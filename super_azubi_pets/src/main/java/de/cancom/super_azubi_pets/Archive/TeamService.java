@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.Services;
+package de.cancom.super_azubi_pets.Archive;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,11 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
-import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
-import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
 public class TeamService {
