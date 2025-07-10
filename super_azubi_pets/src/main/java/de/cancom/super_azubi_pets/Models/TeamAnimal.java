@@ -16,13 +16,12 @@ import jakarta.persistence.Table;
  * animal has a different position.
  */
 @Entity
-@Table(name = "teamanimals")
+@Table(name = "team_animals")
 public class TeamAnimal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamAnimalId;
-    private int pos;
 
     // for references to name and ability
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,8 +32,7 @@ public class TeamAnimal {
     private int health;
     private int attack;
 
-    // this value is equivalent to xp and is used in a specific EventType to alter
-    // health and attack
+    // this value is equivalent to xp
     private int level;
 
     public TeamAnimal() {
@@ -42,18 +40,9 @@ public class TeamAnimal {
 
     public TeamAnimal(Animal baseAnimal, int level, int pos) {
         this.baseAnimal = baseAnimal;
-        setPos(pos);
         setHealth(baseAnimal.getHealth());
         setAttack(baseAnimal.getAttack());
         setLevel(level);
-    }
-
-    public void setPos(int pos) {
-        if (pos < 0 || pos > 4) {
-            throw new IllegalArgumentException("Position of animal must be between 0 and 4");
-        } else {
-            this.pos = pos;
-        }
     }
 
     public void setHealth(int health) {
@@ -89,15 +78,11 @@ public class TeamAnimal {
     }
 
     public String getAnimalId() {
-        return baseAnimal.getAnimalName();
-    }
-
-    public int getPos() {
-        return pos;
+        return baseAnimal.getName();
     }
 
     public String getName() {
-        return baseAnimal.getAnimalName();
+        return baseAnimal.getName();
     }
 
     public String getAbility() {

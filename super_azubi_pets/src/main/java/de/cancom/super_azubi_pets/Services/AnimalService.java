@@ -35,11 +35,11 @@ public class AnimalService {
     }
 
     public Animal updateAnimal(Animal animal) {
-        String name = animal.getAnimalName();
+        String name = animal.getName();
         if (!animalRepository.existsById(name)) {
             throw new RuntimeException("Animal with ID " + name + " not found.");
         }
-        deleteAnimal(animal.getAnimalName());
+        deleteAnimal(animal.getName());
         return animalRepository.save(animal);
     }
 

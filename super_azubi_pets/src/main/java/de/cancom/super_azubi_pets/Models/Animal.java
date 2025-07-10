@@ -1,5 +1,7 @@
 package de.cancom.super_azubi_pets.Models;
 
+import org.hibernate.annotations.Immutable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -9,12 +11,13 @@ import jakarta.persistence.Table;
  * This class retrieves animal data from the database based on the provided ID.
  */
 @Entity
+@Immutable
 @Table(name = "animals")
 public class Animal {
 
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String animalName;
+    private String name;
 
     private int health;
     private int attack;
@@ -27,35 +30,21 @@ public class Animal {
      * Constructor to create an Animal object with a specific ID.
      * This constructor retrieves the animal's data from the database.
      * 
-     * @param animalName
+     * @param name
      * @param health
      * @param attack
      * @param ability
      */
-    public Animal(String animalName, int health, int attack, String ability) {
-        this.animalName = animalName;
+    public Animal(String name, int health, int attack, String ability) {
+        this.name = name;
         this.health = health;
         this.attack = attack;
         this.ability = ability;
     }
 
-    /**
-     * Copy constructor to create a new Animal object based on an existing one.
-     * this constructor is used to modify animals during battle, but not throughout
-     * the game
-     * 
-     * @param animal
-     */
-    public Animal(Animal animal) {
-        this.animalName = animal.getAnimalName();
-        this.health = animal.getHealth();
-        this.attack = animal.getAttack();
-        this.ability = animal.getAbility();
-    }
-
     // Getters and Setters
-    public String getAnimalName() {
-        return this.animalName;
+    public String getName() {
+        return this.name;
     }
 
     public int getHealth() {
@@ -70,20 +59,5 @@ public class Animal {
         return this.ability;
     }
 
-    public void setAnimalName(String animalName) {
-        this.animalName = animalName;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public void setAbility(String ability) {
-        this.ability = ability;
-    }
-
+    // no Setter because immutable
 }
