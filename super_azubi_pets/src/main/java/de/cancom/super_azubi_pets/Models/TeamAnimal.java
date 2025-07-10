@@ -45,6 +45,10 @@ public class TeamAnimal {
         setLevel(level);
     }
 
+    public void setBaseAnimal(Animal baseAnimal) {
+        this.baseAnimal = baseAnimal;
+    }
+
     public void setHealth(int health) {
         this.health = health;
         // health cannot be less than 0
@@ -87,6 +91,10 @@ public class TeamAnimal {
 
     public String getAbility() {
         return baseAnimal.getAbility();
+    }
+
+    public Animal getBaseAnimal() {
+        return baseAnimal;
     }
 
     public int getHealth() {

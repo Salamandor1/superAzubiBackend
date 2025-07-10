@@ -1,9 +1,9 @@
 package de.cancom.super_azubi_pets.Services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
@@ -11,40 +11,12 @@ import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 @Service
 public class AnimalService {
 
-    private final AnimalRepository animalRepository;
-
     @Autowired
-    public AnimalService(AnimalRepository animalRepository) {
-        this.animalRepository = animalRepository;
-    }
+    private AnimalRepository baseAnimalRepo;
 
-    public Animal getAnimalById(String name) {
-        return animalRepository.findById(name)
-                .orElseThrow(() -> new RuntimeException("Animal with ID " + name + " not found."));
+    // Get
+    public Animal getAnimalByID(String nameID) {
+        return baseAnimalRepo.findById(nameID)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal not found"));
     }
-
-    public Animal createAnimal(Animal animal) {
-        return animalRepository.save(animal);
-    }
-
-    public void deleteAnimal(String name) {
-        if (!animalRepository.existsById(name)) {
-            throw new RuntimeException("Animal with ID " + name + " not found.");
-        }
-        animalRepository.deleteById(name);
-    }
-
-    public Animal updateAnimal(Animal animal) {
-        String name = animal.getName();
-        if (!animalRepository.existsById(name)) {
-            throw new RuntimeException("Animal with ID " + name + " not found.");
-        }
-        deleteAnimal(animal.getName());
-        return animalRepository.save(animal);
-    }
-
-    public List<Animal> getFiveRandomAnimals() {
-        return animalRepository.findFiveRandomAnimals();
-    }
-
 }

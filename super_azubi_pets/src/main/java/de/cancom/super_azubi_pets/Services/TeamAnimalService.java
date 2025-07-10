@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
-import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
-import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
 
 @Service
@@ -19,16 +17,14 @@ public class TeamAnimalService {
     private TeamAnimalRepository teamAnimalRepo;
 
     @Autowired
-    private AnimalRepository baseAnimalRepo;
+    private AnimalService baseAnimalService;
 
     // Create
     public TeamAnimal createTeamAnimal(CreateAndUpdateTeamAnimalDTO dto) {
-        Animal baseAnimal = baseAnimalRepo.findById(dto.getBaseAnimalID())
-                .orElseThrow(() -> new RuntimeException("Base Animal does not exist"));
-
-        TeamAnimal newTeamAnimal = new TeamAnimal(baseAnimal, dto.getLevel(), dto.getPos());
-        newTeamAnimal.setHealth(baseAnimal.getHealth());
-        newTeamAnimal.setAttack(baseAnimal.getAttack());
+        TeamAnimal newTeamAnimal = new TeamAnimal();
+        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimal().getAnimalName()));
+        newTeamAnimal.setAttack(dto.getAttack());
+        newTeamAnimal.setHealth(dto.getHealth());
         newTeamAnimal.setLevel(dto.getLevel());
 
         return teamAnimalRepo.save(newTeamAnimal);
