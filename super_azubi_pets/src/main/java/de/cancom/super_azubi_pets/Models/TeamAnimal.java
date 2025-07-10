@@ -21,7 +21,7 @@ public class TeamAnimal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long teamAnimalId;
+    private Long id;
 
     // for references to name and ability
     @ManyToOne(fetch = FetchType.EAGER)
@@ -81,8 +81,8 @@ public class TeamAnimal {
         }
     }
 
-    public String getAnimalId() {
-        return baseAnimal.getName();
+    public Long getAnimalId() {
+        return id;
     }
 
     public String getName() {

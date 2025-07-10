@@ -41,6 +41,10 @@ public class GameTeam {
     public GameTeam() {
     }
 
+    public Long getID() {
+        return id;
+    }
+
     public TeamAnimal getSlot0() {
         return slot0;
     }

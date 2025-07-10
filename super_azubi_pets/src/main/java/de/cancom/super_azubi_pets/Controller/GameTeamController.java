@@ -12,45 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameDTO;
-import de.cancom.super_azubi_pets.Models.Game;
-import de.cancom.super_azubi_pets.Services.GameService;
+import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameTeamDTO;
+import de.cancom.super_azubi_pets.Models.GameTeam;
+import de.cancom.super_azubi_pets.Services.GameTeamService;
 
 @RestController
-@RequestMapping("/game")
-public class GameController {
+@RequestMapping("/playerteam")
+public class GameTeamController {
 
     @Autowired
-    private GameService gameService;
+    GameTeamService teamService;
 
     // POST
     @PostMapping
-    public ResponseEntity<CreateAndUpdateGameDTO> createGame(@RequestBody CreateAndUpdateGameDTO dto) {
-        gameService.createGame(dto);
+    public ResponseEntity<CreateAndUpdateGameTeamDTO> createTeam(@RequestBody CreateAndUpdateGameTeamDTO dto) {
+        teamService.createTeam(dto);
         return ResponseEntity.ok(dto);
     }
 
     // GET all
     @GetMapping
-    public ResponseEntity<List<Game>> getAllGames() {
-        return ResponseEntity.ok(gameService.getAllGames());
+    public ResponseEntity<List<GameTeam>> getAllTeams() {
+        return ResponseEntity.ok(teamService.getAllTeams());
     }
 
     // GET by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Game> getGameByID(@PathVariable Long id) {
-        return ResponseEntity.ok(gameService.getGameByID(id));
+    public ResponseEntity<GameTeam> getTeamByID(@PathVariable Long id) {
+        return ResponseEntity.ok(teamService.getTeamByID(id));
     }
 
     // PUT by ID
     @PutMapping("/{id}")
-    public ResponseEntity<Game> updateGameByID(@PathVariable Long id, @RequestBody CreateAndUpdateGameDTO dto) {
+    public ResponseEntity<GameTeam> updateTeamByID(@PathVariable Long id, @RequestBody CreateAndUpdateGameTeamDTO dto) {
         try {
-            Game updatedGame = gameService.updateGameByID(id, dto);
-            return ResponseEntity.ok(updatedGame);
+            GameTeam updatedTeam = teamService.updateTeamByID(id, dto);
+            return ResponseEntity.ok(updatedTeam);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

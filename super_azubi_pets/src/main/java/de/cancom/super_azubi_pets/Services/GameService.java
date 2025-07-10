@@ -22,7 +22,7 @@ public class GameService {
     private GameTeamService teamService;
 
     // Create
-    public Game saveGame(CreateAndUpdateGameDTO dto) {
+    public Game createGame(CreateAndUpdateGameDTO dto) {
         Game newGame = new Game();
         newGame.setHearts(dto.getHearts());
         newGame.setRounds(dto.getRounds());
@@ -44,6 +44,17 @@ public class GameService {
     public Game getGameByID(Long id) {
         return gameRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"));
+    }
+
+    // Update
+    public Game updateGameByID(Long id, CreateAndUpdateGameDTO dto) {
+        Game game = getGameByID(id);
+        game.setHearts(dto.getHearts());
+        game.setWins(dto.getWins());
+        game.setRounds(dto.getRounds());
+        game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeam()));
+
+        return gameRepo.save(game);
     }
 
 }

@@ -40,9 +40,21 @@ public class GameTeamService {
     }
 
     // Read
-    public GameTeam findTeamByID(Long id) {
+    public GameTeam getTeamByID(Long id) {
         return teamRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
+    }
+
+    // Update
+    public GameTeam updateTeamByID(Long id, CreateAndUpdateGameTeamDTO dto) {
+        GameTeam team = getTeamByID(id);
+        team.setSlot0(teamAnimalService.updateTeamAnimalByID(team.getSlot0().getAnimalId(), dto.getSlot0()));
+        team.setSlot1(teamAnimalService.updateTeamAnimalByID(team.getSlot1().getAnimalId(), dto.getSlot1()));
+        team.setSlot2(teamAnimalService.updateTeamAnimalByID(team.getSlot2().getAnimalId(), dto.getSlot2()));
+        team.setSlot3(teamAnimalService.updateTeamAnimalByID(team.getSlot3().getAnimalId(), dto.getSlot3()));
+        team.setSlot4(teamAnimalService.updateTeamAnimalByID(team.getSlot4().getAnimalId(), dto.getSlot4()));
+
+        return teamRepo.save(team);
     }
 
 }
