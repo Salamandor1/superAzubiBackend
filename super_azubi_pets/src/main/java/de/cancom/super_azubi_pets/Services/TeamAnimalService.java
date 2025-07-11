@@ -26,7 +26,7 @@ public class TeamAnimalService {
             return null;
         }
         TeamAnimal newTeamAnimal = new TeamAnimal();
-        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimal().getAnimalName()));
+        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
         newTeamAnimal.setAttack(dto.getAttack());
         newTeamAnimal.setHealth(dto.getHealth());
         newTeamAnimal.setLevel(dto.getLevel());

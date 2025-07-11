@@ -2,7 +2,7 @@ package de.cancom.super_azubi_pets.DTOs;
 
 public class CreateAndUpdateTeamAnimalDTO {
 
-    private CreateAndUpdateAnimalDTO baseAnimal;
+    private String baseAnimalName;
     private int health;
     private int attack;
     private int level;
@@ -10,8 +10,8 @@ public class CreateAndUpdateTeamAnimalDTO {
     public CreateAndUpdateTeamAnimalDTO() {
     }
 
-    public void setBaseAnimal(CreateAndUpdateAnimalDTO baseAnimal) {
-        this.baseAnimal = baseAnimal;
+    public void setBaseAnimalName(String baseAnimal) {
+        this.baseAnimalName = baseAnimal;
     }
 
     public void setHealth(int health) {
@@ -26,8 +26,8 @@ public class CreateAndUpdateTeamAnimalDTO {
         this.level = level;
     }
 
-    public CreateAndUpdateAnimalDTO getBaseAnimal() {
-        return baseAnimal;
+    public String getBaseAnimalName() {
+        return baseAnimalName;
     }
 
     public int getHealth() {
