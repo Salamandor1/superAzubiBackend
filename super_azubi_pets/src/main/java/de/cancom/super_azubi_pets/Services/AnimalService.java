@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.Models.Animal;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 
 @Service
@@ -28,5 +29,11 @@ public class AnimalService {
             throw new IllegalArgumentException("Must be at least 1, can't be more than 5.");
         }
         return baseAnimalRepo.findRandomAnimals(count);
+    }
+
+    // TRANSFORM to TeamAnimal
+    public TeamAnimal transformToTeamAnimal(Animal animal) {
+        TeamAnimal teamAnimal = new TeamAnimal(animal, 1);
+        return teamAnimal;
     }
 }

@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.Archive;
+package Archive;
 
 import de.cancom.super_azubi_pets.Models.Fight;
 import jakarta.persistence.EmbeddedId;

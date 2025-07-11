@@ -65,7 +65,7 @@ public class Game {
         this.wins = wins;
     }
 
-    public void setRounds(int rounds) {
+    public void setRound(int rounds) {
         this.rounds = rounds;
     }
 

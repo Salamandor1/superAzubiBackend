@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.Archive;
+package Archive;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

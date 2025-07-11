@@ -1,5 +1,8 @@
 package de.cancom.super_azubi_pets.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -63,6 +66,16 @@ public class GameTeam {
 
     public TeamAnimal getSlot4() {
         return slot4;
+    }
+
+    public List<TeamAnimal> getAllAnimals() {
+        List<TeamAnimal> animals = new ArrayList<>();
+        animals.add(slot0);
+        animals.add(slot1);
+        animals.add(slot2);
+        animals.add(slot3);
+        animals.add(slot4);
+        return animals;
     }
 
     public void setSlot0(TeamAnimal slot0) {

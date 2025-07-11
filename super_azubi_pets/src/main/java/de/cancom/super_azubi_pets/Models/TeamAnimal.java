@@ -38,11 +38,18 @@ public class TeamAnimal {
     public TeamAnimal() {
     }
 
-    public TeamAnimal(Animal baseAnimal, int level, int pos) {
+    public TeamAnimal(Animal baseAnimal, int level) {
         this.baseAnimal = baseAnimal;
         setHealth(baseAnimal.getHealth());
         setAttack(baseAnimal.getAttack());
         setLevel(level);
+    }
+
+    public TeamAnimal(TeamAnimal original) {
+        this.baseAnimal = original.getBaseAnimal();
+        this.health = original.getHealth();
+        this.attack = original.getAttack();
+        this.level = original.getLevel();
     }
 
     public void setBaseAnimal(Animal baseAnimal) {
@@ -79,6 +86,15 @@ public class TeamAnimal {
         if (this.level > 20) {
             this.level = 20;
         }
+    }
+
+    public void levelUp() {
+        if (this.level > 19) {
+            return;
+        }
+        this.level++;
+        this.health += 2;
+        this.attack += 2;
     }
 
     public Long getAnimalId() {

@@ -25,7 +25,7 @@ public class GameService {
     public Game createGame(CreateAndUpdateGameDTO dto) {
         Game newGame = new Game();
         newGame.setHearts(dto.getHearts());
-        newGame.setRounds(dto.getRounds());
+        newGame.setRound(dto.getRounds());
         newGame.setWins(dto.getWins());
 
         // create GameTeam via GameTeamService from DTO
@@ -51,7 +51,7 @@ public class GameService {
         Game game = getGameByID(id);
         game.setHearts(dto.getHearts());
         game.setWins(dto.getWins());
-        game.setRounds(dto.getRounds());
+        game.setRound(dto.getRounds());
         game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeamDTO()));
 
         return gameRepo.save(game);
