@@ -10,13 +10,13 @@ import de.cancom.super_azubi_pets.EmbeddedIds.LogID;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.Fight;
 import de.cancom.super_azubi_pets.Models.Game;
-import de.cancom.super_azubi_pets.Models.GameTeam;
 import de.cancom.super_azubi_pets.Models.Log;
+import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
-import de.cancom.super_azubi_pets.Repositories.GameTeamRepository;
 import de.cancom.super_azubi_pets.Repositories.LogRepository;
+import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
 public class FightService {
@@ -28,7 +28,7 @@ public class FightService {
     GameRepository gameRepo;
 
     @Autowired
-    GameTeamRepository teamRepo;
+    TeamRepository teamRepo;
 
     @Autowired
     AnimalRepository baseAnimalRepo;
@@ -110,14 +110,14 @@ public class FightService {
         return logRepo.save(this.log);
     }
 
-    private GameTeam fetchPlayerTeam() {
+    private Team fetchPlayerTeam() {
         Long playerTeamID = game.getTeam().getID();
-        GameTeam playerTeam = teamRepo.findById(playerTeamID).orElseThrow();
+        Team playerTeam = teamRepo.findById(playerTeamID).orElseThrow();
         return playerTeam;
     }
 
-    private GameTeam generateNpcTeam() {
-        GameTeam npcTeam = new GameTeam();
+    private Team generateNpcTeam() {
+        Team npcTeam = new Team();
         // set animal Count for npc team
         int animalCount = calculateAnimalCount(game.getRound());
 
@@ -185,7 +185,7 @@ public class FightService {
         return animals.stream().allMatch(a -> a.getLevel() >= 20);
     }
 
-    private void putAnimalsToTeam(List<TeamAnimal> animals, GameTeam team) {
+    private void putAnimalsToTeam(List<TeamAnimal> animals, Team team) {
         switch (animals.size()) {
             case 5:
                 team.setSlot4(animals.get(4));

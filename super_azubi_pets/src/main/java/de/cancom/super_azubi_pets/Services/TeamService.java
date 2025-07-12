@@ -7,22 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameTeamDTO;
-import de.cancom.super_azubi_pets.Models.GameTeam;
-import de.cancom.super_azubi_pets.Repositories.GameTeamRepository;
+import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
+import de.cancom.super_azubi_pets.Models.Team;
+import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
-public class GameTeamService {
+public class TeamService {
 
     @Autowired
-    private GameTeamRepository teamRepo;
+    private TeamRepository teamRepo;
 
     @Autowired
     private TeamAnimalService teamAnimalService;
 
     // Create
-    public GameTeam createTeam(CreateAndUpdateGameTeamDTO dto) {
-        GameTeam team = new GameTeam();
+    public Team createTeam(CreateAndUpdateTeamDTO dto) {
+        Team team = new Team();
         // Create TeamAnimals from dto via service
 
         team.setSlot0(teamAnimalService.createTeamAnimal(dto.getSlot0()));
@@ -35,19 +35,19 @@ public class GameTeamService {
     }
 
     // Read
-    public List<GameTeam> getAllTeams() {
+    public List<Team> getAllTeams() {
         return teamRepo.findAll();
     }
 
     // Read
-    public GameTeam getTeamByID(Long id) {
+    public Team getTeamByID(Long id) {
         return teamRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
     }
 
     // Update
-    public GameTeam updateTeamByID(Long id, CreateAndUpdateGameTeamDTO dto) {
-        GameTeam team = getTeamByID(id);
+    public Team updateTeamByID(Long id, CreateAndUpdateTeamDTO dto) {
+        Team team = getTeamByID(id);
         team.setSlot0(teamAnimalService.updateTeamAnimalByID(team.getSlot0().getAnimalId(), dto.getSlot0()));
         team.setSlot1(teamAnimalService.updateTeamAnimalByID(team.getSlot1().getAnimalId(), dto.getSlot1()));
         team.setSlot2(teamAnimalService.updateTeamAnimalByID(team.getSlot2().getAnimalId(), dto.getSlot2()));

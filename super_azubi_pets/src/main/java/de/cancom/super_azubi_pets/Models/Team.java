@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "teams")
-public class GameTeam {
+public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long team_id;
@@ -41,7 +41,7 @@ public class GameTeam {
     @JoinColumn(name = "pos5_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot4;
 
-    public GameTeam() {
+    public Team() {
     }
 
     public Long getID() {

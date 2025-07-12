@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameDTO;
 import de.cancom.super_azubi_pets.Models.Game;
-import de.cancom.super_azubi_pets.Models.GameTeam;
+import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class GameService {
     private GameRepository gameRepo;
 
     @Autowired
-    private GameTeamService teamService;
+    private TeamService teamService;
 
     // Create
     public Game createGame(CreateAndUpdateGameDTO dto) {
@@ -29,7 +29,7 @@ public class GameService {
         newGame.setWins(dto.getWins());
 
         // create GameTeam via GameTeamService from DTO
-        GameTeam team = teamService.createTeam(dto.getTeamDTO());
+        Team team = teamService.createTeam(dto.getTeamDTO());
         newGame.setTeam(team);
 
         return gameRepo.save(newGame);

@@ -22,7 +22,7 @@ public class Game {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id", referencedColumnName = "team_id")
-    private GameTeam team;
+    private Team team;
 
     public Game() {
     }
@@ -33,7 +33,7 @@ public class Game {
         game.hearts = 10;
         game.wins = 0;
         game.rounds = 1;
-        game.team = new GameTeam();
+        game.team = new Team();
         return game;
     }
 
@@ -53,7 +53,7 @@ public class Game {
         return rounds;
     }
 
-    public GameTeam getTeam() {
+    public Team getTeam() {
         return team;
     }
 
@@ -69,7 +69,7 @@ public class Game {
         this.rounds = rounds;
     }
 
-    public void setTeam(GameTeam team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 }

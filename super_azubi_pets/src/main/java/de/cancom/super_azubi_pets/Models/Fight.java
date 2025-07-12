@@ -2,23 +2,23 @@ package de.cancom.super_azubi_pets.Models;
 
 public class Fight {
 
-    private GameTeam playerTeam;
-    private GameTeam npcTeam;
+    private Team playerTeam;
+    private Team npcTeam;
     private Log log;
 
     public Fight() {
     }
 
-    public Fight(GameTeam playerTeam, GameTeam npcTeam) {
+    public Fight(Team playerTeam, Team npcTeam) {
         this.playerTeam = playerTeam;
         this.npcTeam = npcTeam;
     }
 
-    public void setPlayerTeam(GameTeam playerTeam) {
+    public void setPlayerTeam(Team playerTeam) {
         this.playerTeam = playerTeam;
     }
 
-    public void setNpcTeam(GameTeam npcTeam) {
+    public void setNpcTeam(Team npcTeam) {
         this.npcTeam = npcTeam;
     }
 
@@ -26,11 +26,11 @@ public class Fight {
         this.log = log;
     }
 
-    public GameTeam getPlayerTeam() {
+    public Team getPlayerTeam() {
         return playerTeam;
     }
 
-    public GameTeam getNpcTeam() {
+    public Team getNpcTeam() {
         return npcTeam;
     }
 

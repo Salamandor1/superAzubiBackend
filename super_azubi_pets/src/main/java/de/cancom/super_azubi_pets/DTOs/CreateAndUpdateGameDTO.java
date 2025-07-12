@@ -5,7 +5,7 @@ public class CreateAndUpdateGameDTO {
     private int wins;
     private int rounds;
 
-    private CreateAndUpdateGameTeamDTO teamDTO;
+    private CreateAndUpdateTeamDTO teamDTO;
 
     public CreateAndUpdateGameDTO() {
     }
@@ -22,7 +22,7 @@ public class CreateAndUpdateGameDTO {
         return rounds;
     }
 
-    public CreateAndUpdateGameTeamDTO getTeamDTO() {
+    public CreateAndUpdateTeamDTO getTeamDTO() {
         return teamDTO;
     }
 
@@ -38,7 +38,7 @@ public class CreateAndUpdateGameDTO {
         this.rounds = rounds;
     }
 
-    public void setTeam(CreateAndUpdateGameTeamDTO teamDTO) {
+    public void setTeam(CreateAndUpdateTeamDTO teamDTO) {
         this.teamDTO = teamDTO;
     }
 

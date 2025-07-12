@@ -1,13 +1,13 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-public class CreateAndUpdateGameTeamDTO {
+public class CreateAndUpdateTeamDTO {
     private CreateAndUpdateTeamAnimalDTO slot0;
     private CreateAndUpdateTeamAnimalDTO slot1;
     private CreateAndUpdateTeamAnimalDTO slot2;
     private CreateAndUpdateTeamAnimalDTO slot3;
     private CreateAndUpdateTeamAnimalDTO slot4;
 
-    public CreateAndUpdateGameTeamDTO() {
+    public CreateAndUpdateTeamDTO() {
     }
 
     public CreateAndUpdateTeamAnimalDTO getSlot0() {
