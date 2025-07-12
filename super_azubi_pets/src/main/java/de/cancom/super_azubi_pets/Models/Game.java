@@ -14,14 +14,14 @@ import jakarta.persistence.Table;
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gameID;
+    private Long game_ID;
 
     private int hearts;
     private int wins;
     private int rounds;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id")
     private GameTeam team;
 
     public Game() {
@@ -38,7 +38,7 @@ public class Game {
     }
 
     public Long getGameID() {
-        return gameID;
+        return game_ID;
     }
 
     public int getHearts() {

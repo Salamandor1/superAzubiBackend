@@ -21,11 +21,11 @@ public class TeamAnimal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long team_animal_id;
 
     // for references to name and ability
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "animal_id")
+    @JoinColumn(name = "base_animal_id", referencedColumnName = "name")
     private Animal baseAnimal;
 
     // these values may differ from the base values, so they are saved separatley
@@ -98,7 +98,7 @@ public class TeamAnimal {
     }
 
     public Long getAnimalId() {
-        return id;
+        return team_animal_id;
     }
 
     public String getName() {

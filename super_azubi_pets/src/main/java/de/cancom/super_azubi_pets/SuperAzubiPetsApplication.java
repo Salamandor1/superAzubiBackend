@@ -9,7 +9,7 @@ public class SuperAzubiPetsApplication {
     public static void main(String[] args) {
         SpringApplication.run(SuperAzubiPetsApplication.class, args);
         /*
-         * IF YOU NEED TO CLEAT THE DATABASE USE THE FOLLOWING COMMAND VIA pgAdmin:
+         * IF YOU NEED TO CLEAR THE DATABASE USE THE FOLLOWING COMMAND VIA pgAdmin:
          * 
          * DO $$ DECLARE
          * r RECORD;

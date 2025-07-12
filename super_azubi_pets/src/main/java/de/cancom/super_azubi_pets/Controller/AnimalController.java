@@ -29,7 +29,7 @@ public class AnimalController {
     }
 
     @GetMapping("/random/{count}")
-    public ResponseEntity<?> getFiveRandomAnimals(@PathVariable int count) {
+    public ResponseEntity<?> getRandomAnimals(@PathVariable int count) {
         try {
             return new ResponseEntity<>(animalService.getRandomAnimals(count), HttpStatus.OK);
         } catch (Exception e) {

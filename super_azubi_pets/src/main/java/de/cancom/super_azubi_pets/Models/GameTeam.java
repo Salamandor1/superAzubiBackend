@@ -13,39 +13,39 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "playerTeam")
+@Table(name = "teams")
 public class GameTeam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long team_id;
 
     // No use of list or similar, because the return value of a list from a database
     // is more complex to put into an object
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pos1_id")
+    @JoinColumn(name = "pos1_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot0;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pos2_id")
+    @JoinColumn(name = "pos2_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot1;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pos3_id")
+    @JoinColumn(name = "pos3_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot2;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pos4_id")
+    @JoinColumn(name = "pos4_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot3;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pos5_id")
+    @JoinColumn(name = "pos5_id", referencedColumnName = "team_animal_id")
     private TeamAnimal slot4;
 
     public GameTeam() {
     }
 
     public Long getID() {
-        return id;
+        return team_id;
     }
 
     public TeamAnimal getSlot0() {
