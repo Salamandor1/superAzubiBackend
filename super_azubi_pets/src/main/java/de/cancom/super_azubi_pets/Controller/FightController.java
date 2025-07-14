@@ -18,7 +18,7 @@ public class FightController {
     private FightService fightService;
 
     // ResolveFight
-    @GetMapping("/{GameID}")
+    @GetMapping("/{gameID}")
     public ResponseEntity<Log> resolveFight(@PathVariable Long gameID) {
         Log log = fightService.resolveFight(gameID);
         return ResponseEntity.ok(log);
