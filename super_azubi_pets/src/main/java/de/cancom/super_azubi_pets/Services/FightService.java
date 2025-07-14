@@ -36,66 +36,44 @@ public class FightService {
     @Autowired
     private AnimalService baseAnimalService;
 
-    private Game game;
-    private Fight fight = new Fight();
-    private List<TeamAnimal> playerTeam = new ArrayList<>();
-    private List<TeamAnimal> enemyTeam = new ArrayList<>();
-    private Log log = new Log();
-
     public FightService() {
-    }
-
-    public FightService(Fight fight) {
-        this.fight = fight;
-    }
-
-    public void setFight(Fight fight) {
-        this.fight = fight;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public Fight getFight() {
-        return fight;
-    }
-
-    public Game getGame() {
-        return game;
     }
 
     public Log resolveFight(Long gameID) {
         String log = "";
 
         // Fetch Game
-        setGame(gameRepo.findById(gameID).orElseThrow());
+        Game game = gameRepo.findById(gameID).orElseThrow();
+        Fight fight = new Fight(game);
 
         // Generate Teams
-        fight = new Fight();
-        fight.setPlayerTeam(fetchPlayerTeam());
-        fight.setNpcTeam(generateNpcTeam());
-        copyTeams();
+        fight.setPlayerTeam(fetchPlayerTeam(fight.getGame()));
+        fight.setNpcTeam(generateNpcTeam(fight.getGame()));
+        copyTeams(fight);
 
-        // Fight
+        // Init fight
         int round = 1;
-        removeDeadAnimals();
+        List<TeamAnimal> playerTeam = fight.getPlayerTeamAnimals();
+        List<TeamAnimal> enemyTeam = fight.getEnemyTeamAnimals();
+        removeDeadAnimals(playerTeam, enemyTeam);
 
         while (true) {
+            TeamAnimal playerAnimal = playerTeam.getFirst();
+            TeamAnimal enemyAnimal = enemyTeam.getFirst();
             log += "--------------- Runde " + round + " ---------------\n";
-            log += attack() + "\n";
-            removeDeadAnimals();
-            if (isTied()) {
+            log += attack(playerAnimal, enemyAnimal) + "\n";
+            removeDeadAnimals(fight.getPlayerTeamAnimals(), fight.getEnemyTeamAnimals());
+            if (isTied(playerTeam, enemyTeam)) {
                 log += "Der Kampf ging unentschieden aus! Beide Teams haben keine kampffähigen Tiere mehr.";
                 break;
             }
-            if (didWin()) {
-                addWin();
+            if (didWin(enemyTeam)) {
+                addWin(game);
                 log += "Du hast den Kampf gewonnen!";
                 break;
             }
-            if (didLose()) {
-                removeHeart();
+            if (didLose(playerTeam)) {
+                removeHeart(game);
                 log += "Leider hast du dem Kampf verloren...";
                 break;
             }
@@ -107,20 +85,20 @@ public class FightService {
         } // while
 
         // Update Game-Object and save game to database
-        endFight();
+        endFight(game);
 
         // Update Log-Object and save to database
-        updateLogObject(log);
-        return logRepo.save(this.log);
+        Log logObj = createLogObject(fight, log);
+        return logRepo.save(logObj);
     }
 
-    private Team fetchPlayerTeam() {
+    private Team fetchPlayerTeam(Game game) {
         Long playerTeamID = game.getTeam().getID();
         Team playerTeam = teamRepo.findById(playerTeamID).orElseThrow();
         return playerTeam;
     }
 
-    private Team generateNpcTeam() {
+    private Team generateNpcTeam(Game game) {
         Team npcTeam = new Team();
         // set animal Count for npc team
         int animalCount = calculateAnimalCount(game.getRound());
@@ -130,7 +108,7 @@ public class FightService {
         List<TeamAnimal> teamAnimals = transformAnimals(randomAnimals);
 
         // calculate xp for team
-        int xp = calculateXP();
+        int xp = calculateXP(game);
 
         // level up team animals
         levelUpTeam(teamAnimals, xp);
@@ -142,7 +120,7 @@ public class FightService {
     }
 
     private int calculateAnimalCount(int gameRound) {
-        if (gameRound == 1) {
+        if (gameRound <= 1) {
             return 3;
         }
         if (gameRound == 2) {
@@ -160,7 +138,7 @@ public class FightService {
         return teamAnimals;
     }
 
-    private int calculateXP() {
+    private int calculateXP(Game game) {
         double lifeFactor = (double) game.getHearts() / 10.0;
         double winFactor = (double) game.getWins() / game.getRound();
         double combinedFactor = (winFactor * 0.7) + (lifeFactor * 0.3);
@@ -205,50 +183,43 @@ public class FightService {
         teamRepo.save(team);
     }
 
-    private void copyTeams() {
+    private void copyTeams(Fight fight) {
         for (TeamAnimal original : fight.getPlayerTeam().getAllAnimals()) {
             if (original == null) {
                 continue;
             }
             TeamAnimal copy = new TeamAnimal(original);
-            playerTeam.add(copy);
-            System.out.println("Animal added to player: " + copy.getName() + "/" + copy.getHealth());
-            System.out.println(playerTeam.size());
+            fight.getPlayerTeamAnimals().add(copy);
         }
         for (TeamAnimal original : fight.getNpcTeam().getAllAnimals()) {
             if (original == null) {
                 continue;
             }
             TeamAnimal copy = new TeamAnimal(original);
-            enemyTeam.add(copy);
-            System.out.println("Animal added to enemy: " + copy.getName() + "/" + copy.getHealth());
-            System.out.println(enemyTeam.size());
-
+            fight.getEnemyTeamAnimals().add(copy);
         }
     }
 
-    private void removeDeadAnimals() {
+    private void removeDeadAnimals(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
         playerTeam.removeIf(item -> item == null || item.getHealth() <= 0);
         enemyTeam.removeIf(item -> item == null || item.getHealth() <= 0);
     }
 
-    private String attack() {
-        // fetch animals
-        TeamAnimal playerAnimal = playerTeam.get(0);
-        TeamAnimal npcAnimal = enemyTeam.get(0);
+    private String attack(TeamAnimal playerAnimal, TeamAnimal enemyAnimal) {
         // fetch attack value
         int playerAttack = playerAnimal.getAttack();
-        int npcAttack = npcAnimal.getAttack();
+        int enemyAttack = enemyAnimal.getAttack();
 
         // apply damage
-        playerAnimal.setHealth(playerAnimal.getHealth() - npcAttack);
-        npcAnimal.setHealth(npcAnimal.getHealth() - playerAttack);
+        playerAnimal.setHealth(playerAnimal.getHealth() - enemyAttack);
+        enemyAnimal.setHealth(enemyAnimal.getHealth() - playerAttack);
 
+        // create log entry
         String log = "";
-        log += playerAnimal.getName() + " (Spieler) verursacht " + playerAttack + " Schaden an " + npcAnimal.getName()
+        log += playerAnimal.getName() + " (Spieler) verursacht " + playerAttack + " Schaden an " + enemyAnimal.getName()
                 + " (Gegner). ";
-        log += die(npcAnimal) + "\n";
-        log += npcAnimal.getName() + " (Gegner) verursacht " + npcAttack + " Schaden an " + playerAnimal.getName()
+        log += die(enemyAnimal) + "\n";
+        log += enemyAnimal.getName() + " (Gegner) verursacht " + enemyAttack + " Schaden an " + playerAnimal.getName()
                 + " (Spieler). ";
         log += die(playerAnimal);
         return log;
@@ -262,36 +233,38 @@ public class FightService {
         return log;
     }
 
-    private boolean isTied() {
-        return didWin() && didLose();
+    private boolean isTied(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
+        return didWin(enemyTeam) && didLose(playerTeam);
     }
 
-    private boolean didWin() {
+    private boolean didWin(List<TeamAnimal> enemyTeam) {
         return enemyTeam.isEmpty();
     }
 
-    private void addWin() {
+    private void addWin(Game game) {
         game.setWins(game.getWins() + 1);
     }
 
-    private boolean didLose() {
+    private boolean didLose(List<TeamAnimal> playerTeam) {
         return playerTeam.isEmpty();
     }
 
-    private void removeHeart() {
+    private void removeHeart(Game game) {
         game.setHearts(game.getHearts() - 1);
     }
 
-    private void endFight() {
+    private void endFight(Game game) {
         game.setRound(game.getRound() + 1);
         gameRepo.save(game);
     }
 
-    private void updateLogObject(String log) {
+    private Log createLogObject(Fight fight, String log) {
+        Log logObj = new Log();
         Long playerTeamID = fight.getPlayerTeam().getID();
         Long npcTeamID = fight.getNpcTeam().getID();
         LogID logID = new LogID(playerTeamID, npcTeamID);
-        this.log.setLogID(logID);
-        this.log.setLog(log);
+        logObj.setLogID(logID);
+        logObj.setLog(log);
+        return logObj;
     }
 }
