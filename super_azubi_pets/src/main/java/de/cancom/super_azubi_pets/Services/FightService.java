@@ -90,15 +90,18 @@ public class FightService {
                 break;
             }
             if (didWin()) {
+                addWin();
                 log += "Du hast den Kampf gewonnen!";
                 break;
             }
             if (didLose()) {
+                removeHeart();
                 log += "Leider hast du dem Kampf verloren...";
                 break;
             }
             if (round >= 20) {
                 log += "Der Kampf ist unentschieden, da nach 20 Runden kein Gewinner ermittelt werden konnte.";
+                break;
             }
             round++;
         } // while
@@ -264,19 +267,19 @@ public class FightService {
     }
 
     private boolean didWin() {
-        boolean didWin = enemyTeam.isEmpty();
-        if (didWin) {
-            game.setWins(game.getWins() + 1);
-        }
-        return didWin;
+        return enemyTeam.isEmpty();
+    }
+
+    private void addWin() {
+        game.setWins(game.getWins() + 1);
     }
 
     private boolean didLose() {
-        boolean didLose = playerTeam.isEmpty();
-        if (didLose) {
-            game.setHearts(game.getHearts() - 1);
-        }
-        return didLose;
+        return playerTeam.isEmpty();
+    }
+
+    private void removeHeart() {
+        game.setHearts(game.getHearts() - 1);
     }
 
     private void endFight() {
