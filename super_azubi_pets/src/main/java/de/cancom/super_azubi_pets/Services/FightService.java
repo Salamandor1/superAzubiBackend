@@ -87,6 +87,7 @@ public class FightService {
             removeDeadAnimals();
             if (isTied()) {
                 log += "Der Kampf ging unentschieden aus! Beide Teams haben keine kampffähigen Tiere mehr.";
+                break;
             }
             if (didWin()) {
                 log += "Du hast den Kampf gewonnen!";
