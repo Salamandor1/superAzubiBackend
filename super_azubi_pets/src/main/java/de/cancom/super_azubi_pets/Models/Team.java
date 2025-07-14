@@ -3,74 +3,98 @@ package de.cancom.super_azubi_pets.Models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "team")
+@Table(name = "teams")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long teamID;
-    private int hearts;
-    private int wins;
-    private int rounds;
+    private Long team_id;
 
-    @OneToMany
-    private ArrayList<TeamAnimal> animals;
+    // No use of list or similar, because the return value of a list from a database
+    // is more complex to put into an object
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pos1_id", referencedColumnName = "team_animal_id")
+    private TeamAnimal slot0;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pos2_id", referencedColumnName = "team_animal_id")
+    private TeamAnimal slot1;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pos3_id", referencedColumnName = "team_animal_id")
+    private TeamAnimal slot2;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pos4_id", referencedColumnName = "team_animal_id")
+    private TeamAnimal slot3;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pos5_id", referencedColumnName = "team_animal_id")
+    private TeamAnimal slot4;
 
     public Team() {
     }
 
-    public Team(int hearts, int wins, int rounds) {
-        this.hearts = hearts;
-        this.wins = wins;
-        this.rounds = rounds;
+    public Long getID() {
+        return team_id;
     }
 
-    public Long getTeamID() {
-        return this.teamID;
+    public TeamAnimal getSlot0() {
+        return slot0;
     }
 
-    public int getHearts() {
-        return this.hearts;
+    public TeamAnimal getSlot1() {
+        return slot1;
     }
 
-    public int getWins() {
-        return this.wins;
+    public TeamAnimal getSlot2() {
+        return slot2;
     }
 
-    public int getRounds() {
-        return this.rounds;
+    public TeamAnimal getSlot3() {
+        return slot3;
     }
 
-    public ArrayList<TeamAnimal> getAnimals() {
-        return this.animals;
+    public TeamAnimal getSlot4() {
+        return slot4;
     }
 
-    // maybe not needed, but could be relevant for testing
-    public void setTeamID(Long teamID) {
-        this.teamID = teamID;
+    public List<TeamAnimal> getAllAnimals() {
+        List<TeamAnimal> animals = new ArrayList<>();
+        animals.add(slot0);
+        animals.add(slot1);
+        animals.add(slot2);
+        animals.add(slot3);
+        animals.add(slot4);
+        return animals;
     }
 
-    public void setHearts(int hearts) {
-        this.hearts = hearts;
+    public void setSlot0(TeamAnimal slot0) {
+        this.slot0 = slot0;
     }
 
-    public void setWins(int wins) {
-        this.wins = wins;
+    public void setSlot1(TeamAnimal slot1) {
+        this.slot1 = slot1;
     }
 
-    public void setRounds(int rounds) {
-        this.rounds = rounds;
+    public void setSlot2(TeamAnimal slot2) {
+        this.slot2 = slot2;
     }
 
-    public void setAnimals(List<TeamAnimal> animals) {
-        this.animals = new ArrayList<>(animals);
+    public void setSlot3(TeamAnimal slot3) {
+        this.slot3 = slot3;
     }
 
+    public void setSlot4(TeamAnimal slot4) {
+        this.slot4 = slot4;
+    }
 }

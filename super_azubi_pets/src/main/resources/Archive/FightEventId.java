@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.EmbeddedIds;
+package Archive;
 
 import java.io.Serializable;
 import java.util.Objects;

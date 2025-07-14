@@ -1,4 +1,4 @@
-package de.cancom.super_azubi_pets.Controller;
+package Archive;
 
 import java.util.List;
 
@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateFightEventDTO;
-import de.cancom.super_azubi_pets.EmbeddedIds.FightEventId;
-import de.cancom.super_azubi_pets.Models.FightEvent;
-import de.cancom.super_azubi_pets.Services.FightEventService;
 
 @RestController
 @RequestMapping("/fight-events")

@@ -16,44 +16,44 @@ import jakarta.persistence.Table;
  * animal has a different position.
  */
 @Entity
-@Table(name = "teamanimals")
+@Table(name = "team_animals")
 public class TeamAnimal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long teamAnimalId;
-    private int pos;
+    private Long team_animal_id;
 
     // for references to name and ability
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "animal_id")
+    @JoinColumn(name = "base_animal_id", referencedColumnName = "name")
     private Animal baseAnimal;
 
     // these values may differ from the base values, so they are saved separatley
     private int health;
     private int attack;
 
-    // this value is equivalent to xp and is used in a specific EventType to alter
-    // health and attack
+    // this value is equivalent to xp
     private int level;
 
     public TeamAnimal() {
     }
 
-    public TeamAnimal(Animal baseAnimal, int level, int pos) {
+    public TeamAnimal(Animal baseAnimal, int level) {
         this.baseAnimal = baseAnimal;
-        setPos(pos);
         setHealth(baseAnimal.getHealth());
         setAttack(baseAnimal.getAttack());
         setLevel(level);
     }
 
-    public void setPos(int pos) {
-        if (pos < 0 || pos > 4) {
-            throw new IllegalArgumentException("Position of animal must be between 0 and 4");
-        } else {
-            this.pos = pos;
-        }
+    public TeamAnimal(TeamAnimal original) {
+        this.baseAnimal = original.getBaseAnimal();
+        this.health = original.getHealth();
+        this.attack = original.getAttack();
+        this.level = original.getLevel();
+    }
+
+    public void setBaseAnimal(Animal baseAnimal) {
+        this.baseAnimal = baseAnimal;
     }
 
     public void setHealth(int health) {
@@ -88,20 +88,29 @@ public class TeamAnimal {
         }
     }
 
-    public String getAnimalId() {
-        return baseAnimal.getAnimalName();
+    public void levelUp() {
+        if (this.level > 19) {
+            return;
+        }
+        this.level++;
+        this.health += 2;
+        this.attack += 2;
     }
 
-    public int getPos() {
-        return pos;
+    public Long getAnimalId() {
+        return team_animal_id;
     }
 
     public String getName() {
-        return baseAnimal.getAnimalName();
+        return baseAnimal.getName();
     }
 
     public String getAbility() {
         return baseAnimal.getAbility();
+    }
+
+    public Animal getBaseAnimal() {
+        return baseAnimal;
     }
 
     public int getHealth() {

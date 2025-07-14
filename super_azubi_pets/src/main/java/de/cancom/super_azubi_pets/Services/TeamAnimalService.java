@@ -1,15 +1,14 @@
 package de.cancom.super_azubi_pets.Services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
-import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
-import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
 
 @Service
@@ -19,16 +18,17 @@ public class TeamAnimalService {
     private TeamAnimalRepository teamAnimalRepo;
 
     @Autowired
-    private AnimalRepository baseAnimalRepo;
+    private AnimalService baseAnimalService;
 
     // Create
     public TeamAnimal createTeamAnimal(CreateAndUpdateTeamAnimalDTO dto) {
-        Animal baseAnimal = baseAnimalRepo.findById(dto.getBaseAnimalID())
-                .orElseThrow(() -> new RuntimeException("Base Animal does not exist"));
-
-        TeamAnimal newTeamAnimal = new TeamAnimal(baseAnimal, dto.getLevel(), dto.getPos());
-        newTeamAnimal.setHealth(baseAnimal.getHealth());
-        newTeamAnimal.setAttack(baseAnimal.getAttack());
+        if (dto == null) {
+            return null;
+        }
+        TeamAnimal newTeamAnimal = new TeamAnimal();
+        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
+        newTeamAnimal.setAttack(dto.getAttack());
+        newTeamAnimal.setHealth(dto.getHealth());
         newTeamAnimal.setLevel(dto.getLevel());
 
         return teamAnimalRepo.save(newTeamAnimal);
@@ -40,8 +40,19 @@ public class TeamAnimalService {
     }
 
     // Read
-    public Optional<TeamAnimal> getTeamAnimalById(Long Id) {
-        return teamAnimalRepo.findById(Id);
+    public TeamAnimal getTeamAnimalById(Long Id) {
+        return teamAnimalRepo.findById(Id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TeamAnimal not found"));
+    }
+
+    // Update
+    public TeamAnimal updateTeamAnimalByID(Long id, CreateAndUpdateTeamAnimalDTO dto) {
+        TeamAnimal teamAnimal = getTeamAnimalById(id);
+        teamAnimal.setAttack(dto.getAttack());
+        teamAnimal.setHealth(dto.getHealth());
+        teamAnimal.setLevel(dto.getLevel());
+
+        return teamAnimalRepo.save(teamAnimal);
     }
 
 }

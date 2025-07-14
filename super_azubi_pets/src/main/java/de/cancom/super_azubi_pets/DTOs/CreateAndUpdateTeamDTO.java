@@ -1,55 +1,52 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-import java.util.ArrayList;
-
-import de.cancom.super_azubi_pets.Models.TeamAnimal;
-
 public class CreateAndUpdateTeamDTO {
-    private int hearts;
-    private int wins;
-    private int rounds;
-
-    private ArrayList<TeamAnimal> animals;
+    private CreateAndUpdateTeamAnimalDTO slot0;
+    private CreateAndUpdateTeamAnimalDTO slot1;
+    private CreateAndUpdateTeamAnimalDTO slot2;
+    private CreateAndUpdateTeamAnimalDTO slot3;
+    private CreateAndUpdateTeamAnimalDTO slot4;
 
     public CreateAndUpdateTeamDTO() {
     }
 
-    public CreateAndUpdateTeamDTO(int hearts, int wins, int rounds, ArrayList<TeamAnimal> animals) {
-        this.hearts = hearts;
-        this.wins = wins;
-        this.rounds = rounds;
-        this.animals = animals;
+    public CreateAndUpdateTeamAnimalDTO getSlot0() {
+        return slot0;
     }
 
-    public int getHearts() {
-        return this.hearts;
+    public CreateAndUpdateTeamAnimalDTO getSlot1() {
+        return slot1;
     }
 
-    public int getWins() {
-        return this.wins;
+    public CreateAndUpdateTeamAnimalDTO getSlot2() {
+        return slot2;
     }
 
-    public int getRounds() {
-        return this.rounds;
+    public CreateAndUpdateTeamAnimalDTO getSlot3() {
+        return slot3;
     }
 
-    public ArrayList<TeamAnimal> getAnimals() {
-        return this.animals;
+    public CreateAndUpdateTeamAnimalDTO getSlot4() {
+        return slot4;
     }
 
-    public void setHearts(int hearts) {
-        this.hearts = hearts;
+    public void setSlot0(CreateAndUpdateTeamAnimalDTO dto) {
+        this.slot0 = dto;
     }
 
-    public void setWins(int wins) {
-        this.wins = wins;
+    public void setSlot1(CreateAndUpdateTeamAnimalDTO dto) {
+        this.slot1 = dto;
     }
 
-    public void setRounds(int rounds) {
-        this.rounds = rounds;
+    public void setSlot2(CreateAndUpdateTeamAnimalDTO dto) {
+        this.slot2 = dto;
     }
 
-    public void setAnimals(ArrayList<TeamAnimal> animalIDs) {
-        this.animals = animalIDs;
+    public void setSlot3(CreateAndUpdateTeamAnimalDTO dto) {
+        this.slot3 = dto;
+    }
+
+    public void setSlot4(CreateAndUpdateTeamAnimalDTO dto) {
+        this.slot4 = dto;
     }
 }
