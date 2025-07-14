@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
+import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
 
@@ -26,7 +27,8 @@ public class TeamAnimalService {
             return null;
         }
         TeamAnimal newTeamAnimal = new TeamAnimal();
-        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
+        Animal baseAnimal = baseAnimalService.getAnimalByID(dto.getBaseAnimalName());
+        newTeamAnimal.setBaseAnimal(baseAnimal);
         newTeamAnimal.setAttack(dto.getAttack());
         newTeamAnimal.setHealth(dto.getHealth());
         newTeamAnimal.setLevel(dto.getLevel());
