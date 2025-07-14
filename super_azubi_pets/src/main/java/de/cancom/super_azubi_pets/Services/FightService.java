@@ -22,19 +22,19 @@ import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 public class FightService {
 
     @Autowired
-    LogRepository logRepo;
+    private LogRepository logRepo;
 
     @Autowired
-    GameRepository gameRepo;
+    private GameRepository gameRepo;
 
     @Autowired
-    TeamRepository teamRepo;
+    private TeamRepository teamRepo;
 
     @Autowired
-    AnimalRepository baseAnimalRepo;
+    private AnimalRepository baseAnimalRepo;
 
     @Autowired
-    AnimalService baseAnimalService;
+    private AnimalService baseAnimalService;
 
     private Game game;
     private Fight fight = new Fight();

@@ -21,7 +21,7 @@ import de.cancom.super_azubi_pets.Services.TeamService;
 public class TeamController {
 
     @Autowired
-    TeamService teamService;
+    private TeamService teamService;
 
     // POST
     @PostMapping

@@ -14,7 +14,7 @@ public class Log {
     private LogID logID;
 
     @Column(name = "log", columnDefinition = "TEXT")
-    String log;
+    private String log;
 
     public Log() {
     }
