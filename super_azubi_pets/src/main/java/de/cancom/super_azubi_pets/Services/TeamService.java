@@ -40,6 +40,16 @@ public class TeamService {
         return teamRepo.save(team);
     }
 
+    public Team createTeam() {
+        Team team = new Team();
+        team.setSlot0(null);
+        team.setSlot1(null);
+        team.setSlot2(null);
+        team.setSlot3(null);
+        team.setSlot4(null);
+        return teamRepo.save(team);
+    }
+
     // Read
     public List<Team> getAllTeams() {
         return teamRepo.findAll();
