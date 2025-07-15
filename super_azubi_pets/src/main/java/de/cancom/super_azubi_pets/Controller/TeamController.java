@@ -48,7 +48,7 @@ public class TeamController {
     }
 
     // PUT by ID
-    @PutMapping("/slot/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeamByID(@PathVariable Long id,
             @RequestBody CreateAndUpdateTeamDTO dto) {
         try {
@@ -60,7 +60,7 @@ public class TeamController {
     }
 
     // Put by ID
-    @PutMapping("/{id}")
+    @PutMapping("/slot/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeamSlot(@PathVariable Long id,
             @RequestBody TeamUpdateSlotDTO dto) {
         try {
