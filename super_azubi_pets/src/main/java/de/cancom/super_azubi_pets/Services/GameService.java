@@ -65,6 +65,7 @@ public class GameService {
         return new GameResponseDTO(game);
     }
 
+    // Fetch
     private Game fetchGame(Long id) {
         return gameRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"));
