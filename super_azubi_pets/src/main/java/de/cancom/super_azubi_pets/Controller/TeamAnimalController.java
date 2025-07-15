@@ -2,6 +2,7 @@ package de.cancom.super_azubi_pets.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +30,15 @@ public class TeamAnimalController {
 
     // Get
     @GetMapping("/{id}")
-    public ResponseEntity<TeamAnimal> getAnimal(@PathVariable Long id) {
+    public ResponseEntity<TeamAnimal> getTeamAnimalByID(@PathVariable Long id) {
         return ResponseEntity.ok(teamAnimalService.getTeamAnimalById(id));
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeamAnimalByID(@PathVariable Long id) {
+        teamAnimalService.deleteTeamAnimalByID(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

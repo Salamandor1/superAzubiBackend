@@ -10,6 +10,7 @@ import de.cancom.super_azubi_pets.DTOs.LogResponseDTO;
 import de.cancom.super_azubi_pets.EmbeddedIds.LogID;
 import de.cancom.super_azubi_pets.Models.Log;
 import de.cancom.super_azubi_pets.Repositories.LogRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class LogService {
@@ -21,7 +22,7 @@ public class LogService {
     public LogResponseDTO getLogByID(LogQueryDTO dto) {
         LogID logID = new LogID(dto.getPlayerTeamID(), dto.getNpcTeamID());
         Log log = logRepo.findById(logID)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Log nicht gefunden"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Log nicht gefunden."));
         return new LogResponseDTO(log.getLog());
     }
 
@@ -30,7 +31,7 @@ public class LogService {
         LogID logID = new LogID(dto.getPlayerTeamID(), dto.getNpcTeamID());
 
         if (logRepo.existsById(logID)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Log existiert bereits");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Log existiert bereits.");
         }
 
         Log logObject = new Log(logID, log);
@@ -39,6 +40,14 @@ public class LogService {
         LogResponseDTO logResponse = new LogResponseDTO(log);
 
         return logResponse;
+    }
+
+    // Delete
+    public void deleteLogByID(LogID id) {
+        if (logRepo.existsById(id)) {
+            logRepo.deleteById(id);
+        } else
+            throw new EntityNotFoundException("Log with ID " + id + " not found.");
     }
 
 }
