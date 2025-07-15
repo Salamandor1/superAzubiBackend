@@ -12,6 +12,7 @@ import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TeamService {
@@ -82,6 +83,14 @@ public class TeamService {
 
     public void updateAnimal(Team team, int i, CreateAndUpdateTeamAnimalDTO dto) {
         team.setSlotByIndex(teamAnimalService.updateTeamAnimalByID(team.getSlotByIndex(i).getAnimalId(), dto), i);
+    }
+
+    // Delete
+    public void deleteTeamByID(Long id) {
+        if (teamRepo.existsById(id)) {
+            teamRepo.deleteById(id);
+        } else
+            throw new EntityNotFoundException("Team with ID " + id + " not found");
     }
 
 }
