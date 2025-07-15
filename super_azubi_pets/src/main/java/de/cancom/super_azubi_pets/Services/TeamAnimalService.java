@@ -11,6 +11,7 @@ import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TeamAnimalService {
@@ -44,7 +45,7 @@ public class TeamAnimalService {
     // Read
     public TeamAnimal getTeamAnimalById(Long Id) {
         return teamAnimalRepo.findById(Id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TeamAnimal not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TeamAnimal not found."));
     }
 
     // Update
@@ -56,6 +57,14 @@ public class TeamAnimalService {
         teamAnimal.setLevel(dto.getLevel());
 
         return teamAnimalRepo.save(teamAnimal);
+    }
+
+    // Delete
+    public void deleteTeamAnimalByID(Long id) {
+        if (teamAnimalRepo.existsById(id)) {
+            teamAnimalRepo.deleteById(id);
+        } else
+            throw new EntityNotFoundException("TeamAnimal with id " + id + " not found.");
     }
 
 }
