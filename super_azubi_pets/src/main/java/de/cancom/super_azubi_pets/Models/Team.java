@@ -1,6 +1,6 @@
 package de.cancom.super_azubi_pets.Models;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -68,14 +68,26 @@ public class Team {
         return slot4;
     }
 
+    // getter for flexibility
+    public TeamAnimal getSlotByIndex(int i) {
+        switch (i) {
+            case 0:
+                return getSlot0();
+            case 1:
+                return getSlot1();
+            case 2:
+                return getSlot2();
+            case 3:
+                return getSlot3();
+            case 4:
+                return getSlot4();
+            default:
+                throw new IllegalArgumentException("Index out of bounds: possible index 0 - 4");
+        }
+    }
+
     public List<TeamAnimal> getAllAnimals() {
-        List<TeamAnimal> animals = new ArrayList<>();
-        animals.add(slot0);
-        animals.add(slot1);
-        animals.add(slot2);
-        animals.add(slot3);
-        animals.add(slot4);
-        return animals;
+        return Arrays.asList(slot0, slot1, slot2, slot3, slot4);
     }
 
     public void setSlot0(TeamAnimal slot0) {
@@ -96,5 +108,39 @@ public class Team {
 
     public void setSlot4(TeamAnimal slot4) {
         this.slot4 = slot4;
+    }
+
+    // setter for flexibility
+    public void setSlotByIndex(TeamAnimal teamAnimal, int i) {
+        switch (i) {
+            case 0:
+                setSlot0(teamAnimal);
+                break;
+            case 1:
+                setSlot1(teamAnimal);
+                break;
+            case 2:
+                setSlot2(teamAnimal);
+                break;
+            case 3:
+                setSlot3(teamAnimal);
+                break;
+            case 4:
+                setSlot4(teamAnimal);
+                break;
+            default:
+                throw new IllegalArgumentException("Index out of bounds. Possible index: 0-4.");
+        }
+    }
+
+    public void setAllAnimals(List<TeamAnimal> animals) {
+        if (animals.size() > 5) {
+            throw new IllegalArgumentException("Index out of bounds. Max count of animals: 5");
+        }
+        setSlot0(animals.get(0));
+        setSlot1(animals.get(1));
+        setSlot2(animals.get(2));
+        setSlot3(animals.get(3));
+        setSlot4(animals.get(4));
     }
 }
