@@ -39,7 +39,7 @@ public class Game {
         return wins;
     }
 
-    public int getRound() {
+    public int getRounds() {
         return rounds;
     }
 

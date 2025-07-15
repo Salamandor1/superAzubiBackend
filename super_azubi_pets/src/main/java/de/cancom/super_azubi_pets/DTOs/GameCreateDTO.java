@@ -1,13 +1,11 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-public class CreateAndUpdateGameDTO {
+public class GameCreateDTO {
     private int hearts;
     private int wins;
     private int rounds;
 
-    private CreateAndUpdateTeamDTO teamDTO;
-
-    public CreateAndUpdateGameDTO() {
+    public GameCreateDTO() {
     }
 
     public int getHearts() {
@@ -22,10 +20,6 @@ public class CreateAndUpdateGameDTO {
         return rounds;
     }
 
-    public CreateAndUpdateTeamDTO getTeamDTO() {
-        return teamDTO;
-    }
-
     public void setHearts(int hearts) {
         this.hearts = hearts;
     }
@@ -36,10 +30,6 @@ public class CreateAndUpdateGameDTO {
 
     public void setRounds(int rounds) {
         this.rounds = rounds;
-    }
-
-    public void setTeam(CreateAndUpdateTeamDTO teamDTO) {
-        this.teamDTO = teamDTO;
     }
 
 }

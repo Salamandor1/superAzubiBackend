@@ -101,7 +101,7 @@ public class FightService {
     private Team generateNpcTeam(Game game) {
         Team npcTeam = new Team();
         // set animal Count for npc team
-        int animalCount = calculateAnimalCount(game.getRound());
+        int animalCount = calculateAnimalCount(game.getRounds());
 
         // transform base animals to team animals
         List<Animal> randomAnimals = baseAnimalRepo.findRandomAnimals(animalCount);
@@ -140,9 +140,9 @@ public class FightService {
 
     private int calculateXP(Game game) {
         double lifeFactor = (double) game.getHearts() / 10.0;
-        double winFactor = (double) game.getWins() / game.getRound();
+        double winFactor = (double) game.getWins() / game.getRounds();
         double combinedFactor = (winFactor * 0.7) + (lifeFactor * 0.3);
-        int xp = game.getRound() + (int) Math.round(combinedFactor * 20.0);
+        int xp = game.getRounds() + (int) Math.round(combinedFactor * 20.0);
         return xp;
     }
 
@@ -254,7 +254,7 @@ public class FightService {
     }
 
     private void endFight(Game game) {
-        game.setRound(game.getRound() + 1);
+        game.setRound(game.getRounds() + 1);
         gameRepo.save(game);
     }
 

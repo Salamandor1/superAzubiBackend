@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameDTO;
-import de.cancom.super_azubi_pets.Models.Game;
+import de.cancom.super_azubi_pets.DTOs.GameCreateDTO;
+import de.cancom.super_azubi_pets.DTOs.GameResponseDTO;
+import de.cancom.super_azubi_pets.DTOs.GameUpdateDTO;
 import de.cancom.super_azubi_pets.Services.GameService;
 
 @RestController
@@ -26,28 +27,28 @@ public class GameController {
 
     // POST
     @PostMapping
-    public ResponseEntity<CreateAndUpdateGameDTO> createGame(@RequestBody CreateAndUpdateGameDTO dto) {
-        gameService.createGame(dto);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<GameResponseDTO> createGame(@RequestBody GameCreateDTO dto) {
+        GameResponseDTO response = gameService.createGame(dto);
+        return ResponseEntity.ok(response);
     }
 
     // GET all
     @GetMapping
-    public ResponseEntity<List<Game>> getAllGames() {
+    public ResponseEntity<List<GameResponseDTO>> getAllGames() {
         return ResponseEntity.ok(gameService.getAllGames());
     }
 
     // GET by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Game> getGameByID(@PathVariable Long id) {
+    public ResponseEntity<GameResponseDTO> getGameByID(@PathVariable Long id) {
         return ResponseEntity.ok(gameService.getGameByID(id));
     }
 
     // PUT by ID
     @PutMapping("/{id}")
-    public ResponseEntity<Game> updateGameByID(@PathVariable Long id, @RequestBody CreateAndUpdateGameDTO dto) {
+    public ResponseEntity<GameResponseDTO> updateGameByID(@PathVariable Long id, @RequestBody GameUpdateDTO dto) {
         try {
-            Game updatedGame = gameService.updateGameByID(id, dto);
+            GameResponseDTO updatedGame = gameService.updateGameByID(id, dto);
             return ResponseEntity.ok(updatedGame);
         } catch (RuntimeException e) {
             e.printStackTrace();
