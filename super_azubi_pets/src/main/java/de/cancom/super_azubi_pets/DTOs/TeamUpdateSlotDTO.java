@@ -8,11 +8,11 @@ public class TeamUpdateSlotDTO {
     }
 
     public TeamUpdateSlotDTO(CreateAndUpdateTeamAnimalDTO dto, int index) {
-        setUpdateDTO(dto);
+        setDTO(dto);
         setIndex(index);
     }
 
-    public void setUpdateDTO(CreateAndUpdateTeamAnimalDTO dto) {
+    public void setDTO(CreateAndUpdateTeamAnimalDTO dto) {
         this.dto = dto;
     }
 
@@ -20,7 +20,7 @@ public class TeamUpdateSlotDTO {
         this.index = index;
     }
 
-    public CreateAndUpdateTeamAnimalDTO getTeamAnimalDTO() {
+    public CreateAndUpdateTeamAnimalDTO getDTO() {
         return dto;
     }
 
