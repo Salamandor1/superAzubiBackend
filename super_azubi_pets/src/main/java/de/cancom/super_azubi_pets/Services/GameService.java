@@ -11,6 +11,7 @@ import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateGameDTO;
 import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class GameService {
@@ -55,6 +56,14 @@ public class GameService {
         game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeamDTO()));
 
         return gameRepo.save(game);
+    }
+
+    // Delete
+    public void deleteGameByID(Long id) {
+        if (gameRepo.existsById(id)) {
+            gameRepo.deleteById(id);
+        } else
+            throw new EntityNotFoundException("Game with ID " + id + " not found.");
     }
 
 }
