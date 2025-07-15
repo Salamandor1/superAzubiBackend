@@ -1,7 +1,5 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-import java.util.List;
-
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 
@@ -17,14 +15,11 @@ public class TeamResponseDTO {
     }
 
     public TeamResponseDTO(Team team) {
-        List<TeamAnimal> animals = team.getAllAnimals();
-        int i = 0;
-        for (TeamAnimal animal : animals) {
-            if (animal == null) {
-                continue;
-            } else {
+        setTeamID(team.getID());
+        for (int i = 0; i < 5; i++) {
+            TeamAnimal animal = team.getSlotByIndex(i);
+            if (animal != null) {
                 setSlotIDByIndex(animal.getAnimalId(), i);
-                i++;
             }
         }
     }
@@ -72,19 +67,19 @@ public class TeamResponseDTO {
         return slot0ID;
     }
 
-    public Long setSlot1ID() {
+    public Long getSlot1ID() {
         return slot1ID;
     }
 
-    public Long setSlot2ID() {
+    public Long getSlot2ID() {
         return slot2ID;
     }
 
-    public Long setSlot3ID() {
+    public Long getSlot3ID() {
         return slot3ID;
     }
 
-    public Long setSlot4ID() {
+    public Long getSlot4ID() {
         return slot4ID;
     }
 
