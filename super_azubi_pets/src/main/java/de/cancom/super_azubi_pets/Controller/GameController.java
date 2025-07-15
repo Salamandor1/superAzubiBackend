@@ -49,6 +49,7 @@ public class GameController {
             Game updatedGame = gameService.updateGameByID(id, dto);
             return ResponseEntity.ok(updatedGame);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
     }

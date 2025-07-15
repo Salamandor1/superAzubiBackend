@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
 import de.cancom.super_azubi_pets.Models.Team;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class TeamService {
 
     @Autowired
     private TeamAnimalService teamAnimalService;
+
+    @Autowired
+    private AnimalService baseAnimalService;
 
     // Create
     public Team createTeam(CreateAndUpdateTeamDTO dto) {
@@ -46,15 +51,37 @@ public class TeamService {
     }
 
     // Update
-    public Team updateTeamByID(Long id, CreateAndUpdateTeamDTO dto) {
+    public Team updateTeamByID(Long id, CreateAndUpdateTeamDTO dtoTeam) {
         Team team = getTeamByID(id);
-        team.setSlot0(teamAnimalService.updateTeamAnimalByID(team.getSlot0().getAnimalId(), dto.getSlot0()));
-        team.setSlot1(teamAnimalService.updateTeamAnimalByID(team.getSlot1().getAnimalId(), dto.getSlot1()));
-        team.setSlot2(teamAnimalService.updateTeamAnimalByID(team.getSlot2().getAnimalId(), dto.getSlot2()));
-        team.setSlot3(teamAnimalService.updateTeamAnimalByID(team.getSlot3().getAnimalId(), dto.getSlot3()));
-        team.setSlot4(teamAnimalService.updateTeamAnimalByID(team.getSlot4().getAnimalId(), dto.getSlot4()));
-
+        for (int i = 0; i < 5; i++) {
+            CreateAndUpdateTeamAnimalDTO dtoAnimal = dtoTeam.getSlotByIndex(i);
+            TeamAnimal currentAnimal = team.getSlotByIndex(i);
+            if (dtoAnimal == null) {
+                removeAnimal(team, i);
+            } else if (currentAnimal == null) {
+                createAnimal(team, i, dtoAnimal);
+            } else {
+                updateAnimal(team, i, dtoAnimal);
+            }
+        }
         return teamRepo.save(team);
+    }
+
+    public void removeAnimal(Team team, int i) {
+        team.setSlotByIndex(null, i);
+    }
+
+    public void createAnimal(Team team, int i, CreateAndUpdateTeamAnimalDTO dto) {
+        TeamAnimal animal = new TeamAnimal();
+        animal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
+        animal.setAttack(dto.getAttack());
+        animal.setHealth(dto.getHealth());
+        animal.setLevel(dto.getLevel());
+        team.setSlotByIndex(animal, i);
+    }
+
+    public void updateAnimal(Team team, int i, CreateAndUpdateTeamAnimalDTO dto) {
+        team.setSlotByIndex(teamAnimalService.updateTeamAnimalByID(team.getSlotByIndex(i).getAnimalId(), dto), i);
     }
 
 }
