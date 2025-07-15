@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamResponseDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
@@ -101,6 +103,24 @@ public class TeamService {
             teamRepo.deleteById(id);
         } else
             throw new EntityNotFoundException("Team with ID " + id + " not found");
+    }
+
+    // Convert to DTO
+    public TeamResponseDTO convertToDTO(Team team) {
+        return new TeamResponseDTO(team);
+    }
+
+    public List<TeamResponseDTO> convertToDTO(List<Team> teams) {
+        List<TeamResponseDTO> response = new ArrayList<>();
+        for (Team team : teams) {
+            response.add(convertToDTO(team));
+        }
+        return response;
+    }
+
+    // Save method for external use
+    public void save(Team team) {
+        teamRepo.save(team);
     }
 
 }
