@@ -63,4 +63,11 @@ public class GameController {
         return ResponseEntity.noContent().build();
     }
 
+    // DELETE all
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllGames() {
+        gameService.deleteAllGames();
+        return ResponseEntity.noContent().build();
+    }
+
 }

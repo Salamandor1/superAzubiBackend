@@ -80,4 +80,9 @@ public class GameService {
             throw new EntityNotFoundException("Game with ID " + id + " not found.");
     }
 
+    // Delete
+    public void deleteAllGames() {
+        gameRepo.deleteAll();
+    }
+
 }
