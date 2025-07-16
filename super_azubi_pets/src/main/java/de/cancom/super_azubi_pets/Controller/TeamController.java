@@ -59,7 +59,7 @@ public class TeamController {
         }
     }
 
-    // Put by ID
+    // PUT slot by ID
     @PutMapping("/slot/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeamSlot(@PathVariable Long id,
             @RequestBody TeamUpdateSlotDTO dto) {
@@ -78,5 +78,14 @@ public class TeamController {
     public ResponseEntity<Void> deleteTeamByID(@PathVariable Long id) {
         teamService.deleteTeamByID(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // DELETE slot by ID
+    @DeleteMapping("slot/{id}/{slot}")
+    public ResponseEntity<TeamResponseDTO> deleteTeamSlot(@PathVariable Long id, @PathVariable int slot) {
+        Team team = teamService.getTeamByID(id);
+        teamService.removeAnimal(team, slot);
+        teamService.save(team);
+        return ResponseEntity.ok(teamService.convertToDTO(team));
     }
 }
