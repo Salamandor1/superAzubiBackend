@@ -28,8 +28,8 @@ public class LogController {
 
     // DELETE log by id
     @DeleteMapping("{playerTeamID}/{npcTeamID}")
-    public ResponseEntity<Void> deleteLogByID(@PathVariable Long playerTeamID, @PathVariable Long npcTeamID) {
+    public ResponseEntity<String> deleteLogByID(@PathVariable Long playerTeamID, @PathVariable Long npcTeamID) {
         logService.deleteLogByID(new LogID(playerTeamID, npcTeamID));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Log with ID " + new LogID(playerTeamID, npcTeamID) + " was deleted.");
     }
 }

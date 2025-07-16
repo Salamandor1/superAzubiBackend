@@ -36,9 +36,9 @@ public class TeamAnimalController {
 
     // Delete
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTeamAnimalByID(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTeamAnimalByID(@PathVariable Long id) {
         teamAnimalService.deleteTeamAnimalByID(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("TeamAnimal with ID " + id + " was deleted.");
     }
 
 }
