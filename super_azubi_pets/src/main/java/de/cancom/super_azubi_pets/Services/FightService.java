@@ -139,11 +139,21 @@ public class FightService {
     }
 
     private int calculateXP(Game game) {
-        double lifeFactor = (double) game.getHearts() / 10.0;
-        double winFactor = (double) game.getWins() / game.getRounds();
-        double combinedFactor = (winFactor * 0.7) + (lifeFactor * 0.3);
-        int xp = game.getRounds() + (int) Math.round(combinedFactor * 20.0);
-        return xp;
+        // check for 0
+        int countedRounds = game.getRounds() - 1;
+        if (countedRounds <= 0) {
+            return 0;
+        }
+
+        // base XP
+        int baseXP = 2 * countedRounds;
+
+        // bonus XP
+        int wins = game.getWins();
+        double winFactor = (double) wins / countedRounds;
+        int bonusXP = (int) (Math.round(countedRounds * winFactor));
+
+        return (baseXP + bonusXP);
     }
 
     private void levelUpTeam(List<TeamAnimal> animals, int xp) {

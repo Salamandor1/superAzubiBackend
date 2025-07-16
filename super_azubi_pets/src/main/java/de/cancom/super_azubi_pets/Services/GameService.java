@@ -29,8 +29,8 @@ public class GameService {
     public GameResponseDTO createGame(GameCreateDTO dto) {
         Game newGame = new Game();
         newGame.setHearts(dto.getHearts());
-        newGame.setRound(dto.getRounds());
-        newGame.setWins(dto.getWins());
+        newGame.setRound(1);
+        newGame.setWins(0);
 
         // create GameTeam via GameTeamService from DTO
         Team team = teamService.createTeam();
