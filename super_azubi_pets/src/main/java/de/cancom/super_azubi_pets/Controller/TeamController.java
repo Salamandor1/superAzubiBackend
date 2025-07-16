@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamResponseDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamUpdateSlotDTO;
 import de.cancom.super_azubi_pets.Models.Team;
@@ -28,7 +28,7 @@ public class TeamController {
 
     // POST
     @PostMapping
-    public ResponseEntity<TeamResponseDTO> createTeam(@RequestBody CreateAndUpdateTeamDTO dto) {
+    public ResponseEntity<TeamResponseDTO> createTeam(@RequestBody TeamCreateAndUpdateDTO dto) {
         Team team = teamService.createTeam(dto);
         return ResponseEntity.ok(teamService.convertToDTO(team));
     }
@@ -50,7 +50,7 @@ public class TeamController {
     // PUT by ID
     @PutMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> updateTeamByID(@PathVariable Long id,
-            @RequestBody CreateAndUpdateTeamDTO dto) {
+            @RequestBody TeamCreateAndUpdateDTO dto) {
         try {
             Team updatedTeam = teamService.updateTeamByID(id, dto);
             return ResponseEntity.ok(teamService.convertToDTO(updatedTeam));

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamResponseDTO;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
@@ -29,7 +29,7 @@ public class TeamService {
     private AnimalService baseAnimalService;
 
     // Create
-    public Team createTeam(CreateAndUpdateTeamDTO dto) {
+    public Team createTeam(TeamCreateAndUpdateDTO dto) {
         Team team = new Team();
         // Create TeamAnimals from dto via service
 
@@ -64,7 +64,7 @@ public class TeamService {
     }
 
     // Update
-    public Team updateTeamByID(Long id, CreateAndUpdateTeamDTO dtoTeam) {
+    public Team updateTeamByID(Long id, TeamCreateAndUpdateDTO dtoTeam) {
         Team team = getTeamByID(id);
         for (int i = 0; i < 5; i++) {
             CreateAndUpdateTeamAnimalDTO dtoAnimal = dtoTeam.getSlotByIndex(i);
