@@ -60,7 +60,8 @@ public class GameService {
     // Update
     public GameResponseDTO updateGameByID(Long id, GameUpdateDTO dto) {
         Game game = fetchGame(id);
-        game.setTeam(teamService.updateTeamByID(game.getTeam().getID(), dto.getTeamDTO()));
+        Team team = teamService.createTeam(dto.getTeamDTO());
+        game.setTeam(team);
         gameRepo.save(game);
         return new GameResponseDTO(game);
     }
@@ -77,6 +78,11 @@ public class GameService {
             gameRepo.deleteById(id);
         } else
             throw new EntityNotFoundException("Game with ID " + id + " not found.");
+    }
+
+    // Delete
+    public void deleteAllGames() {
+        gameRepo.deleteAll();
     }
 
 }

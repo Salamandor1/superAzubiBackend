@@ -58,9 +58,16 @@ public class GameController {
 
     // DELETE by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
+    public ResponseEntity<String> deleteGame(@PathVariable Long id) {
         gameService.deleteGameByID(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Game with ID " + id + " was deleted.");
+    }
+
+    // DELETE all
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllGames() {
+        gameService.deleteAllGames();
+        return ResponseEntity.ok("All Games were deleted.");
     }
 
 }

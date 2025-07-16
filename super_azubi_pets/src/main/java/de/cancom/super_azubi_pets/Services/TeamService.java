@@ -94,7 +94,12 @@ public class TeamService {
     }
 
     public void updateAnimal(Team team, int i, TeamAnimalCreateAndUpdateDTO dto) {
-        team.setSlotByIndex(teamAnimalService.updateTeamAnimalByID(team.getSlotByIndex(i).getAnimalId(), dto), i);
+        TeamAnimal newAnimal = new TeamAnimal();
+        newAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
+        newAnimal.setHealth(dto.getHealth());
+        newAnimal.setAttack(dto.getAttack());
+        newAnimal.setLevel(dto.getLevel());
+        team.setSlotByIndex(newAnimal, i);
     }
 
     // Delete
