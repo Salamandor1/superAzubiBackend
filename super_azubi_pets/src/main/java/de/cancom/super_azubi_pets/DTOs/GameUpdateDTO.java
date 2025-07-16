@@ -2,16 +2,16 @@ package de.cancom.super_azubi_pets.DTOs;
 
 public class GameUpdateDTO {
 
-    private CreateAndUpdateTeamDTO teamDTO;
+    private TeamCreateAndUpdateDTO teamDTO;
 
     public GameUpdateDTO() {
     }
 
-    public void setTeamDTO(CreateAndUpdateTeamDTO teamDTO) {
+    public void setTeamDTO(TeamCreateAndUpdateDTO teamDTO) {
         this.teamDTO = teamDTO;
     }
 
-    public CreateAndUpdateTeamDTO getTeamDTO() {
+    public TeamCreateAndUpdateDTO getTeamDTO() {
         return teamDTO;
     }
 
