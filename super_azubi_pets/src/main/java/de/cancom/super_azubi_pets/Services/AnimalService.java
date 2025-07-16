@@ -17,7 +17,7 @@ public class AnimalService {
     @Autowired
     private AnimalRepository baseAnimalRepo;
 
-    // GET
+    // GET by ID
     public Animal getAnimalByID(String nameID) {
         return baseAnimalRepo.findById(nameID)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal not found"));
@@ -29,6 +29,11 @@ public class AnimalService {
             throw new IllegalArgumentException("Must be at least 1, can't be more than 5.");
         }
         return baseAnimalRepo.findRandomAnimals(count);
+    }
+
+    // GET all
+    public List<Animal> getAllAnimals() {
+        return baseAnimalRepo.findAll();
     }
 
     // TRANSFORM to TeamAnimal
