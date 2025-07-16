@@ -1,18 +1,18 @@
 package de.cancom.super_azubi_pets.DTOs;
 
 public class TeamUpdateSlotDTO {
-    private CreateAndUpdateTeamAnimalDTO dto;
+    private TeamAnimalCreateAndUpdateDTO dto;
     private int index;
 
     public TeamUpdateSlotDTO() {
     }
 
-    public TeamUpdateSlotDTO(CreateAndUpdateTeamAnimalDTO dto, int index) {
+    public TeamUpdateSlotDTO(TeamAnimalCreateAndUpdateDTO dto, int index) {
         setDTO(dto);
         setIndex(index);
     }
 
-    public void setDTO(CreateAndUpdateTeamAnimalDTO dto) {
+    public void setDTO(TeamAnimalCreateAndUpdateDTO dto) {
         this.dto = dto;
     }
 
@@ -20,7 +20,7 @@ public class TeamUpdateSlotDTO {
         this.index = index;
     }
 
-    public CreateAndUpdateTeamAnimalDTO getDTO() {
+    public TeamAnimalCreateAndUpdateDTO getDTO() {
         return dto;
     }
 

@@ -1,13 +1,13 @@
 package de.cancom.super_azubi_pets.DTOs;
 
-public class CreateAndUpdateTeamAnimalDTO {
+public class TeamAnimalCreateAndUpdateDTO {
 
     private String baseAnimalName;
     private int health;
     private int attack;
     private int level;
 
-    public CreateAndUpdateTeamAnimalDTO() {
+    public TeamAnimalCreateAndUpdateDTO() {
     }
 
     public void setBaseAnimalName(String baseAnimal) {

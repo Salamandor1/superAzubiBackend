@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Services.TeamAnimalService;
 
@@ -23,7 +23,7 @@ public class TeamAnimalController {
 
     // Create
     @PostMapping
-    public ResponseEntity<TeamAnimal> createTeamAnimal(@RequestBody CreateAndUpdateTeamAnimalDTO dto) {
+    public ResponseEntity<TeamAnimal> createTeamAnimal(@RequestBody TeamAnimalCreateAndUpdateDTO dto) {
         TeamAnimal newTeamAnimal = teamAnimalService.createTeamAnimal(dto);
         return ResponseEntity.ok(newTeamAnimal);
     }

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
@@ -23,7 +23,7 @@ public class TeamAnimalService {
     private AnimalService baseAnimalService;
 
     // Create
-    public TeamAnimal createTeamAnimal(CreateAndUpdateTeamAnimalDTO dto) {
+    public TeamAnimal createTeamAnimal(TeamAnimalCreateAndUpdateDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class TeamAnimalService {
     }
 
     // Update
-    public TeamAnimal updateTeamAnimalByID(Long id, CreateAndUpdateTeamAnimalDTO dto) {
+    public TeamAnimal updateTeamAnimalByID(Long id, TeamAnimalCreateAndUpdateDTO dto) {
         TeamAnimal teamAnimal = getTeamAnimalById(id);
         teamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
         teamAnimal.setAttack(dto.getAttack());
