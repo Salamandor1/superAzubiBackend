@@ -18,7 +18,7 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
-    // get
+    // GET by ID
     @GetMapping("/{name}")
     public ResponseEntity<?> getAninmal(@PathVariable String name) {
         try {
@@ -28,12 +28,23 @@ public class AnimalController {
         }
     }
 
+    // GET random amount
     @GetMapping("/random/{count}")
     public ResponseEntity<?> getRandomAnimals(@PathVariable int count) {
         try {
             return new ResponseEntity<>(animalService.getRandomAnimals(count), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Konnte keine zufälligen Tiere laden", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // GET all
+    @GetMapping
+    public ResponseEntity<?> getAllAnimals() {
+        try {
+            return new ResponseEntity<>(animalService.getAllAnimals(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Tiere konnten nicht geladen werden", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
