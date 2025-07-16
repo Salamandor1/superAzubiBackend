@@ -93,8 +93,8 @@ public class TeamAnimal {
             return;
         }
         this.level++;
-        this.health += 2;
-        this.attack += 2;
+        this.health += 1;
+        this.attack += 1;
     }
 
     public Long getAnimalId() {
