@@ -1,32 +1,41 @@
 package de.cancom.super_azubi_pets.DTOs;
 
+import de.cancom.super_azubi_pets.Models.Animal;
+
 /**
  * DTO for creating and updating an Animal object.
  * This class contains the necessary fields to create or update an animal's
  * attributes.
  */
-public class AnimalCreateAndUpdateDTO {
+public class AnimalResponseDTO {
 
     private String animalName;
-    private int hearts;
+    private int health;
     private int attack;
-    private AnimalCreateAndUpdateDTO ability;
+    private String ability;
 
-    public AnimalCreateAndUpdateDTO() {
+    public AnimalResponseDTO() {
+    }
+
+    public AnimalResponseDTO(Animal animal) {
+        setAnimalName(animal.getName());
+        setHealth(animal.getHealth());
+        setAttack(animal.getAttack());
+        setAbility(animal.getAbility());
     }
 
     /**
      * Constructor to create an Animal object with specific attributes.
      * 
      * @param animalName Name of the animal.
-     * @param hearts     Health points of the animal.
+     * @param health     Health points of the animal.
      * @param attack     Attack points of the animal.
      * @param ability    Special ability of the animal.
      */
-    public AnimalCreateAndUpdateDTO(String animalName, int hearts, int attack,
-            AnimalCreateAndUpdateDTO ability) {
+    public AnimalResponseDTO(String animalName, int health, int attack,
+            String ability) {
         this.animalName = animalName;
-        this.hearts = hearts;
+        this.health = health;
         this.attack = attack;
         this.ability = ability;
     }
@@ -39,12 +48,12 @@ public class AnimalCreateAndUpdateDTO {
         this.animalName = animalName;
     }
 
-    public int getHearts() {
-        return hearts;
+    public int getHealth() {
+        return health;
     }
 
-    public void setHearts(int hearts) {
-        this.hearts = hearts;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public int getAttack() {
@@ -55,11 +64,11 @@ public class AnimalCreateAndUpdateDTO {
         this.attack = attack;
     }
 
-    public AnimalCreateAndUpdateDTO getAbility() {
+    public String getAbility() {
         return ability;
     }
 
-    public void setAbility(AnimalCreateAndUpdateDTO ability) {
+    public void setAbility(String ability) {
         this.ability = ability;
     }
 
