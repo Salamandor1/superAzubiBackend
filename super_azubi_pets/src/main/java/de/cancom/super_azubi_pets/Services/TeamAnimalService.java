@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamAnimalResponseDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalUpdateDTO;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
@@ -51,14 +52,11 @@ public class TeamAnimalService {
     }
 
     // Update
-    public TeamAnimal updateTeamAnimalByID(Long id, TeamAnimalCreateDTO dto) {
-        TeamAnimal teamAnimal = getTeamAnimalById(id);
-        teamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
-        teamAnimal.setAttack(dto.getAttack());
-        teamAnimal.setHealth(dto.getHealth());
-        teamAnimal.setLevel(dto.getLevel());
-
-        return teamAnimalRepo.save(teamAnimal);
+    public TeamAnimal updateTeamAnimal(TeamAnimal animal, TeamAnimalUpdateDTO dto) {
+        animal.setAttack(dto.getAttack());
+        animal.setHealth(dto.getHealth());
+        animal.setLevel(dto.getLevel());
+        return teamAnimalRepo.save(animal);
     }
 
     // Delete

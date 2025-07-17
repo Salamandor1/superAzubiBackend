@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamAnimalResponseDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalUpdateDTO;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Services.TeamAnimalService;
 
@@ -43,6 +44,15 @@ public class TeamAnimalController {
     public ResponseEntity<List<TeamAnimalResponseDTO>> getAllTeamAnimals() {
         List<TeamAnimal> teamAnimals = teamAnimalService.getAllTeamAnimals();
         return ResponseEntity.ok(teamAnimalService.convertToDTO(teamAnimals));
+    }
+
+    // UPDATE by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamAnimalResponseDTO> updateTeamAnimalByID(@PathVariable Long id,
+            @RequestBody TeamAnimalUpdateDTO dto) {
+        TeamAnimal teamAnimal = teamAnimalService.getTeamAnimalById(id);
+        teamAnimalService.updateTeamAnimal(teamAnimal, dto);
+        return ResponseEntity.ok(new TeamAnimalResponseDTO(teamAnimal));
     }
 
     // DELETE by ID
