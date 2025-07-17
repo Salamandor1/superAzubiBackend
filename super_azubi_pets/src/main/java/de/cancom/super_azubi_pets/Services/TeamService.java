@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateAndUpdateDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamResponseDTO;
 import de.cancom.super_azubi_pets.Models.Team;
@@ -67,14 +67,11 @@ public class TeamService {
     public Team updateTeamByID(Long id, TeamCreateAndUpdateDTO dtoTeam) {
         Team team = getTeamByID(id);
         for (int i = 0; i < 5; i++) {
-            TeamAnimalCreateAndUpdateDTO dtoAnimal = dtoTeam.getSlotByIndex(i);
-            TeamAnimal currentAnimal = team.getSlotByIndex(i);
+            TeamAnimalCreateDTO dtoAnimal = dtoTeam.getSlotByIndex(i);
             if (dtoAnimal == null) {
                 removeAnimal(team, i);
-            } else if (currentAnimal == null) {
-                createAnimal(team, i, dtoAnimal);
             } else {
-                updateAnimal(team, i, dtoAnimal);
+                createAnimal(team, i, dtoAnimal);
             }
         }
         return teamRepo.save(team);
@@ -84,22 +81,13 @@ public class TeamService {
         team.setSlotByIndex(null, i);
     }
 
-    public void createAnimal(Team team, int i, TeamAnimalCreateAndUpdateDTO dto) {
+    public void createAnimal(Team team, int i, TeamAnimalCreateDTO dto) {
         TeamAnimal animal = new TeamAnimal();
         animal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
         animal.setAttack(dto.getAttack());
         animal.setHealth(dto.getHealth());
         animal.setLevel(dto.getLevel());
         team.setSlotByIndex(animal, i);
-    }
-
-    public void updateAnimal(Team team, int i, TeamAnimalCreateAndUpdateDTO dto) {
-        TeamAnimal newAnimal = new TeamAnimal();
-        newAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
-        newAnimal.setHealth(dto.getHealth());
-        newAnimal.setAttack(dto.getAttack());
-        newAnimal.setLevel(dto.getLevel());
-        team.setSlotByIndex(newAnimal, i);
     }
 
     // Delete

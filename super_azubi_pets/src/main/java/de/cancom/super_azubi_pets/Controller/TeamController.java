@@ -65,7 +65,7 @@ public class TeamController {
             @RequestBody TeamUpdateSlotDTO dto) {
         try {
             Team team = teamService.getTeamByID(id);
-            teamService.updateAnimal(team, dto.getIndex(), dto.getDTO());
+            teamService.createAnimal(team, dto.getIndex(), dto.getDTO());
             teamService.save(team);
             return ResponseEntity.ok(teamService.convertToDTO(team));
         } catch (RuntimeException e) {
