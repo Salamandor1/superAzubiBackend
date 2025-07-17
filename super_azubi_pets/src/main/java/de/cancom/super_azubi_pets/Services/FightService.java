@@ -58,10 +58,7 @@ public class FightService {
         removeDeadAnimals(playerTeam, enemyTeam);
 
         while (true) {
-            TeamAnimal playerAnimal = playerTeam.getFirst();
-            TeamAnimal enemyAnimal = enemyTeam.getFirst();
-            log += "--------------- Runde " + round + " ---------------\n";
-            log += attack(playerAnimal, enemyAnimal) + "\n";
+
             removeDeadAnimals(fight.getPlayerTeamAnimals(), fight.getEnemyTeamAnimals());
             if (isTied(playerTeam, enemyTeam)) {
                 log += "Der Kampf ging unentschieden aus! Beide Teams haben keine kampffähigen Tiere mehr.";
@@ -81,6 +78,10 @@ public class FightService {
                 log += "Der Kampf ist unentschieden, da nach 20 Runden kein Gewinner ermittelt werden konnte.";
                 break;
             }
+            log += "--------------- Runde " + round + " ---------------\n";
+            TeamAnimal playerAnimal = playerTeam.getFirst();
+            TeamAnimal enemyAnimal = enemyTeam.getFirst();
+            log += attack(playerAnimal, enemyAnimal) + "\n";
             round++;
         } // while
 
