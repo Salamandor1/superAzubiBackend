@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
-import de.cancom.super_azubi_pets.DTOs.TeamAnimalUpdateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamCreateAndUpdateDTO;
 import de.cancom.super_azubi_pets.DTOs.TeamResponseDTO;
 import de.cancom.super_azubi_pets.Models.Team;
@@ -69,13 +68,10 @@ public class TeamService {
         Team team = getTeamByID(id);
         for (int i = 0; i < 5; i++) {
             TeamAnimalCreateDTO dtoAnimal = dtoTeam.getSlotByIndex(i);
-            TeamAnimal currentAnimal = team.getSlotByIndex(i);
             if (dtoAnimal == null) {
                 removeAnimal(team, i);
-            } else if (currentAnimal == null) {
-                createAnimal(team, i, dtoAnimal);
             } else {
-                updateAnimal(team, i, dtoAnimal);
+                createAnimal(team, i, dtoAnimal);
             }
         }
         return teamRepo.save(team);
@@ -92,12 +88,6 @@ public class TeamService {
         animal.setHealth(dto.getHealth());
         animal.setLevel(dto.getLevel());
         team.setSlotByIndex(animal, i);
-    }
-
-    public void updateAnimal(Team team, int i, TeamAnimalCreateDTO dto) {
-        TeamAnimal animal = team.getSlotByIndex(i);
-        TeamAnimalUpdateDTO animalDTO = new TeamAnimalUpdateDTO(dto);
-        teamAnimalService.updateTeamAnimal(animal, animalDTO);
     }
 
     // Delete

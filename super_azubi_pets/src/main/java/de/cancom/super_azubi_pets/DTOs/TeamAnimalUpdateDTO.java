@@ -9,12 +9,6 @@ public class TeamAnimalUpdateDTO {
     public TeamAnimalUpdateDTO() {
     }
 
-    public TeamAnimalUpdateDTO(TeamAnimalCreateDTO dto) {
-        setHealth(dto.getHealth());
-        setAttack(dto.getAttack());
-        setLevel(dto.getLevel());
-    }
-
     public void setHealth(int health) {
         this.health = health;
     }
