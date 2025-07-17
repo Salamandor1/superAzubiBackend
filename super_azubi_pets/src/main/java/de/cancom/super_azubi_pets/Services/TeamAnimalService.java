@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,22 @@ public class TeamAnimalService {
             throw new EntityNotFoundException("TeamAnimal with id " + id + " not found.");
     }
 
+    // Delete
+    public void deleteAllTeamAnimal() {
+        teamAnimalRepo.deleteAll();
+    }
+
     // Convert
     public TeamAnimalResponseDTO convertToDTO(TeamAnimal teamAnimal) {
         return new TeamAnimalResponseDTO(teamAnimal);
+    }
+
+    public List<TeamAnimalResponseDTO> convertToDTO(List<TeamAnimal> teamAnimals) {
+        List<TeamAnimalResponseDTO> response = new ArrayList<>();
+        for (TeamAnimal teamanimal : teamAnimals) {
+            response.add(convertToDTO(teamanimal));
+        }
+        return response;
     }
 
 }
