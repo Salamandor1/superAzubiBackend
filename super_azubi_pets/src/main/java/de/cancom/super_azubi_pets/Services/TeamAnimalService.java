@@ -53,6 +53,8 @@ public class TeamAnimalService {
 
     // Update
     public TeamAnimal updateTeamAnimal(TeamAnimal animal, TeamAnimalUpdateDTO dto) {
+        Animal baseAnimal = baseAnimalService.getAnimalByID(dto.getBaseAnimalName());
+        animal.setBaseAnimal(baseAnimal);
         animal.setAttack(dto.getAttack());
         animal.setHealth(dto.getHealth());
         animal.setLevel(dto.getLevel());
