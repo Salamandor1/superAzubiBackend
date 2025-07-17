@@ -56,6 +56,12 @@ public class GameController {
         }
     }
 
+    // PUT team by ID
+    @PutMapping("{gameID}/{teamID}")
+    public ResponseEntity<GameResponseDTO> updateTeamByID(@PathVariable Long gameID, @PathVariable Long teamID) {
+        return ResponseEntity.ok(gameService.updateTeamByID(gameID, teamID));
+    }
+
     // DELETE by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGame(@PathVariable Long id) {

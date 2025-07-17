@@ -66,6 +66,15 @@ public class GameService {
         return new GameResponseDTO(game);
     }
 
+    // Update
+    public GameResponseDTO updateTeamByID(Long gameID, Long teamID) {
+        Game game = fetchGame(gameID);
+        Team team = teamService.getTeamByID(teamID);
+        game.setTeam(team);
+        gameRepo.save(game);
+        return new GameResponseDTO(game);
+    }
+
     // Fetch
     private Game fetchGame(Long id) {
         return gameRepo.findById(id)
