@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateAndUpdateDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalResponseDTO;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
@@ -23,7 +24,7 @@ public class TeamAnimalService {
     private AnimalService baseAnimalService;
 
     // Create
-    public TeamAnimal createTeamAnimal(TeamAnimalCreateAndUpdateDTO dto) {
+    public TeamAnimal createTeamAnimal(TeamAnimalCreateDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -49,7 +50,7 @@ public class TeamAnimalService {
     }
 
     // Update
-    public TeamAnimal updateTeamAnimalByID(Long id, TeamAnimalCreateAndUpdateDTO dto) {
+    public TeamAnimal updateTeamAnimalByID(Long id, TeamAnimalCreateDTO dto) {
         TeamAnimal teamAnimal = getTeamAnimalById(id);
         teamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
         teamAnimal.setAttack(dto.getAttack());
@@ -65,6 +66,11 @@ public class TeamAnimalService {
             teamAnimalRepo.deleteById(id);
         } else
             throw new EntityNotFoundException("TeamAnimal with id " + id + " not found.");
+    }
+
+    // Convert
+    public TeamAnimalResponseDTO convertToDTO(TeamAnimal teamAnimal) {
+        return new TeamAnimalResponseDTO(teamAnimal);
     }
 
 }
