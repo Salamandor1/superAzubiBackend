@@ -52,6 +52,10 @@ public class TeamAnimal {
         this.level = original.getLevel();
     }
 
+    public void setTeamAnimalID(Long id) {
+        this.team_animal_id = id;
+    }
+
     public void setBaseAnimal(Animal baseAnimal) {
         this.baseAnimal = baseAnimal;
     }
@@ -93,8 +97,8 @@ public class TeamAnimal {
             return;
         }
         this.level++;
-        this.health += 2;
-        this.attack += 2;
+        this.health += 1;
+        this.attack += 1;
     }
 
     public Long getAnimalId() {

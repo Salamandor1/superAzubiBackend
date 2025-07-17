@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import de.cancom.super_azubi_pets.DTOs.CreateAndUpdateTeamAnimalDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalCreateDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalResponseDTO;
+import de.cancom.super_azubi_pets.DTOs.TeamAnimalUpdateDTO;
+import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.TeamAnimalRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TeamAnimalService {
@@ -21,12 +26,13 @@ public class TeamAnimalService {
     private AnimalService baseAnimalService;
 
     // Create
-    public TeamAnimal createTeamAnimal(CreateAndUpdateTeamAnimalDTO dto) {
+    public TeamAnimal createTeamAnimal(TeamAnimalCreateDTO dto) {
         if (dto == null) {
             return null;
         }
         TeamAnimal newTeamAnimal = new TeamAnimal();
-        newTeamAnimal.setBaseAnimal(baseAnimalService.getAnimalByID(dto.getBaseAnimalName()));
+        Animal baseAnimal = baseAnimalService.getAnimalByID(dto.getBaseAnimalName());
+        newTeamAnimal.setBaseAnimal(baseAnimal);
         newTeamAnimal.setAttack(dto.getAttack());
         newTeamAnimal.setHealth(dto.getHealth());
         newTeamAnimal.setLevel(dto.getLevel());
@@ -42,17 +48,43 @@ public class TeamAnimalService {
     // Read
     public TeamAnimal getTeamAnimalById(Long Id) {
         return teamAnimalRepo.findById(Id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TeamAnimal not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "TeamAnimal not found."));
     }
 
     // Update
-    public TeamAnimal updateTeamAnimalByID(Long id, CreateAndUpdateTeamAnimalDTO dto) {
-        TeamAnimal teamAnimal = getTeamAnimalById(id);
-        teamAnimal.setAttack(dto.getAttack());
-        teamAnimal.setHealth(dto.getHealth());
-        teamAnimal.setLevel(dto.getLevel());
+    public TeamAnimal updateTeamAnimal(TeamAnimal animal, TeamAnimalUpdateDTO dto) {
+        Animal baseAnimal = baseAnimalService.getAnimalByID(dto.getBaseAnimalName());
+        animal.setBaseAnimal(baseAnimal);
+        animal.setAttack(dto.getAttack());
+        animal.setHealth(dto.getHealth());
+        animal.setLevel(dto.getLevel());
+        return teamAnimalRepo.save(animal);
+    }
 
-        return teamAnimalRepo.save(teamAnimal);
+    // Delete
+    public void deleteTeamAnimalByID(Long id) {
+        if (teamAnimalRepo.existsById(id)) {
+            teamAnimalRepo.deleteById(id);
+        } else
+            throw new EntityNotFoundException("TeamAnimal with id " + id + " not found.");
+    }
+
+    // Delete
+    public void deleteAllTeamAnimal() {
+        teamAnimalRepo.deleteAll();
+    }
+
+    // Convert
+    public TeamAnimalResponseDTO convertToDTO(TeamAnimal teamAnimal) {
+        return new TeamAnimalResponseDTO(teamAnimal);
+    }
+
+    public List<TeamAnimalResponseDTO> convertToDTO(List<TeamAnimal> teamAnimals) {
+        List<TeamAnimalResponseDTO> response = new ArrayList<>();
+        for (TeamAnimal teamanimal : teamAnimals) {
+            response.add(convertToDTO(teamanimal));
+        }
+        return response;
     }
 
 }

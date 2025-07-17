@@ -5,14 +5,14 @@ package de.cancom.super_azubi_pets.DTOs;
  * This class contains the necessary fields to create or update an animal's
  * attributes.
  */
-public class CreateAndUpdateAnimalDTO {
+public class AnimalCreateAndUpdateDTO {
 
     private String animalName;
     private int hearts;
     private int attack;
-    private CreateAndUpdateAnimalDTO ability;
+    private AnimalCreateAndUpdateDTO ability;
 
-    public CreateAndUpdateAnimalDTO() {
+    public AnimalCreateAndUpdateDTO() {
     }
 
     /**
@@ -23,8 +23,8 @@ public class CreateAndUpdateAnimalDTO {
      * @param attack     Attack points of the animal.
      * @param ability    Special ability of the animal.
      */
-    public CreateAndUpdateAnimalDTO(String animalName, int hearts, int attack,
-            CreateAndUpdateAnimalDTO ability) {
+    public AnimalCreateAndUpdateDTO(String animalName, int hearts, int attack,
+            AnimalCreateAndUpdateDTO ability) {
         this.animalName = animalName;
         this.hearts = hearts;
         this.attack = attack;
@@ -55,11 +55,11 @@ public class CreateAndUpdateAnimalDTO {
         this.attack = attack;
     }
 
-    public CreateAndUpdateAnimalDTO getAbility() {
+    public AnimalCreateAndUpdateDTO getAbility() {
         return ability;
     }
 
-    public void setAbility(CreateAndUpdateAnimalDTO ability) {
+    public void setAbility(AnimalCreateAndUpdateDTO ability) {
         this.ability = ability;
     }
 

@@ -27,16 +27,6 @@ public class Game {
     public Game() {
     }
 
-    // Constructor for a non empty Game-object with standardized values
-    public static Game createGame() {
-        Game game = new Game();
-        game.hearts = 10;
-        game.wins = 0;
-        game.rounds = 1;
-        game.team = new Team();
-        return game;
-    }
-
     public Long getGameID() {
         return game_ID;
     }
@@ -49,7 +39,7 @@ public class Game {
         return wins;
     }
 
-    public int getRound() {
+    public int getRounds() {
         return rounds;
     }
 
@@ -59,6 +49,13 @@ public class Game {
 
     public void setHearts(int hearts) {
         this.hearts = hearts;
+        if (this.hearts < 0) {
+            this.hearts = 0;
+        }
+        // max value
+        if (this.hearts > 15) {
+            this.hearts = 15;
+        }
     }
 
     public void setWins(int wins) {
@@ -67,6 +64,10 @@ public class Game {
 
     public void setRound(int rounds) {
         this.rounds = rounds;
+        // min value
+        if (this.rounds < 1) {
+            this.rounds = 1;
+        }
     }
 
     public void setTeam(Team team) {
