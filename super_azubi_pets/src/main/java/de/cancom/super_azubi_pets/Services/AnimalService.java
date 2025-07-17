@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import de.cancom.super_azubi_pets.DTOs.AnimalResponseDTO;
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
@@ -40,5 +42,19 @@ public class AnimalService {
     public TeamAnimal transformToTeamAnimal(Animal animal) {
         TeamAnimal teamAnimal = new TeamAnimal(animal, 1);
         return teamAnimal;
+    }
+
+    // CONVERT to DTO
+    public AnimalResponseDTO convertToDTO(Animal animal) {
+        return new AnimalResponseDTO(animal);
+    }
+
+    // CONVERT to DTO
+    public List<AnimalResponseDTO> convertToDTO(List<Animal> animals) {
+        List<AnimalResponseDTO> response = new ArrayList<>();
+        for (Animal animal : animals) {
+            response.add(new AnimalResponseDTO(animal));
+        }
+        return response;
     }
 }
