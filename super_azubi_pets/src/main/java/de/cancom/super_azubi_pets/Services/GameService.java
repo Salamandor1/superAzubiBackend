@@ -29,6 +29,9 @@ public class GameService {
     public GameResponseDTO createGame(GameCreateDTO dto) {
         Game newGame = new Game();
         newGame.setHearts(dto.getHearts());
+        if (newGame.getHearts() < 5) {
+            newGame.setHearts(5);
+        }
         newGame.setRound(1);
         newGame.setWins(0);
 
