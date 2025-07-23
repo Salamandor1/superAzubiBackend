@@ -9,7 +9,7 @@ import de.cancom.super_azubi_pets.Models.Animal;
  */
 public class AnimalResponseDTO {
 
-    private String animalName;
+    private String name;
     private int health;
     private int attack;
     private String ability;
@@ -18,7 +18,7 @@ public class AnimalResponseDTO {
     }
 
     public AnimalResponseDTO(Animal animal) {
-        setAnimalName(animal.getName());
+        setName(animal.getName());
         setHealth(animal.getHealth());
         setAttack(animal.getAttack());
         setAbility(animal.getAbility());
@@ -34,18 +34,18 @@ public class AnimalResponseDTO {
      */
     public AnimalResponseDTO(String animalName, int health, int attack,
             String ability) {
-        this.animalName = animalName;
+        this.name = animalName;
         this.health = health;
         this.attack = attack;
         this.ability = ability;
     }
 
-    public String getAnimalName() {
-        return animalName;
+    public String getName() {
+        return name;
     }
 
-    public void setAnimalName(String animalName) {
-        this.animalName = animalName;
+    public void setName(String animalName) {
+        this.name = animalName;
     }
 
     public int getHealth() {
