@@ -22,7 +22,7 @@ public class AnimalController {
 
     // GET by ID
     @GetMapping("/{name}")
-    public ResponseEntity<AnimalResponseDTO> getAninmal(@PathVariable String name) {
+    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable String name) {
         Animal animal = animalService.getAnimalByID(name);
         return ResponseEntity.ok(animalService.convertToDTO(animal));
     }
