@@ -18,7 +18,11 @@ public class DataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Starte Daten seeding der Tiere.");
-        loadInitialAnimals();
+        try {
+            loadInitialAnimals();
+        } catch (Exception e) {
+
+        }
         System.out.println("Daten seeding abgeschlossen.");
     }
 

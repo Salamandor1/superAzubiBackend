@@ -30,7 +30,16 @@ public class AnimalService {
         if (count < 1 || count > 5) {
             throw new IllegalArgumentException("Must be at least 1, can't be more than 5.");
         }
-        return baseAnimalRepo.findRandomAnimals(count);
+        List<Animal> randomRanimals = new ArrayList<>();
+        for (int i = count; i > 0; i--) {
+            randomRanimals.add(getRandomAnimal());
+        }
+        return randomRanimals;
+    }
+
+    // GET random animal
+    public Animal getRandomAnimal() {
+        return baseAnimalRepo.findRandomAnimal();
     }
 
     // GET all
