@@ -26,4 +26,7 @@ public interface AnimalRepository extends JpaRepository<Animal, String> {
     @Query(value = "SELECT * FROM animals ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
     List<Animal> findRandomAnimals(@Param("limit") int limit);
 
+    @Query(value = "SELECT * FROM animals ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Animal findRandomAnimal();
+
 }
