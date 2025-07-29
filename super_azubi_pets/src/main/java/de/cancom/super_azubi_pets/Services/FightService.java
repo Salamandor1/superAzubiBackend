@@ -13,6 +13,8 @@ import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.Log;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
+import de.cancom.super_azubi_pets.Models.Skills.FightState;
+import de.cancom.super_azubi_pets.Models.Skills.Trigger;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
 import de.cancom.super_azubi_pets.Repositories.LogRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
@@ -31,6 +33,9 @@ public class FightService {
 
     @Autowired
     private AnimalService baseAnimalService;
+
+    @Autowired
+    private SkillService skillService;
 
     public FightService() {
     }
@@ -70,14 +75,12 @@ public class FightService {
                 log += "Leider hast du dem Kampf verloren...";
                 break;
             }
-            if (round >= 20) {
+            if (round >= 21) {
                 log += "Der Kampf ist unentschieden, da nach 20 Runden kein Gewinner ermittelt werden konnte.";
                 break;
             }
             log += "--------------- Runde " + round + " ---------------\n";
-            TeamAnimal playerAnimal = playerTeam.getFirst();
-            TeamAnimal enemyAnimal = enemyTeam.getFirst();
-            log += attack(playerAnimal, enemyAnimal) + "\n";
+            log += attack(playerTeam, enemyTeam) + "\n";
             round++;
         } // while
 
@@ -212,23 +215,39 @@ public class FightService {
         enemyTeam.removeIf(item -> item == null || item.getHealth() <= 0);
     }
 
-    private String attack(TeamAnimal playerAnimal, TeamAnimal enemyAnimal) {
+    private String attack(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
+        FightState state = new FightState(playerTeam, enemyTeam);
+        Trigger trigger = null;
+
+        // team to animal
+        TeamAnimal playerAnimal = playerTeam.get(0);
+        TeamAnimal enemyAnimal = enemyTeam.get(0);
+
         // fetch attack value
-        int playerAttack = playerAnimal.getAttack();
-        int enemyAttack = enemyAnimal.getAttack();
+        state.setOutgoingDmg(playerAnimal.getAttack());
+        state.setIncomingDmg(enemyAnimal.getAttack());
+
+        // trigger: before attack
+        trigger = Trigger.BEFORE_ATTACK;
+        skillService.checkSkills(trigger, state);
 
         // apply damage
-        playerAnimal.setHealth(playerAnimal.getHealth() - enemyAttack);
-        enemyAnimal.setHealth(enemyAnimal.getHealth() - playerAttack);
+        playerAnimal.setHealth(playerAnimal.getHealth() - state.getIncomingDmg());
+        enemyAnimal.setHealth(enemyAnimal.getHealth() - state.getOutgoingDmg());
 
-        // create log entry
+        // generate log
         String log = "";
-        log += playerAnimal.getName() + " (Spieler) verursacht " + playerAttack + " Schaden an " + enemyAnimal.getName()
-                + " (Gegner). ";
+        log += playerAnimal.getEmoji() + playerAnimal.getName() + " (Spieler) verursacht " + state.getOutgoingDmg()
+                + " Schaden an " + enemyAnimal.getEmoji() + enemyAnimal.getName()
+                + " (Gegner).\n";
+        log += enemyAnimal.getEmoji() + enemyAnimal.getName() + " (Gegner) verursacht " + state.getIncomingDmg()
+                + " Schaden an "
+                + playerAnimal.getEmoji() + playerAnimal.getName()
+                + " (Spieler).\n";
+        log += state.getLog();
         log += die(enemyAnimal) + "\n";
-        log += enemyAnimal.getName() + " (Gegner) verursacht " + enemyAttack + " Schaden an " + playerAnimal.getName()
-                + " (Spieler). ";
-        log += die(playerAnimal);
+        log += die(playerAnimal) + "\n";
+
         return log;
     }
 
