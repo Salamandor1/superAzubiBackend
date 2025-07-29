@@ -10,8 +10,10 @@ import de.cancom.super_azubi_pets.Models.Animal;
 public class AnimalResponseDTO {
 
     private String name;
+    private String emoji;
     private int health;
     private int attack;
+    private int tier;
     private String ability;
 
     public AnimalResponseDTO() {
@@ -19,8 +21,10 @@ public class AnimalResponseDTO {
 
     public AnimalResponseDTO(Animal animal) {
         setName(animal.getName());
+        setEmoji(animal.getEmoji());
         setHealth(animal.getHealth());
         setAttack(animal.getAttack());
+        setTier(animal.getTier());
         setAbility(animal.getAbility());
     }
 
@@ -48,6 +52,14 @@ public class AnimalResponseDTO {
         this.name = animalName;
     }
 
+    public String getEmoji() {
+        return emoji;
+    }
+
+    public void setEmoji(String emoji) {
+        this.emoji = emoji;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -62,6 +74,14 @@ public class AnimalResponseDTO {
 
     public void setAttack(int attack) {
         this.attack = attack;
+    }
+
+    public int getTier() {
+        return tier;
+    }
+
+    public void setTier(int tier) {
+        this.tier = tier;
     }
 
     public String getAbility() {
