@@ -28,9 +28,9 @@ public class AnimalController {
     }
 
     // GET random amount
-    @GetMapping("/random/{count}")
-    public ResponseEntity<List<AnimalResponseDTO>> getRandomAnimals(@PathVariable int count) {
-        List<Animal> animals = animalService.getRandomAnimals(count);
+    @GetMapping("/random/{round}/{count}")
+    public ResponseEntity<List<AnimalResponseDTO>> getRandomAnimals(@PathVariable int round, @PathVariable int count) {
+        List<Animal> animals = animalService.getRandomAnimals(round, count);
         return ResponseEntity.ok(animalService.convertToDTO(animals));
     }
 

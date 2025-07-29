@@ -26,7 +26,7 @@ public interface AnimalRepository extends JpaRepository<Animal, String> {
     @Query(value = "SELECT * FROM animals ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
     List<Animal> findRandomAnimals(@Param("limit") int limit);
 
-    @Query(value = "SELECT * FROM animals ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
-    Animal findRandomAnimal();
+    @Query(value = "SELECT * FROM animals WHERE tier BETWEEN :lowest AND :highest ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Animal findRandomAnimal(@Param("lowest") int lowest, @Param("highest") int highest);
 
 }

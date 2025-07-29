@@ -97,8 +97,25 @@ public class TeamAnimal {
             return;
         }
         this.level++;
-        this.health += 1;
-        this.attack += 1;
+
+        int addHealth = (int) (Math.round(this.health * 0.15));
+        if (addHealth > 5) {
+            addHealth = 5;
+        }
+        if (addHealth < 1) {
+            addHealth = 1;
+        }
+        setHealth(this.health + addHealth);
+
+        int addAttack = 1;
+        addAttack = (int) (Math.round(this.attack * 0.15));
+        if (addAttack > 5) {
+            addAttack = 5;
+        }
+        if (addAttack < 1) {
+            addAttack = 1;
+        }
+        setAttack(this.attack + addAttack);
     }
 
     public Long getAnimalId() {
@@ -107,6 +124,14 @@ public class TeamAnimal {
 
     public String getName() {
         return baseAnimal.getName();
+    }
+
+    public String getEmoji() {
+        return baseAnimal.getEmoji();
+    }
+
+    public int getTier() {
+        return baseAnimal.getTier();
     }
 
     public String getAbility() {

@@ -19,8 +19,10 @@ public class Animal {
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
 
+    private String emoji;
     private int health;
     private int attack;
+    private int tier;
     private String ability;
 
     public Animal() {
@@ -35,10 +37,12 @@ public class Animal {
      * @param attack
      * @param ability
      */
-    public Animal(String name, int health, int attack, String ability) {
+    public Animal(String name, String emoji, int health, int attack, int tier, String ability) {
         this.name = name;
+        this.emoji = emoji;
         this.health = health;
         this.attack = attack;
+        this.tier = tier;
         this.ability = ability;
     }
 
@@ -47,12 +51,20 @@ public class Animal {
         return this.name;
     }
 
+    public String getEmoji() {
+        return this.emoji;
+    }
+
     public int getHealth() {
         return this.health;
     }
 
     public int getAttack() {
         return this.attack;
+    }
+
+    public int getTier() {
+        return this.tier;
     }
 
     public String getAbility() {

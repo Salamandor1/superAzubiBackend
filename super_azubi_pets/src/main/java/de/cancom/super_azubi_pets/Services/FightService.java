@@ -13,7 +13,6 @@ import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.Log;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
-import de.cancom.super_azubi_pets.Repositories.AnimalRepository;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
 import de.cancom.super_azubi_pets.Repositories.LogRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
@@ -29,9 +28,6 @@ public class FightService {
 
     @Autowired
     private TeamRepository teamRepo;
-
-    @Autowired
-    private AnimalRepository baseAnimalRepo;
 
     @Autowired
     private AnimalService baseAnimalService;
@@ -105,7 +101,7 @@ public class FightService {
         int animalCount = calculateAnimalCount(game.getRounds());
 
         // transform base animals to team animals
-        List<Animal> randomAnimals = baseAnimalRepo.findRandomAnimals(animalCount);
+        List<Animal> randomAnimals = baseAnimalService.getRandomAnimals(game.getRounds(), animalCount);
         List<TeamAnimal> teamAnimals = transformAnimals(randomAnimals);
 
         // calculate xp for team

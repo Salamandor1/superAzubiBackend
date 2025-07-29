@@ -26,20 +26,39 @@ public class AnimalService {
     }
 
     // GET random by number
-    public List<Animal> getRandomAnimals(int count) {
+    public List<Animal> getRandomAnimals(int round, int count) {
         if (count < 1 || count > 5) {
             throw new IllegalArgumentException("Must be at least 1, can't be more than 5.");
         }
         List<Animal> randomRanimals = new ArrayList<>();
         for (int i = count; i > 0; i--) {
-            randomRanimals.add(getRandomAnimal());
+            randomRanimals.add(getRandomAnimal(round));
         }
         return randomRanimals;
     }
 
     // GET random animal
-    public Animal getRandomAnimal() {
-        return baseAnimalRepo.findRandomAnimal();
+    public Animal getRandomAnimal(int round) {
+        if (round > 11) {
+            round = 11;
+        }
+        int lowestTier = 1;
+        int highestTier = 1;
+        switch (round) {
+            case 11:
+                lowestTier++;
+                highestTier++;
+            case 10, 9:
+                highestTier++;
+            case 8, 7:
+                lowestTier++;
+                highestTier++;
+            case 6, 5:
+                highestTier++;
+            case 3:
+                highestTier++;
+        }
+        return baseAnimalRepo.findRandomAnimal(lowestTier, highestTier);
     }
 
     // GET all
