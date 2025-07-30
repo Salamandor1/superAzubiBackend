@@ -57,6 +57,8 @@ public class FightService {
         List<TeamAnimal> playerTeam = fight.getPlayerTeamAnimals();
         List<TeamAnimal> enemyTeam = fight.getEnemyTeamAnimals();
         removeDeadAnimals(playerTeam, enemyTeam);
+        skillService.initSkills(playerTeam);
+        skillService.initSkills(enemyTeam);
 
         while (true) {
 
@@ -218,6 +220,7 @@ public class FightService {
     private String attack(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
         FightState state = new FightState(playerTeam, enemyTeam);
         Trigger trigger = null;
+        String log = "";
 
         // team to animal
         TeamAnimal playerAnimal = playerTeam.get(0);
@@ -230,13 +233,13 @@ public class FightService {
         // trigger: before attack
         trigger = Trigger.BEFORE_ATTACK;
         skillService.checkSkills(trigger, state);
+        log += state.getLog();
 
         // apply damage
+        trigger = Trigger.ON_ATTACK;
+        skillService.checkSkills(trigger, state);
         playerAnimal.setHealth(playerAnimal.getHealth() - state.getIncomingDmg());
         enemyAnimal.setHealth(enemyAnimal.getHealth() - state.getOutgoingDmg());
-
-        // generate log
-        String log = "";
         log += playerAnimal.getEmoji() + playerAnimal.getName() + " (Spieler) verursacht " + state.getOutgoingDmg()
                 + " Schaden an " + enemyAnimal.getEmoji() + enemyAnimal.getName()
                 + " (Gegner).\n";
@@ -245,6 +248,11 @@ public class FightService {
                 + playerAnimal.getEmoji() + playerAnimal.getName()
                 + " (Spieler).\n";
         log += state.getLog();
+
+        // trigger: after attack
+        trigger = Trigger.AFTER_ATTACK;
+        skillService.checkSkills(trigger, state);
+
         log += die(enemyAnimal) + "\n";
         log += die(playerAnimal) + "\n";
 

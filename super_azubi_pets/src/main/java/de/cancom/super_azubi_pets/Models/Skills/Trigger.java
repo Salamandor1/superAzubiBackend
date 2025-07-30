@@ -31,7 +31,10 @@ public enum Trigger {
     ON_OWN_DEATH,
     ON_FRIEND_DEATH,
     ON_ENEMY_DEATH,
-    ON_HEALTH_THRESHOLD;
+    ON_HEALTH_THRESHOLD,
+    ON_DAMAGE,
+
+    ;
 
     public List<TeamAnimal> trim(List<TeamAnimal> team) {
         return team;

@@ -13,27 +13,35 @@ import de.cancom.super_azubi_pets.Models.Skills.Trigger;
 @Service
 public class SkillService {
 
+    public void initSkills(List<TeamAnimal> team) {
+        for (TeamAnimal animal : team) {
+            if (hasSkill(animal)) {
+                animal.setSkill(getSkill(animal));
+            }
+        }
+    }
+
     public void checkSkills(Trigger trigger, FightState state) {
         List<TeamAnimal> toCheckPlayerTeam = trigger.trim(state.getPlayerTeam());
         List<TeamAnimal> toCheckEnemyTeam = trigger.trim(state.getEnemyTeam());
         for (TeamAnimal animal : toCheckPlayerTeam) {
-            if (hasSkill(animal)) {
-                getSkill(animal).apply(state, "player");
+            if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
+                animal.getSkill().apply(state, "player");
             }
         }
         for (TeamAnimal animal : toCheckEnemyTeam) {
-            if (hasSkill(animal)) {
-                getSkill(animal).apply(state, "enemy");
+            if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
+                animal.getSkill().apply(state, "enemy");
             }
         }
     }
 
     public Skill getSkill(TeamAnimal animal) {
-        return Factory.createSkill(animal.getAbility(), animal);
+        return Factory.createSkill(animal.getSkillDescription(), animal);
     }
 
     public boolean hasSkill(TeamAnimal animal) {
-        return animal.getAbility().length() > 5;
+        return animal.getSkillDescription().length() > 5;
     }
 
 }

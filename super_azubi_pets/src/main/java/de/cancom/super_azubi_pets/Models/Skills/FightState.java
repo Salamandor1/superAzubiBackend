@@ -56,6 +56,8 @@ public class FightState {
     }
 
     public String getLog() {
+        String log = this.log;
+        this.log = "";
         return log;
     }
 

@@ -5,11 +5,13 @@ import java.util.function.BiFunction;
 
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
 
 public class Factory {
 
     private static final Map<String, BiFunction<Integer, Integer, Skill>> SKILL_MAP = Map.of(
-            "BLOCK", Block::new);
+            "BLOCK", Block::new,
+            "SCHILD", Shield::new);
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
