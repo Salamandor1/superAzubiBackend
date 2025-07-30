@@ -60,7 +60,7 @@ public class Revenge implements Skill {
         team.get(index).setHealth(team.get(index).getHealth() - damage);
         if (team.get(index).getHealth() <= 0) {
             return team.get(index).getEmoji() + ") " + damage + " Schaden zu. " + team.get(index).getEmoji()
-                    + " wurde besiegt.";
+                    + " wurde besiegt.\n";
         }
 
         return team.get(index).getEmoji() + ") " + damage + " Schaden zu.\n";

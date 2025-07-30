@@ -56,7 +56,8 @@ public class Guardian implements Skill {
             animal.setHealth(animal.getHealth() + boost);
         }
 
-        return "[BESCHÜTZER] (" + skip.getEmoji() + ", " + source + ") - Gesundheit aller verbleibenden um " + boost
+        return "[BESCHÜTZER] (" + skip.getEmoji() + ", " + source
+                + ") - Gesundheit aller verbleibenden Teammitglieder um " + boost
                 + " erhöht.\n";
 
     }

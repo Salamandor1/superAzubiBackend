@@ -156,7 +156,7 @@ public class FightService {
         }
 
         // base XP
-        int baseXP = (int) (Math.round((1.5 * countedRounds) * (1.0 - (countedRounds / 100.0))));
+        int baseXP = (int) (Math.round((1.8 * countedRounds) * (1.0 + (countedRounds / 100.0))));
 
         // bonus XP
         int wins = game.getWins();
@@ -263,8 +263,8 @@ public class FightService {
         skillService.checkSkills(trigger, state);
         log += state.getLog();
 
-        log += die(enemyAnimal, state);
-        log += die(playerAnimal, state);
+        log += die(enemyAnimal, state, "Gegner");
+        log += die(playerAnimal, state, "Spieler");
         // trigger : death
         log += nextTrigger(Trigger.ON_FRIEND_DEATH, state);
         log += nextTrigger(Trigger.ON_OWN_DEATH, state);
@@ -278,10 +278,10 @@ public class FightService {
         return state.getLog();
     }
 
-    private String die(TeamAnimal animal, FightState state) {
+    private String die(TeamAnimal animal, FightState state, String who) {
         String log = "";
         if (animal.getHealth() <= 0) {
-            log += animal.getName() + " wurde besiegt!\n";
+            log += animal.getEmoji() + " (" + who + ") wurde besiegt!\n";
         }
         return log;
     }

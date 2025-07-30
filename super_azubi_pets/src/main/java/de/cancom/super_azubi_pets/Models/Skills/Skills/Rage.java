@@ -51,10 +51,10 @@ public class Rage implements Skill {
         target.setAttack((int) Math.round(target.getAttack() * (1.0 + boost)));
         if (source.equals("player")) {
             state.setLog(state.getLog() + "[RAGE] (" + target.getEmoji() + ", Spieler) - Angriff wurde um "
-                    + (boost * 100) + "% erhöht.\n");
+                    + Math.round(target.getAttack() * (1.0 + boost)) + " erhöht.\n");
         } else {
             state.setLog(state.getLog() + "[RAGE] (" + target.getEmoji() + ", Gegner) - Angriff wurde um "
-                    + (boost * 100) + "% erhöht.\n");
+                    + Math.round(target.getAttack() * (1.0 + boost)) + " erhöht.\n");
         }
     }
 }
