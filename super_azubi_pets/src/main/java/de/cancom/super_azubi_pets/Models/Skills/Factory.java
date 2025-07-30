@@ -1,0 +1,43 @@
+package de.cancom.super_azubi_pets.Models.Skills;
+
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
+
+public class Factory {
+
+    private static final Map<String, BiFunction<Integer, Integer, Skill>> SKILL_MAP = Map.of(
+            "BLOCK", Block::new,
+            "SCHILD", Shield::new,
+            "RAGE", Rage::new,
+            "BESCHÜTZER", Guardian::new,
+            "LEHRLING", Apprentice::new,
+            "RACHE", Revenge::new,
+            "MUT", Courage::new);
+
+    public static Skill createSkill(String skill, TeamAnimal user) {
+        skill = trim(skill);
+        BiFunction<Integer, Integer, Skill> constructor = SKILL_MAP.get(skill);
+        if (constructor != null) {
+            return constructor.apply(user.getLevel(), user.getTier());
+        } else {
+            return new None(user.getLevel(), user.getTier());
+        }
+    }
+
+    public static String trim(String skill) {
+        int start = skill.indexOf('[');
+        int end = skill.indexOf(']');
+        return skill.substring(start + 1, end);
+    }
+
+}

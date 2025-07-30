@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models;
 
+import de.cancom.super_azubi_pets.Models.Skills.Skill;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 /**
  * Represents an animal which is part of a team and has changed or changable
@@ -35,6 +37,9 @@ public class TeamAnimal {
     // this value is equivalent to xp
     private int level;
 
+    @Transient
+    private Skill skill;
+
     public TeamAnimal() {
     }
 
@@ -50,6 +55,7 @@ public class TeamAnimal {
         this.health = original.getHealth();
         this.attack = original.getAttack();
         this.level = original.getLevel();
+        this.skill = original.getSkill();
     }
 
     public void setTeamAnimalID(Long id) {
@@ -90,6 +96,10 @@ public class TeamAnimal {
         if (this.level > 20) {
             this.level = 20;
         }
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     public void levelUp() {
@@ -134,7 +144,7 @@ public class TeamAnimal {
         return baseAnimal.getTier();
     }
 
-    public String getAbility() {
+    public String getSkillDescription() {
         return baseAnimal.getAbility();
     }
 
@@ -152,6 +162,10 @@ public class TeamAnimal {
 
     public int getLevel() {
         return level;
+    }
+
+    public Skill getSkill() {
+        return skill;
     }
 
 }

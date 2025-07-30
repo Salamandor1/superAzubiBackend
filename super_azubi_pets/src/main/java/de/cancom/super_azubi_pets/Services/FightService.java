@@ -13,6 +13,8 @@ import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.Log;
 import de.cancom.super_azubi_pets.Models.Team;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
+import de.cancom.super_azubi_pets.Models.Skills.FightState;
+import de.cancom.super_azubi_pets.Models.Skills.Trigger;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
 import de.cancom.super_azubi_pets.Repositories.LogRepository;
 import de.cancom.super_azubi_pets.Repositories.TeamRepository;
@@ -31,6 +33,9 @@ public class FightService {
 
     @Autowired
     private AnimalService baseAnimalService;
+
+    @Autowired
+    private SkillService skillService;
 
     public FightService() {
     }
@@ -51,7 +56,14 @@ public class FightService {
         int round = 1;
         List<TeamAnimal> playerTeam = fight.getPlayerTeamAnimals();
         List<TeamAnimal> enemyTeam = fight.getEnemyTeamAnimals();
+        FightState state = new FightState(game, playerTeam, enemyTeam);
+        state.initMap(fight);
         removeDeadAnimals(playerTeam, enemyTeam);
+        skillService.initSkills(playerTeam);
+        skillService.initSkills(enemyTeam);
+
+        // trigger = gamestart
+        log += nextTrigger(Trigger.ON_GAME_START, state) + "\n";
 
         while (true) {
 
@@ -70,19 +82,20 @@ public class FightService {
                 log += "Leider hast du dem Kampf verloren...";
                 break;
             }
-            if (round >= 20) {
+            if (round >= 21) {
                 log += "Der Kampf ist unentschieden, da nach 20 Runden kein Gewinner ermittelt werden konnte.";
                 break;
             }
             log += "--------------- Runde " + round + " ---------------\n";
-            TeamAnimal playerAnimal = playerTeam.getFirst();
-            TeamAnimal enemyAnimal = enemyTeam.getFirst();
-            log += attack(playerAnimal, enemyAnimal) + "\n";
+            log += nextTrigger(Trigger.ON_ROUND_START, state);
+            log += attack(game, state) + "\n";
             round++;
+            log += nextTrigger(Trigger.ON_ROUND_END, state);
         } // while
 
         // Update Game-Object and save game to database
         endFight(game);
+        log += nextTrigger(Trigger.ON_GAME_END, state);
 
         // Update Log-Object and save to database
         Log logObj = createLogObject(fight, log);
@@ -143,7 +156,7 @@ public class FightService {
         }
 
         // base XP
-        int baseXP = (int) (Math.round((1.5 * countedRounds) * (1.0 - (countedRounds / 100.0))));
+        int baseXP = (int) (Math.round((1.8 * countedRounds) * (1.0 + (countedRounds / 100.0))));
 
         // bonus XP
         int wins = game.getWins();
@@ -212,30 +225,63 @@ public class FightService {
         enemyTeam.removeIf(item -> item == null || item.getHealth() <= 0);
     }
 
-    private String attack(TeamAnimal playerAnimal, TeamAnimal enemyAnimal) {
+    private String attack(Game game, FightState state) {
+        List<TeamAnimal> playerTeam = state.getPlayerTeam();
+        List<TeamAnimal> enemyTeam = state.getEnemyTeam();
+        Trigger trigger = null;
+        String log = "";
+
+        // team to animal
+        TeamAnimal playerAnimal = playerTeam.get(0);
+        TeamAnimal enemyAnimal = enemyTeam.get(0);
+
         // fetch attack value
-        int playerAttack = playerAnimal.getAttack();
-        int enemyAttack = enemyAnimal.getAttack();
+        state.setOutgoingDmg(playerAnimal.getAttack());
+        state.setIncomingDmg(enemyAnimal.getAttack());
+
+        // trigger: before attack
+        log += nextTrigger(Trigger.BEFORE_ATTACK, state);
 
         // apply damage
-        playerAnimal.setHealth(playerAnimal.getHealth() - enemyAttack);
-        enemyAnimal.setHealth(enemyAnimal.getHealth() - playerAttack);
+        trigger = Trigger.ON_ATTACK;
+        skillService.checkSkills(trigger, state);
+        playerAnimal.setHealth(playerAnimal.getHealth() - state.getIncomingDmg());
+        enemyAnimal.setHealth(enemyAnimal.getHealth() - state.getOutgoingDmg());
+        log += playerAnimal.getEmoji() + playerAnimal.getName() + " (Spieler) verursacht " + state.getOutgoingDmg()
+                + " Schaden an " + enemyAnimal.getEmoji() + enemyAnimal.getName()
+                + " (Gegner).\n";
+        log += enemyAnimal.getEmoji() + enemyAnimal.getName() + " (Gegner) verursacht " + state.getIncomingDmg()
+                + " Schaden an "
+                + playerAnimal.getEmoji() + playerAnimal.getName()
+                + " (Spieler).\n";
+        log += state.getLog();
+        log += nextTrigger(Trigger.ON_DAMAGE, state);
+        log += nextTrigger(Trigger.ON_HEALTH_THRESHOLD, state);
 
-        // create log entry
-        String log = "";
-        log += playerAnimal.getName() + " (Spieler) verursacht " + playerAttack + " Schaden an " + enemyAnimal.getName()
-                + " (Gegner). ";
-        log += die(enemyAnimal) + "\n";
-        log += enemyAnimal.getName() + " (Gegner) verursacht " + enemyAttack + " Schaden an " + playerAnimal.getName()
-                + " (Spieler). ";
-        log += die(playerAnimal);
-        return log;
+        // trigger: after attack
+        trigger = Trigger.AFTER_ATTACK;
+        skillService.checkSkills(trigger, state);
+        log += state.getLog();
+
+        log += die(enemyAnimal, state, "Gegner");
+        log += die(playerAnimal, state, "Spieler");
+        // trigger : death
+        log += nextTrigger(Trigger.ON_FRIEND_DEATH, state);
+        log += nextTrigger(Trigger.ON_OWN_DEATH, state);
+        log += nextTrigger(Trigger.ON_ENEMY_DEATH, state);
+
+        return log + "\n";
     }
 
-    private String die(TeamAnimal animal) {
+    private String nextTrigger(Trigger trigger, FightState state) {
+        skillService.checkSkills(trigger, state);
+        return state.getLog();
+    }
+
+    private String die(TeamAnimal animal, FightState state, String who) {
         String log = "";
         if (animal.getHealth() <= 0) {
-            log = animal.getName() + " wurde besiegt!";
+            log += animal.getEmoji() + " (" + who + ") wurde besiegt!\n";
         }
         return log;
     }

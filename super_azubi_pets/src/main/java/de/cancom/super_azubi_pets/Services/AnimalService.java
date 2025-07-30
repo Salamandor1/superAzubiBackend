@@ -55,7 +55,7 @@ public class AnimalService {
                 highestTier++;
             case 6, 5:
                 highestTier++;
-            case 3:
+            case 4, 3:
                 highestTier++;
         }
         return baseAnimalRepo.findRandomAnimal(lowestTier, highestTier);
