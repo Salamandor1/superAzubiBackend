@@ -32,56 +32,46 @@ public class DataSeeder implements CommandLineRunner {
 
         List<Animal> standardAnimals = new ArrayList<>();
         // TIER 1: combined value 2 - 4
-        standardAnimals.add(new Animal("Faultier", "🦥", 1, 1, 1, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals
-                .add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Faultier", "🦥", 1, 1, 1, "[BLOCK]"));
+        standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[SCHILD]"));
+        standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[RAGE]"));
+        standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[LEHRLING] "));
 
         // TIER 2: combined value 5 - 6
-        standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 3, 2, 2, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals
-                .add(new Animal("Fliege", "🪰", 1, 4, 2, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
+        standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 3, 2, 2, "[SCHILD]"));
+        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[RAGE]"));
+        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[LEHRLING]"));
 
         // TIER 3: combined value 7 - 8
-        standardAnimals.add(new Animal("Thaddäus", "🦑", 5, 2, 3, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Nilpferd", "🦛", 4, 4, 3, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals.add(new Animal("Kamel", "🐪", 3, 5, 3, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals.add(new Animal("Biene", "🐝", 1, 6, 3, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Thaddäus", "🦑", 5, 2, 3, "[BLOCK]"));
+        standardAnimals.add(new Animal("Nilpferd", "🦛", 4, 4, 3, "[SCHILD]"));
+        standardAnimals.add(new Animal("Kamel", "🐪", 3, 5, 3, "[RAGE]"));
+        standardAnimals.add(new Animal("Biene", "🐝", 1, 6, 3, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3, "[LEHRLING]"));
 
         // TIER 4: combined value 9 - 10
-        standardAnimals.add(new Animal("Gorilla", "🦍", 5, 5, 4, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Einhorn", "🦄", 3, 6, 4, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals.add(new Animal("Katze", "🐱", 4, 5, 4, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals.add(new Animal("Stier", "🐃", 2, 7, 4, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Snowy", "⛄", 8, 2, 4,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Gorilla", "🦍", 5, 5, 4, "[BLOCK]"));
+        standardAnimals.add(new Animal("Einhorn", "🦄", 3, 6, 4, "[SCHILD]"));
+        standardAnimals.add(new Animal("Katze", "🐱", 4, 5, 4, "[RAGE]"));
+        standardAnimals.add(new Animal("Stier", "🐃", 2, 7, 4, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Snowy", "⛄", 8, 2, 4, "[LEHRLING]"));
 
         // TIER 5: combined value 11 - 12
-        standardAnimals.add(new Animal("Schlange", "🐍", 10, 1, 5, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Sauropod", "🦕", 6, 6, 5, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals.add(new Animal("Phönix", "🐦‍🔥", 8, 3, 5, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals
-                .add(new Animal("Kugelfisch", "🐡", 2, 10, 5, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Adler", "🦅", 4, 7, 5,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Schlange", "🐍", 10, 1, 5, "[BLOCK]"));
+        standardAnimals.add(new Animal("Sauropod", "🦕", 6, 6, 5, "[SCHILD]"));
+        standardAnimals.add(new Animal("Phönix", "🐦‍🔥", 8, 3, 5, "[RAGE]"));
+        standardAnimals.add(new Animal("Kugelfisch", "🐡", 2, 10, 5, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Adler", "🦅", 4, 7, 5, "[LEHRLING]"));
 
         // TIER 6: combined value > 12
-        standardAnimals.add(new Animal("Elefant", "🐘", 8, 5, 6, "[BLOCK] Reduziert eingehenden Schaden."));
-        standardAnimals.add(new Animal("Nashorn", "🦏", 6, 7, 6, "[SCHILD] Verhindert Schaden komplett."));
-        standardAnimals.add(new Animal("Mammut", "🦣", 7, 7, 6, "[RAGE] Erhöht nach drei Treffern den Angriff."));
-        standardAnimals
-                .add(new Animal("Cthulhu", "🐙", 6, 8, 6, "[BESCHÜTZER] Füllt bei Tod die Herzen des Teams auf."));
-        standardAnimals.add(new Animal("Rex", "🦖", 4, 10, 6,
-                "[LEHRLING] Erhöht bei Tod das Level um 1 und steigert permanent Statuswerte."));
+        standardAnimals.add(new Animal("Elefant", "🐘", 8, 5, 6, "[BLOCK]"));
+        standardAnimals.add(new Animal("Nashorn", "🦏", 6, 7, 6, "[SCHILD]"));
+        standardAnimals.add(new Animal("Mammut", "🦣", 7, 7, 6, "[RAGE]"));
+        standardAnimals.add(new Animal("Cthulhu", "🐙", 6, 8, 6, "[BESCHÜTZER]"));
+        standardAnimals.add(new Animal("Rex", "🦖", 4, 10, 6, "[LEHRLING]"));
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);

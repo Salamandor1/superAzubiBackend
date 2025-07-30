@@ -24,7 +24,7 @@ public class Apprentice implements Skill {
 
     @Override
     public String getName() {
-        return "Apprentice";
+        return "Lehrling";
     }
 
     @Override

@@ -26,7 +26,7 @@ public class Shield implements Skill {
 
     @Override
     public String getName() {
-        return "Shield";
+        return "Schild";
     }
 
     @Override

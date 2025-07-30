@@ -36,21 +36,12 @@ public class SkillService {
         }
     }
 
-    // public void checkSkillsPlayerOnly(Trigger trigger, FightState state) {
-    //     List<TeamAnimal> toCheckPlayerTeam = trigger.trim(state.getPlayerTeam());
-    //     for (TeamAnimal animal : toCheckPlayerTeam) {
-    //         if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
-    //             animal.getSkill().apply(state, "player");
-    //         }
-    //     }
-    // }
-
     public Skill getSkill(TeamAnimal animal) {
         return Factory.createSkill(animal.getSkillDescription(), animal);
     }
 
     public boolean hasSkill(TeamAnimal animal) {
-        return animal.getSkillDescription().length() > 5;
+        return animal.getSkillDescription().length() > 2;
     }
 
 }

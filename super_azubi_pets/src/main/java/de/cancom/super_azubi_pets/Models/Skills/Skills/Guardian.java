@@ -17,7 +17,7 @@ public class Guardian implements Skill {
 
     @Override
     public String getName() {
-        return "Guardian";
+        return "Beschützer";
     }
 
     @Override
