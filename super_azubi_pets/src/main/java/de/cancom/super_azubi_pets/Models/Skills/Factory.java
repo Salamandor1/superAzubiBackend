@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
@@ -19,7 +20,8 @@ public class Factory {
             "RAGE", Rage::new,
             "BESCHÜTZER", Guardian::new,
             "LEHRLING", Apprentice::new,
-            "RACHE", Revenge::new);
+            "RACHE", Revenge::new,
+            "MUT", Courage::new);
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);

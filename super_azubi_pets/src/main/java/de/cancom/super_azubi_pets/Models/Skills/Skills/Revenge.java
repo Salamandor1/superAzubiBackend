@@ -12,7 +12,7 @@ public class Revenge implements Skill {
     private final int damage;
 
     public Revenge(int level, int tier) {
-        this.damage = ((level / 2) * (tier / 2));
+        this.damage = 5 + ((level / 4) * (tier / 2));
     }
 
     @Override

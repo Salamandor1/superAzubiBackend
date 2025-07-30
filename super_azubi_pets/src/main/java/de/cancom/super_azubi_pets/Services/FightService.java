@@ -62,6 +62,9 @@ public class FightService {
         skillService.initSkills(playerTeam);
         skillService.initSkills(enemyTeam);
 
+        // trigger = gamestart
+        log += nextTrigger(Trigger.ON_GAME_START, state) + "\n";
+
         while (true) {
 
             removeDeadAnimals(fight.getPlayerTeamAnimals(), fight.getEnemyTeamAnimals());
@@ -84,12 +87,15 @@ public class FightService {
                 break;
             }
             log += "--------------- Runde " + round + " ---------------\n";
+            log += nextTrigger(Trigger.ON_ROUND_START, state);
             log += attack(game, state) + "\n";
             round++;
+            log += nextTrigger(Trigger.ON_ROUND_END, state);
         } // while
 
         // Update Game-Object and save game to database
         endFight(game);
+        log += nextTrigger(Trigger.ON_GAME_END, state);
 
         // Update Log-Object and save to database
         Log logObj = createLogObject(fight, log);
@@ -249,6 +255,8 @@ public class FightService {
                 + playerAnimal.getEmoji() + playerAnimal.getName()
                 + " (Spieler).\n";
         log += state.getLog();
+        log += nextTrigger(Trigger.ON_DAMAGE, state);
+        log += nextTrigger(Trigger.ON_HEALTH_THRESHOLD, state);
 
         // trigger: after attack
         trigger = Trigger.AFTER_ATTACK;
