@@ -43,7 +43,7 @@ public class Revenge implements Skill {
             if (state.getPlayerTeam().size() < 2) {
                 return;
             }
-            log += state.getPlayerTeam().get(0).getEmoji() + ", Gegner) - fügt einem zufälligen Gegner (";
+            log += state.getEnemyTeam().get(0).getEmoji() + ", Gegner) - fügt einem zufälligen Gegner (";
             log += apply(state.getPlayerTeam());
         }
         state.setLog(state.getLog() + log);
