@@ -25,7 +25,7 @@ public class SkillService {
         List<TeamAnimal> toCheckPlayerTeam = trigger.trim(state.getPlayerTeam());
         List<TeamAnimal> toCheckEnemyTeam = trigger.trim(state.getEnemyTeam());
         for (TeamAnimal animal : toCheckPlayerTeam) {
-            if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
+            if (hasSkill(animal) && animal.getSkill() != null && animal.getSkill().getTrigger() == trigger) {
                 animal.getSkill().apply(state, "player");
             }
         }
@@ -41,7 +41,7 @@ public class SkillService {
     }
 
     public boolean hasSkill(TeamAnimal animal) {
-        return animal.getSkillDescription().length() > 2;
+        return animal.getSkillDescription().length() > 3;
     }
 
 }

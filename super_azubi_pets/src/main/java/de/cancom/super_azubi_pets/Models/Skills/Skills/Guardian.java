@@ -45,6 +45,10 @@ public class Guardian implements Skill {
 
         TeamAnimal skip = team.get(0);
 
+        if (skip.getHealth() > 0) {
+            return "";
+        }
+
         for (TeamAnimal animal : team) {
             if (animal == skip) {
                 continue;

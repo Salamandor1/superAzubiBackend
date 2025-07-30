@@ -85,7 +85,10 @@ public class FightState {
     }
 
     public void initMap(Fight fight) {
-        for (int i = 0; i < fight.getPlayerTeam().getAllAnimals().size(); i++) {
+        if (fight.getPlayerTeam().getAllAnimals().isEmpty() || playerTeam.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < playerTeam.size(); i++) {
             addToMap(playerTeam.get(i), fight.getPlayerTeam().getSlotByIndex(i));
         }
     }

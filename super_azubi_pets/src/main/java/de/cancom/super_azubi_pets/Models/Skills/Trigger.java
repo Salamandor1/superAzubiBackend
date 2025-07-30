@@ -38,6 +38,7 @@ public enum Trigger {
     ON_ENEMY_DEATH,
     ON_HEALTH_THRESHOLD,
     ON_DAMAGE,
+    NONE,
 
     ;
 

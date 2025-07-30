@@ -43,11 +43,10 @@ public class Revenge implements Skill {
             if (state.getPlayerTeam().size() < 2) {
                 return;
             }
-            state.setLog(state.getLog() + log + state.getEnemyTeam().get(0).getEmoji()
-                    + ", Gegner) - fügt einem zufälligen Gegner (");
+            log += state.getPlayerTeam().get(0).getEmoji() + ", Gegner) - fügt einem zufälligen Gegner (";
             log += apply(state.getPlayerTeam());
         }
-        state.setLog(state.getLog() + log + damage + " Schaden zu.\n");
+        state.setLog(state.getLog() + log);
     }
 
     public String apply(List<TeamAnimal> team) {
@@ -56,11 +55,15 @@ public class Revenge implements Skill {
             return "";
         }
 
-        int index = (int) (Math.random() * (team.size()) + 1);
+        int index = (int) (Math.random() * (team.size() - 1)) + 1;
 
         team.get(index).setHealth(team.get(index).getHealth() - damage);
+        if (team.get(index).getHealth() <= 0) {
+            return team.get(index).getEmoji() + ") " + damage + " Schaden zu. " + team.get(index).getEmoji()
+                    + " wurde besiegt.";
+        }
 
-        return team.get(index).getEmoji() + ") ";
+        return team.get(index).getEmoji() + ") " + damage + " Schaden zu.\n";
 
     }
 }

@@ -8,6 +8,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
@@ -28,8 +29,9 @@ public class Factory {
         BiFunction<Integer, Integer, Skill> constructor = SKILL_MAP.get(skill);
         if (constructor != null) {
             return constructor.apply(user.getLevel(), user.getTier());
+        } else {
+            return new None(user.getLevel(), user.getTier());
         }
-        throw new IllegalArgumentException("Unknown Skill: " + skill);
     }
 
     public static String trim(String skill) {

@@ -31,17 +31,27 @@ public class Courage implements Skill {
     @Override
     public void apply(FightState state, String source) {
 
+        String emoji = "";
+
         if (source.equals("player")) {
             for (TeamAnimal animal : state.getPlayerTeam()) {
                 animal.setAttack(animal.getAttack() + tier);
+                if (animal.getSkill() == this && emoji.equals("")) {
+                    emoji += animal.getEmoji();
+                    animal.setSkill(new None(animal.getLevel(), animal.getTier()));
+                }
             }
-            state.setLog(state.getLog() + "[MUT] (" + state.getPlayerTeam().get(0).getEmoji() + ", Spieler) - ");
+            state.setLog(state.getLog() + "[MUT] (" + emoji + ", Spieler) - ");
         } else {
             for (TeamAnimal animal : state.getEnemyTeam()) {
                 animal.setAttack(animal.getAttack() + tier);
+                if (animal.getSkill() == this && emoji.equals("")) {
+                    emoji += animal.getEmoji();
+                    animal.setSkill(new None(animal.getLevel(), animal.getTier()));
+                }
             }
-            state.setLog(state.getLog() + "[MUT] (" + state.getEnemyTeam().get(0).getEmoji() + ", Gegner) - ");
+            state.setLog(state.getLog() + "[MUT] (" + emoji + ", Gegner) - ");
         }
-        state.setLog(state.getLog() + " erhöht den Angriff aller Teammitglieder um " + tier + ".");
+        state.setLog(state.getLog() + "erhöht den Angriff aller Teammitglieder um " + tier + ".\n");
     }
 }

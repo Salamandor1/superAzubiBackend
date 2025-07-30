@@ -11,7 +11,10 @@ public class Rage implements Skill {
     private final double boost;
 
     public Rage(int level, int tier) {
-        this.boost = 0.20 + (level / 100.0) + (tier / 10.0);
+        this.boost = 0.10 + (level / 100.0) + (tier / 10.0);
+        if (level >= 10 || tier >= 5) {
+            hits++;
+        }
     }
 
     @Override
@@ -26,7 +29,7 @@ public class Rage implements Skill {
 
     @Override
     public String getDescription() {
-        return "Erhöht nach drei Treffern die Angriffskraft um " + (boost * 100) + "%.";
+        return "Erhöht nach drei Treffern die Angriffskraft um " + Math.round(boost * 100) + "%.";
     }
 
     @Override
@@ -38,14 +41,14 @@ public class Rage implements Skill {
         hits = 0;
         TeamAnimal target;
         if (source.equals("player")) {
-            target = state.getPlayerTeam().getFirst();
+            target = state.getPlayerTeam().get(0);
         } else {
-            target = state.getEnemyTeam().getFirst();
+            target = state.getEnemyTeam().get(0);
         }
         if (target.getHealth() <= 0) {
             return;
         }
-        target.setHealth((int) Math.round(target.getHealth() * (1.0 + boost)));
+        target.setAttack((int) Math.round(target.getAttack() * (1.0 + boost)));
         if (source.equals("player")) {
             state.setLog(state.getLog() + "[RAGE] (" + target.getEmoji() + ", Spieler) - Angriff wurde um "
                     + (boost * 100) + "% erhöht.\n");
