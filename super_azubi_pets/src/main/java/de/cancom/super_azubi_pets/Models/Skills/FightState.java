@@ -1,22 +1,33 @@
 package de.cancom.super_azubi_pets.Models.Skills;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import de.cancom.super_azubi_pets.Models.Fight;
+import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 
 public class FightState {
+    private Game game;
     private List<TeamAnimal> playerTeam;
     private List<TeamAnimal> enemyTeam;
     private int incomingDmg;
     private int outgoingDmg;
     private String log;
+    private Map<TeamAnimal, TeamAnimal> copyToOrigin = new HashMap<>();
 
-    public FightState(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
+    public FightState(Game game, List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
+        setGame(game);
         setPlayerTeam(playerTeam);
         setEnemyTeam(enemyTeam);
         setIncomingDmg(0);
         setOutgoingDmg(0);
         setLog("");
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public void setPlayerTeam(List<TeamAnimal> playerTeam) {
@@ -39,6 +50,14 @@ public class FightState {
         this.log = log;
     }
 
+    public void addToMap(TeamAnimal copy, TeamAnimal origin) {
+        copyToOrigin.put(copy, origin);
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
     public List<TeamAnimal> getPlayerTeam() {
         return this.playerTeam;
     }
@@ -59,6 +78,16 @@ public class FightState {
         String log = this.log;
         this.log = "";
         return log;
+    }
+
+    public Map<TeamAnimal, TeamAnimal> getMap() {
+        return this.copyToOrigin;
+    }
+
+    public void initMap(Fight fight) {
+        for (int i = 0; i < fight.getPlayerTeam().getAllAnimals().size(); i++) {
+            addToMap(playerTeam.get(i), fight.getPlayerTeam().getSlotByIndex(i));
+        }
     }
 
 }

@@ -56,6 +56,8 @@ public class FightService {
         int round = 1;
         List<TeamAnimal> playerTeam = fight.getPlayerTeamAnimals();
         List<TeamAnimal> enemyTeam = fight.getEnemyTeamAnimals();
+        FightState state = new FightState(game, playerTeam, enemyTeam);
+        state.initMap(fight);
         removeDeadAnimals(playerTeam, enemyTeam);
         skillService.initSkills(playerTeam);
         skillService.initSkills(enemyTeam);
@@ -82,7 +84,7 @@ public class FightService {
                 break;
             }
             log += "--------------- Runde " + round + " ---------------\n";
-            log += attack(playerTeam, enemyTeam) + "\n";
+            log += attack(game, state) + "\n";
             round++;
         } // while
 
@@ -217,8 +219,9 @@ public class FightService {
         enemyTeam.removeIf(item -> item == null || item.getHealth() <= 0);
     }
 
-    private String attack(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
-        FightState state = new FightState(playerTeam, enemyTeam);
+    private String attack(Game game, FightState state) {
+        List<TeamAnimal> playerTeam = state.getPlayerTeam();
+        List<TeamAnimal> enemyTeam = state.getEnemyTeam();
         Trigger trigger = null;
         String log = "";
 
@@ -231,9 +234,7 @@ public class FightService {
         state.setIncomingDmg(enemyAnimal.getAttack());
 
         // trigger: before attack
-        trigger = Trigger.BEFORE_ATTACK;
-        skillService.checkSkills(trigger, state);
-        log += state.getLog();
+        log += nextTrigger(Trigger.BEFORE_ATTACK, state);
 
         // apply damage
         trigger = Trigger.ON_ATTACK;
@@ -252,17 +253,27 @@ public class FightService {
         // trigger: after attack
         trigger = Trigger.AFTER_ATTACK;
         skillService.checkSkills(trigger, state);
+        log += state.getLog();
 
-        log += die(enemyAnimal) + "\n";
-        log += die(playerAnimal) + "\n";
+        log += die(enemyAnimal, state);
+        log += die(playerAnimal, state);
+        // trigger : death
+        log += nextTrigger(Trigger.ON_FRIEND_DEATH, state);
+        log += nextTrigger(Trigger.ON_OWN_DEATH, state);
+        log += nextTrigger(Trigger.ON_ENEMY_DEATH, state);
 
-        return log;
+        return log + "\n";
     }
 
-    private String die(TeamAnimal animal) {
+    private String nextTrigger(Trigger trigger, FightState state) {
+        skillService.checkSkills(trigger, state);
+        return state.getLog();
+    }
+
+    private String die(TeamAnimal animal, FightState state) {
         String log = "";
         if (animal.getHealth() <= 0) {
-            log = animal.getName() + " wurde besiegt!";
+            log += animal.getName() + " wurde besiegt!\n";
         }
         return log;
     }

@@ -21,7 +21,7 @@ public class Block implements Skill {
 
     @Override
     public String getDescription() {
-        return "Bocks " + getBlockPercentage() + " of damage.";
+        return "Bockt " + (getBlockPercentage() * 100) + "% des Schadens.";
     }
 
     @Override
