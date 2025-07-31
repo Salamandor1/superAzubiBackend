@@ -67,7 +67,7 @@ public class Animal {
         return this.tier;
     }
 
-    public String getAbility() {
+    public String getSkill() {
         return this.ability;
     }
 

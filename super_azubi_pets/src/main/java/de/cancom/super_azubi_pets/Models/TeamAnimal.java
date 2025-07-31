@@ -145,7 +145,7 @@ public class TeamAnimal {
     }
 
     public String getSkillDescription() {
-        return baseAnimal.getAbility();
+        return baseAnimal.getSkill();
     }
 
     public Animal getBaseAnimal() {
