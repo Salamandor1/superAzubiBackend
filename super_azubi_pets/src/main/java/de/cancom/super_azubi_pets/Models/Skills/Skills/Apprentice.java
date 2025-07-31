@@ -43,7 +43,7 @@ public class Apprentice implements Skill {
             return;
         }
         TeamAnimal fightAnimal = state.getPlayerTeam().get(0);
-        if (fightAnimal.getHealth() > 0) {
+        if (fightAnimal.getHealth() > 0 || fightAnimal.getLevel() >= 20) {
             return;
         }
 
