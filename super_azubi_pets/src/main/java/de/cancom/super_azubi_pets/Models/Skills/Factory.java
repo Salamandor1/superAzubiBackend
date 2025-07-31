@@ -22,7 +22,8 @@ public class Factory {
             "BESCHÜTZER", Guardian::new,
             "LEHRLING", Apprentice::new,
             "RACHE", Revenge::new,
-            "MUT", Courage::new);
+            "MUT", Courage::new,
+            "NONE", None::new);
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);

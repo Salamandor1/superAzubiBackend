@@ -44,17 +44,17 @@ public class DataSeeder implements CommandLineRunner {
         List<Animal> standardAnimals = new ArrayList<>();
         // TIER 1: combined value 2 - 4
         standardAnimals.add(new Animal("Faultier", "🦥", 1, 1, 1, "[MUT]"));
-        standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[]"));
-        standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[]"));
+        standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[NONE]"));
+        standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[NONE]"));
         standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[RAGE]"));
-        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[] "));
+        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[NONE] "));
 
         // TIER 2: combined value 5 - 6
         standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
         standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 3, 2, 2, "[LEHRLING]"));
-        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[]"));
-        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[]"));
-        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[]"));
+        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[NONE]"));
 
         // TIER 3: combined value 7 - 8
         standardAnimals.add(new Animal("Thaddäus", "🦑", 5, 2, 3, "[MUT]"));
