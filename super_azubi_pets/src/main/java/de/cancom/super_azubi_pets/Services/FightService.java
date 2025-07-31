@@ -156,7 +156,7 @@ public class FightService {
         }
 
         // base XP
-        int baseXP = (int) (Math.round((1.8 * countedRounds) * (1.0 + (countedRounds / 100.0))));
+        int baseXP = (int) (Math.round((1.7 * countedRounds) * (1.0 + (countedRounds / 200.0))));
 
         // bonus XP
         int wins = game.getWins();
