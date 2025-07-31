@@ -14,7 +14,7 @@ public class AnimalResponseDTO {
     private int health;
     private int attack;
     private int tier;
-    private String ability;
+    private String skill;
 
     public AnimalResponseDTO() {
     }
@@ -25,7 +25,7 @@ public class AnimalResponseDTO {
         setHealth(animal.getHealth());
         setAttack(animal.getAttack());
         setTier(animal.getTier());
-        setAbility(animal.getAbility());
+        setSkill(animal.getSkill());
     }
 
     /**
@@ -34,14 +34,14 @@ public class AnimalResponseDTO {
      * @param animalName Name of the animal.
      * @param health     Health points of the animal.
      * @param attack     Attack points of the animal.
-     * @param ability    Special ability of the animal.
+     * @param skill    Special ability of the animal.
      */
     public AnimalResponseDTO(String animalName, int health, int attack,
-            String ability) {
+            String skill) {
         this.name = animalName;
         this.health = health;
         this.attack = attack;
-        this.ability = ability;
+        this.skill = skill;
     }
 
     public String getName() {
@@ -84,12 +84,12 @@ public class AnimalResponseDTO {
         this.tier = tier;
     }
 
-    public String getAbility() {
-        return ability;
+    public String getSkill() {
+        return skill;
     }
 
-    public void setAbility(String ability) {
-        this.ability = ability;
+    public void setSkill(String ability) {
+        this.skill = ability;
     }
 
 }
