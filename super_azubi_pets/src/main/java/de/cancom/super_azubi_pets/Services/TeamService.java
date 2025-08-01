@@ -116,4 +116,38 @@ public class TeamService {
         teamRepo.save(team);
     }
 
+    public boolean areEqual(Team a, Team b) {
+        List<TeamAnimal> listA = a.getAllAnimals();
+        List<TeamAnimal> listB = b.getAllAnimals();
+
+        if (listA.size() != listB.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < listA.size(); i++) {
+            TeamAnimal animalA = listA.get(i);
+            TeamAnimal animalB = listB.get(i);
+            if (animalA == animalB) {
+                continue;
+            }
+            if (animalA == null || animalB == null) {
+                return false;
+            }
+            if (animalA.getName() != animalB.getName()) {
+                return false;
+            }
+            if (animalA.getHealth() != animalB.getHealth()) {
+                return false;
+            }
+            if (animalA.getAttack() != animalB.getAttack()) {
+                return false;
+            }
+            if (animalA.getLevel() != animalB.getLevel()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

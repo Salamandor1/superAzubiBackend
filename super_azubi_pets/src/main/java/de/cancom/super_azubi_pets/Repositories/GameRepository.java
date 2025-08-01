@@ -1,6 +1,10 @@
 package de.cancom.super_azubi_pets.Repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import de.cancom.super_azubi_pets.Models.Game;
@@ -16,5 +20,8 @@ import de.cancom.super_azubi_pets.Models.Game;
  */
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
+
+    @Query(value = "SELECT * FROM game WHERE rounds BETWEEN :rounds - 1 AND :rounds + 1 AND hearts = :hearts AND wins = :wins ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Optional<Game> findGameByStatus(@Param("hearts") int hearts, @Param("rounds") int rounds, @Param("wins") int wins);
 
 }

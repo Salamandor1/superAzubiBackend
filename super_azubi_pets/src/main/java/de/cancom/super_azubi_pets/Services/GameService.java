@@ -2,6 +2,8 @@ package de.cancom.super_azubi_pets.Services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import de.cancom.super_azubi_pets.DTOs.GameResponseDTO;
 import de.cancom.super_azubi_pets.DTOs.GameUpdateDTO;
 import de.cancom.super_azubi_pets.Models.Game;
 import de.cancom.super_azubi_pets.Models.Team;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Repositories.GameRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -100,13 +103,25 @@ public class GameService {
     // Copy
     public void copyGame(Long id) {
         Game game = fetchGame(id);
+        List<TeamAnimal> team = game.getTeam().getAllAnimals();
+        if (team.stream().allMatch(Objects::isNull)) {
+            return;
+        }
         Game copy = new Game(game);
         gameRepo.save(copy);
     }
 
     // Find by Status
     public Game findGameByStatus(Game game) {
-        return null;
+        int hearts = game.getHearts();
+        int rounds = game.getRounds();
+        int wins = game.getWins();
+        Optional<Game> result = gameRepo.findGameByStatus(hearts, rounds, wins);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
     }
 
 }

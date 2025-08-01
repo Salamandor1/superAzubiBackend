@@ -40,6 +40,9 @@ public class FightService {
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private TeamService teamService;
+
     public FightService() {
     }
 
@@ -53,10 +56,15 @@ public class FightService {
         // Generate Teams
         fight.setPlayerTeam(fetchPlayerTeam(fight.getGame()));
         Game ghostGame = gameService.findGameByStatus(game);
+        if (teamService.areEqual(game.getTeam(), ghostGame.getTeam())) {
+            ghostGame = null;
+        }
         if (ghostGame == null) {
             fight.setNpcTeam(generateNpcTeam(fight.getGame()));
+            log += "Zufälliges Gegnerteam generiert.\n";
         } else {
             fight.setNpcTeam(ghostGame.getTeam());
+            log += "Geistdaten eines anderen Spielers geladen.\n";
         }
         copyTeams(fight);
 
