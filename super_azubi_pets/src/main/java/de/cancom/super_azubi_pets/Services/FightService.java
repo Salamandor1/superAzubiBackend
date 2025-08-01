@@ -1,6 +1,7 @@
 package de.cancom.super_azubi_pets.Services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class FightService {
         if (teamService.areEqual(game.getTeam(), ghostGame.getTeam())) {
             ghostGame = null;
         }
-        if (ghostGame == null) {
+        if (ghostGame == null || didWin(ghostGame.getTeam().getAllAnimals())) {
             fight.setNpcTeam(generateNpcTeam(fight.getGame()));
             log += "Zufälliges Gegnerteam generiert.\n";
         } else {
@@ -104,6 +105,7 @@ public class FightService {
                 break;
             }
             log += "--------------- Runde " + round + " ---------------\n";
+            log += getCurrentTeamsDisplay(playerTeam, enemyTeam);
             log += nextTrigger(Trigger.ON_ROUND_START, state);
             log += attack(game, state) + "\n";
             round++;
@@ -326,6 +328,30 @@ public class FightService {
     private void endFight(Game game) {
         game.setRound(game.getRounds() + 1);
         gameRepo.save(game);
+    }
+
+    private String getCurrentTeamsDisplay(List<TeamAnimal> playerTeam, List<TeamAnimal> enemyTeam) {
+        String log = "";
+
+        List<TeamAnimal> mirroredPlayerTeam = new ArrayList<>(playerTeam);
+        Collections.reverse(mirroredPlayerTeam);
+
+        log += getCurrentTeamDisplay(mirroredPlayerTeam);
+        log += " vs. ";
+        log += getCurrentTeamDisplay(enemyTeam);
+        log += "\n";
+        return log;
+    }
+
+    private String getCurrentTeamDisplay(List<TeamAnimal> team) {
+        String log = "";
+        for (TeamAnimal animal : team) {
+            if (animal == null) {
+                continue;
+            }
+            log += "[" + animal.getEmoji() + "(❤️" + animal.getHealth() + "/🗡️" + animal.getAttack() + ")]";
+        }
+        return log;
     }
 
     private Log createLogObject(Fight fight, String log) {
