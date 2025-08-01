@@ -127,7 +127,8 @@ public class GameService {
         int hearts = game.getHearts();
         int rounds = game.getRounds();
         int wins = game.getWins();
-        Optional<Game> result = gameRepo.findGameByStatus(hearts, rounds, wins);
+        Optional<Game> result = gameRepo.findGameByStatus(game.getGameID(), hearts - 2, hearts + 2, rounds, wins - 2,
+                wins + 2);
         if (result.isPresent()) {
             return result.get();
         } else {

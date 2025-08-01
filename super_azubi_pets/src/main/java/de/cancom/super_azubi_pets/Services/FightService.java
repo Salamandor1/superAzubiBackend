@@ -56,6 +56,7 @@ public class FightService {
         // Generate Teams
         fight.setPlayerTeam(fetchPlayerTeam(fight.getGame()));
         Game ghostGame = gameService.findGameByStatus(game);
+        System.out.println(ghostGame.getGameID());
         if (teamService.areEqual(game.getTeam(), ghostGame.getTeam())) {
             ghostGame = null;
         }
