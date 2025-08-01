@@ -85,4 +85,8 @@ public class AnimalService {
         }
         return response;
     }
+
+    public void deleteAll() {
+        baseAnimalRepo.deleteAll();
+    }
 }

@@ -72,6 +72,7 @@ public class TeamAnimalService {
     // Delete
     public void deleteAllTeamAnimal() {
         teamAnimalRepo.deleteAll();
+        teamAnimalRepo.resetIDSequence();
     }
 
     // Convert

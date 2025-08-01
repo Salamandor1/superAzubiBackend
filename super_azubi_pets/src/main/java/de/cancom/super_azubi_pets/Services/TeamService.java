@@ -98,6 +98,12 @@ public class TeamService {
             throw new EntityNotFoundException("Team with ID " + id + " not found");
     }
 
+    // Delete all
+    public void deleteAll() {
+        teamRepo.deleteAll();
+        teamRepo.resetIDSequence();
+    }
+
     // Convert to DTO
     public TeamResponseDTO convertToDTO(Team team) {
         return new TeamResponseDTO(team);
@@ -114,6 +120,40 @@ public class TeamService {
     // Save method for external use
     public void save(Team team) {
         teamRepo.save(team);
+    }
+
+    public boolean areEqual(Team a, Team b) {
+        List<TeamAnimal> listA = a.getAllAnimals();
+        List<TeamAnimal> listB = b.getAllAnimals();
+
+        if (listA.size() != listB.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < listA.size(); i++) {
+            TeamAnimal animalA = listA.get(i);
+            TeamAnimal animalB = listB.get(i);
+            if (animalA == animalB) {
+                continue;
+            }
+            if (animalA == null || animalB == null) {
+                return false;
+            }
+            if (animalA.getName() != animalB.getName()) {
+                return false;
+            }
+            if (animalA.getHealth() != animalB.getHealth()) {
+                return false;
+            }
+            if (animalA.getAttack() != animalB.getAttack()) {
+                return false;
+            }
+            if (animalA.getLevel() != animalB.getLevel()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

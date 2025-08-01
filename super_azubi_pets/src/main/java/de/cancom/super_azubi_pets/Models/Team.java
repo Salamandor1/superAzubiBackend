@@ -44,6 +44,16 @@ public class Team {
     public Team() {
     }
 
+    public Team(Team team) {
+        for (int i = 0; i < 5; i++) {
+            if (team.getSlotByIndex(i) == null) {
+                this.setSlotByIndex(null, i);
+            } else {
+                this.setSlotByIndex(new TeamAnimal(team.getSlotByIndex(i)), i);
+            }
+        }
+    }
+
     public Long getID() {
         return team_id;
     }

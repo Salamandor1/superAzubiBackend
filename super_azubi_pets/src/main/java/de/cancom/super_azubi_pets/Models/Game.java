@@ -27,6 +27,13 @@ public class Game {
     public Game() {
     }
 
+    public Game(Game game) {
+        this.hearts = game.hearts;
+        this.rounds = game.rounds;
+        this.wins = game.wins;
+        this.team = new Team(game.team);
+    }
+
     public Long getGameID() {
         return game_ID;
     }

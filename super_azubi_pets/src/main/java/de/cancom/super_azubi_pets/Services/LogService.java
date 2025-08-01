@@ -50,4 +50,9 @@ public class LogService {
             throw new EntityNotFoundException("Log with ID " + id + " not found.");
     }
 
+    // Delete all
+    public void deleteAll() {
+        logRepo.deleteAll();
+    }
+
 }
