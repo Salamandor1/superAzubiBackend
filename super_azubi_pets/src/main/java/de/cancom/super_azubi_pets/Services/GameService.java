@@ -97,4 +97,11 @@ public class GameService {
         gameRepo.deleteAll();
     }
 
+    // Copy
+    public void copyGame(Long id) {
+        Game game = fetchGame(id);
+        Game copy = new Game(game);
+        gameRepo.save(copy);
+    }
+
 }

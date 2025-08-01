@@ -51,6 +51,9 @@ public class TeamAnimal {
     }
 
     public TeamAnimal(TeamAnimal original) {
+        if (original == null) {
+            return;
+        }
         this.baseAnimal = original.getBaseAnimal();
         this.health = original.getHealth();
         this.attack = original.getAttack();
