@@ -47,6 +47,11 @@ public class GameService {
         return new GameResponseDTO(newGame);
     }
 
+    // Save
+    public void saveGame(Game game) {
+        gameRepo.save(game);
+    }
+
     // Read
     public List<GameResponseDTO> getAllGames() {
         List<Game> games = gameRepo.findAll();
@@ -87,6 +92,11 @@ public class GameService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"));
     }
 
+    // Fetch all
+    public List<Game> fetchAllGames() {
+        return gameRepo.findAll();
+    }
+
     // Delete
     public void deleteGameByID(Long id) {
         if (gameRepo.existsById(id)) {
@@ -98,6 +108,7 @@ public class GameService {
     // Delete
     public void deleteAllGames() {
         gameRepo.deleteAll();
+        gameRepo.resetIDSequence();
     }
 
     // Copy

@@ -3,8 +3,8 @@ package de.cancom.super_azubi_pets.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.cancom.super_azubi_pets.Models.Log;
 import de.cancom.super_azubi_pets.EmbeddedIds.LogID;
+import de.cancom.super_azubi_pets.Models.Log;
 
 /**
  * Methods granted automatically:

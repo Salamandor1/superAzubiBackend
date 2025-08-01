@@ -8,6 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import de.cancom.super_azubi_pets.Models.Animal;
+import de.cancom.super_azubi_pets.Models.Game;
+import de.cancom.super_azubi_pets.Services.GameService;
+import de.cancom.super_azubi_pets.Services.LogService;
+import de.cancom.super_azubi_pets.Services.TeamAnimalService;
+import de.cancom.super_azubi_pets.Services.TeamService;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
@@ -15,20 +20,57 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private GameService gameService;
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    private TeamAnimalService teamAnimalService;
+
+    @Autowired
+    private TeamService teamService;
+
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Starte Daten seeding der Tiere.");
         try {
+            List<Game> savedGames = saveGames();
+            deleteDatabase();
             loadInitialAnimals();
+            refeedGames(savedGames);
+            System.out.println("Daten seeding abgeschlossen.");
         } catch (Exception e) {
-
+            System.out.println("Daten seeding abgebrochen.");
+            e.printStackTrace();
         }
-        System.out.println("Daten seeding abgeschlossen.");
+
+    }
+
+    private List<Game> saveGames() {
+        List<Game> oldGames = gameService.fetchAllGames();
+        List<Game> newGames = refreshGames(oldGames);
+        return newGames;
+    }
+
+    private List<Game> refreshGames(List<Game> oldGames) {
+        List<Game> newGames = new ArrayList<>();
+        for (Game game : oldGames) {
+            newGames.add(new Game(game));
+        }
+        return newGames;
+    }
+
+    private void deleteDatabase() {
+        gameService.deleteAllGames();
+        logService.deleteAll();
+        teamService.deleteAll();
+        teamAnimalService.deleteAllTeamAnimal();
+        animalRepository.deleteAll();
     }
 
     private void loadInitialAnimals() {
-
-        animalRepository.deleteAll();
 
         /*
          * Skill:
@@ -86,6 +128,12 @@ public class DataSeeder implements CommandLineRunner {
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);
+        }
+    }
+
+    private void refeedGames(List<Game> games) {
+        for (Game game : games) {
+            gameService.saveGame(game);
         }
     }
 }

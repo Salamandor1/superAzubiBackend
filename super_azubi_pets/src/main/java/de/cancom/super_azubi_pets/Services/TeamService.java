@@ -98,6 +98,12 @@ public class TeamService {
             throw new EntityNotFoundException("Team with ID " + id + " not found");
     }
 
+    // Delete all
+    public void deleteAll() {
+        teamRepo.deleteAll();
+        teamRepo.resetIDSequence();
+    }
+
     // Convert to DTO
     public TeamResponseDTO convertToDTO(Team team) {
         return new TeamResponseDTO(team);
