@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
 
-    @Query(value = "SELECT * FROM game WHERE rounds BETWEEN :rounds - 1 AND :rounds + 1 AND hearts = :hearts AND wins = :wins ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM game WHERE rounds = :rounds AND hearts BETWEEN :hearts - 2 AND :hearts +2 AND wins BETWEEN :wins - 2 AND :wins + 2 ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
     Optional<Game> findGameByStatus(@Param("hearts") int hearts, @Param("rounds") int rounds, @Param("wins") int wins);
 
     @Transactional
