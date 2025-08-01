@@ -104,4 +104,9 @@ public class GameService {
         gameRepo.save(copy);
     }
 
+    // Find by Status
+    public Game findGameByStatus(Game game) {
+        return null;
+    }
+
 }

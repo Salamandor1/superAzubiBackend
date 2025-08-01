@@ -29,7 +29,7 @@ public class Game {
 
     public Game(Game game) {
         this.hearts = game.hearts;
-        this.rounds = game.hearts;
+        this.rounds = game.rounds;
         this.wins = game.wins;
         this.team = new Team(game.team);
     }

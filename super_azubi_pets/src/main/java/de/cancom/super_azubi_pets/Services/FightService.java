@@ -37,6 +37,9 @@ public class FightService {
     @Autowired
     private SkillService skillService;
 
+    @Autowired
+    private GameService gameService;
+
     public FightService() {
     }
 
@@ -49,7 +52,12 @@ public class FightService {
 
         // Generate Teams
         fight.setPlayerTeam(fetchPlayerTeam(fight.getGame()));
-        fight.setNpcTeam(generateNpcTeam(fight.getGame()));
+        Game ghostGame = gameService.findGameByStatus(game);
+        if (ghostGame == null) {
+            fight.setNpcTeam(generateNpcTeam(fight.getGame()));
+        } else {
+            fight.setNpcTeam(ghostGame.getTeam());
+        }
         copyTeams(fight);
 
         // Init fight

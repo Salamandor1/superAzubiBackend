@@ -24,8 +24,8 @@ public class FightController {
     // ResolveFight
     @GetMapping("/{gameID}")
     public ResponseEntity<Log> resolveFight(@PathVariable Long gameID) {
-        Log log = fightService.resolveFight(gameID);
         gameService.copyGame(gameID);
+        Log log = fightService.resolveFight(gameID);
         return ResponseEntity.ok(log);
     }
 
