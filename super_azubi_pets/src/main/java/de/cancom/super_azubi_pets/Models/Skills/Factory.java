@@ -13,6 +13,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Thorns;
 
 public class Factory {
 
@@ -25,7 +26,8 @@ public class Factory {
             "RACHE", Revenge::new,
             "MUT", Courage::new,
             "NONE", None::new,
-            "VERSTECKEN", Hide::new);
+            "VERSTECKEN", Hide::new,
+            "DORNEN", Thorns::new);
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
