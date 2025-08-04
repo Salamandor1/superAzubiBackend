@@ -47,6 +47,7 @@ public class AnimalService {
         switch (round) {
             case 15:
                 lowestTier++;
+                highestTier++;
             case 14, 13, 12, 11:
                 lowestTier++;
                 highestTier++;
