@@ -137,6 +137,11 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Rex", "🦖", 4, 10, 6, "[RAGE]"));
         standardAnimals.add(new Animal("Alien", "👽", 10, 4, 6, "[NONE]"));
         standardAnimals.add(new Animal("Oger", "🧌", 5, 9, 6, "NONE"));
+        standardAnimals.add(new Animal("Goekdeniz", "🤡", 1, 0, 6, "NONE"));
+        standardAnimals.add(new Animal("Joshua", "🤑", 1, 10, 6, "NONE"));
+        standardAnimals.add(new Animal("Matthias", "😎", 40, 1, 6, "NONE"));
+        standardAnimals.add(new Animal("Meryem", "🧠", 10, 10, 6, "NONE"));
+        standardAnimals.add(new Animal("Tobias", "💩", 5, 6, 6, "NONE"));
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);
