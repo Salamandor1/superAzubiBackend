@@ -39,13 +39,15 @@ public class AnimalService {
 
     // GET random animal
     public Animal getRandomAnimal(int round) {
-        if (round > 11) {
-            round = 11;
+        if (round > 15) {
+            round = 15;
         }
         int lowestTier = 1;
         int highestTier = 1;
         switch (round) {
-            case 11:
+            case 15:
+                lowestTier++;
+            case 14, 13, 12, 11:
                 lowestTier++;
                 highestTier++;
             case 10, 9:
