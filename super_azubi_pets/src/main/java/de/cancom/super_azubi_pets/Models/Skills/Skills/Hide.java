@@ -10,6 +10,10 @@ public class Hide implements Skill {
     boolean isActive = false;
     boolean didUse = false;
 
+    public Hide(int level, int tier) {
+
+    }
+
     @Override
     public String getName() {
         return "Verstecken";

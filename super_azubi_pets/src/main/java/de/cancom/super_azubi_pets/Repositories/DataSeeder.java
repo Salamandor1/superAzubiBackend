@@ -81,6 +81,7 @@ public class DataSeeder implements CommandLineRunner {
          * Rage = [RAGE]
          * Revenge = [RACHE]
          * Shield = [SCHILD]
+         * Hide = [VERSTECKEN]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -89,7 +90,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[NONE]"));
         standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[NONE]"));
         standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[RAGE]"));
-        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[NONE] "));
+        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[VERSTECKEN] "));
         standardAnimals.add(new Animal("Pfau", "🦚", 1, 3, 1, "[NONE]"));
 
         // TIER 2: combined value 5 - 6
@@ -108,7 +109,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Biene", "🐝", 1, 6, 3, "[BESCHÜTZER]"));
         standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3, "[RAGE]"));
         standardAnimals.add(new Animal("Wal", "🐋", 6, 1, 3, "[NONE]"));
-        standardAnimals.add(new Animal("Gute Fee", "🧚‍♀️", 4, 3, 3, "[NONE]"));
+        standardAnimals.add(new Animal("Gute Fee", "🧚‍♀️", 4, 3, 3, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[NONE]"));
 
         // TIER 4: combined value 9 - 10
@@ -139,11 +140,11 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Oger", "🧌", 5, 9, 6, "NONE"));
 
         // TIER 7: combined value > 14
-        standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "NONE"));
-        standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "NONE"));
-        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "NONE"));
-        standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "NONE"));
-        standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "NONE"));
+        standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "[VERSTECKEN]"));
+        standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "[NONE]"));
+        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NONE]"));
+        standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "[NONE]"));
+        standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "[NONE]"));
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);

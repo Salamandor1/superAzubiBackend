@@ -8,6 +8,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Hide;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
@@ -23,7 +24,8 @@ public class Factory {
             "LEHRLING", Apprentice::new,
             "RACHE", Revenge::new,
             "MUT", Courage::new,
-            "NONE", None::new);
+            "NONE", None::new,
+            "VERSTECKEN", Hide::new);
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
