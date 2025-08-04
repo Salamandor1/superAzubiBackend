@@ -129,7 +129,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Geist", "👻", 10, 2, 5, "[NONE]"));
         standardAnimals.add(new Animal("Vampir", "🧛", 6, 5, 5, "[NONE]"));
 
-        // TIER 6: combined value > 12
+        // TIER 6: combined value 13 - 14
         standardAnimals.add(new Animal("Elefant", "🐘", 8, 5, 6, "[LEHRLING]"));
         standardAnimals.add(new Animal("Nashorn", "🦏", 6, 7, 6, "[RACHE]"));
         standardAnimals.add(new Animal("Mammut", "🦣", 7, 7, 6, "[BLOCK]"));
@@ -137,11 +137,13 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Rex", "🦖", 4, 10, 6, "[RAGE]"));
         standardAnimals.add(new Animal("Alien", "👽", 10, 4, 6, "[NONE]"));
         standardAnimals.add(new Animal("Oger", "🧌", 5, 9, 6, "NONE"));
-        standardAnimals.add(new Animal("Goekdeniz", "🤡", 1, 0, 6, "NONE"));
-        standardAnimals.add(new Animal("Joshua", "🤑", 1, 10, 6, "NONE"));
-        standardAnimals.add(new Animal("Matthias", "😎", 40, 1, 6, "NONE"));
-        standardAnimals.add(new Animal("Meryem", "🧠", 10, 10, 6, "NONE"));
-        standardAnimals.add(new Animal("Tobias", "💩", 5, 6, 6, "NONE"));
+
+        // TIER 7: combined value > 14
+        standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "NONE"));
+        standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "NONE"));
+        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "NONE"));
+        standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "NONE"));
+        standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "NONE"));
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);
