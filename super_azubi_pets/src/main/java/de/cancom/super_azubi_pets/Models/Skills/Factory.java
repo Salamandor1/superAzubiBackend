@@ -31,7 +31,7 @@ public class Factory {
             Map.entry("VERSTECKEN", Hide::new),
             Map.entry("DORNEN", Thorns::new),
             Map.entry("STICH", Sting::new),
-            Map.entry("TRAMEPL", Trample::new));
+            Map.entry("TRAMPEL", Trample::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);

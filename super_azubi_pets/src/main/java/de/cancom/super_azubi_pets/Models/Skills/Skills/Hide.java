@@ -29,7 +29,7 @@ public class Hide implements Skill {
         if (isActive) {
             return Trigger.BEFORE_ATTACK;
         } else {
-            return Trigger.ON_ATTACK;
+            return Trigger.AFTER_ATTACK;
         }
     }
 

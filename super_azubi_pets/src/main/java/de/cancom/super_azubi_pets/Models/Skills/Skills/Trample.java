@@ -1,5 +1,7 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
+import java.util.List;
+
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
@@ -40,17 +42,18 @@ public class Trample implements Skill {
             source = "Spieler";
             targetPlayer = "Gegner";
             user = state.getPlayerTeam().get(0);
-            target = state.getEnemyTeam().get(1);
+            target = getNext(state.getEnemyTeam());
             dmg = state.getOutgoingDmg();
         } else {
             source = "Gegner";
             targetPlayer = "Spieler";
             user = state.getEnemyTeam().get(0);
-            target = state.getPlayerTeam().get(1);
+            target = getNext(state.getPlayerTeam());
             dmg = state.getIncomingDmg();
         }
 
         if (target == null) {
+            System.out.println("No Valid Animal Found.");
             return;
         }
 
@@ -67,9 +70,23 @@ public class Trample implements Skill {
             append = target.getEmoji() + " stirbt.";
         }
 
-        state.setLog(state.getLog() + "[TRAMPEL] " + user.getEmoji() + "(" + source + " verletzt ebenfalls "
-                + target.getEmoji() + "(" + targetPlayer + "). " + append + "\n");
+        state.setLog(state.getLog() + "[TRAMPEL] " + user.getEmoji() + "(" + source + ") verursacht ebenfalls " + dmg
+                + " Schaden bei " + target.getEmoji() + "(" + targetPlayer + "). " + append + "\n");
 
+    }
+
+    private TeamAnimal getNext(List<TeamAnimal> team) {
+        boolean skipFirst = true;
+        for (TeamAnimal animal : team) {
+            if (skipFirst) {
+                skipFirst = false;
+                continue;
+            }
+            if (animal != null) {
+                return animal;
+            }
+        }
+        return null;
     }
 
 }
