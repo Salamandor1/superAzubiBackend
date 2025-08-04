@@ -78,7 +78,7 @@ public class Sting implements Skill {
             animalTarget += "(" + target + ") wurde/n besiegt.";
         }
 
-        state.setLog(state.getLog() + "[Stich] " + animalUser + " (" + user + ") fügt allen Gegnern " + dmg
+        state.setLog(state.getLog() + "[STICH] " + animalUser + " (" + user + ") fügt allen Gegnern " + dmg
                 + " Schaden zu. " + animalTarget + "\n");
 
     }
