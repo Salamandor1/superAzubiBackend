@@ -83,6 +83,7 @@ public class DataSeeder implements CommandLineRunner {
          * Shield = [SCHILD]
          * Hide = [VERSTECKEN]
          * Thorns = [DORNEN]
+         * String = [STICH]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -90,7 +91,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Faultier", "🦥", 1, 1, 1, "[MUT]"));
         standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[NONE]"));
         standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[NONE]"));
-        standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[RAGE]"));
+        standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[STICH]"));
         standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[VERSTECKEN] "));
         standardAnimals.add(new Animal("Pfau", "🦚", 1, 3, 1, "[NONE]"));
 
@@ -119,7 +120,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Katze", "🐱", 4, 5, 4, "[LEHRLING]"));
         standardAnimals.add(new Animal("Stier", "🐃", 2, 7, 4, "[RACHE]"));
         standardAnimals.add(new Animal("Snowy", "⛄", 8, 2, 4, "[SCHILD]"));
-        standardAnimals.add(new Animal("Skorpion", "🦂", 3, 7, 4, "[NONE]"));
+        standardAnimals.add(new Animal("Skorpion", "🦂", 3, 7, 4, "[STICH]"));
         standardAnimals.add(new Animal("Zombie", "🧟‍♂️", 4, 6, 4, "[NONE]"));
 
         // TIER 5: combined value 11 - 12
@@ -137,7 +138,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Mammut", "🦣", 7, 7, 6, "[BLOCK]"));
         standardAnimals.add(new Animal("Cthulhu", "🐙", 6, 8, 6, "[MUT]"));
         standardAnimals.add(new Animal("Rex", "🦖", 4, 10, 6, "[RAGE]"));
-        standardAnimals.add(new Animal("Alien", "👽", 10, 4, 6, "[NONE]"));
+        standardAnimals.add(new Animal("Alien", "👽", 10, 4, 6, "[STICH]"));
         standardAnimals.add(new Animal("Oger", "🧌", 5, 9, 6, "[NONE]"));
 
         // TIER 7: combined value > 14

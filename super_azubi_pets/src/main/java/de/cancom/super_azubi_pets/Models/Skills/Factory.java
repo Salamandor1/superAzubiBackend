@@ -13,21 +13,23 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Sting;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Thorns;
 
 public class Factory {
 
-    private static final Map<String, BiFunction<Integer, Integer, Skill>> SKILL_MAP = Map.of(
-            "BLOCK", Block::new,
-            "SCHILD", Shield::new,
-            "RAGE", Rage::new,
-            "BESCHÜTZER", Guardian::new,
-            "LEHRLING", Apprentice::new,
-            "RACHE", Revenge::new,
-            "MUT", Courage::new,
-            "NONE", None::new,
-            "VERSTECKEN", Hide::new,
-            "DORNEN", Thorns::new);
+    private static final Map<String, BiFunction<Integer, Integer, Skill>> SKILL_MAP = Map.ofEntries(
+            Map.entry("BLOCK", Block::new),
+            Map.entry("SCHILD", Shield::new),
+            Map.entry("RAGE", Rage::new),
+            Map.entry("BESCHÜTZER", Guardian::new),
+            Map.entry("LEHRLING", Apprentice::new),
+            Map.entry("RACHE", Revenge::new),
+            Map.entry("MUT", Courage::new),
+            Map.entry("NONE", None::new),
+            Map.entry("VERSTECKEN", Hide::new),
+            Map.entry("DORNEN", Thorns::new),
+            Map.entry("STICH", Sting::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
