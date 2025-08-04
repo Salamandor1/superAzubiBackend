@@ -10,10 +10,14 @@ import de.cancom.super_azubi_pets.Models.Skills.Trigger;
 public class Sting implements Skill {
 
     private final int dmg;
-    boolean wasPrinted = false;
 
     public Sting(int level, int tier) {
-        this.dmg = (int) (Math.round((level * tier) / 20.0));
+        int dmg = (int) (Math.round((level * tier) / 5.0));
+        if (dmg <= 0) {
+            this.dmg = 1;
+        } else {
+            this.dmg = dmg;
+        }
     }
 
     @Override
@@ -28,54 +32,55 @@ public class Sting implements Skill {
 
     @Override
     public Trigger getTrigger() {
-        if (wasPrinted) {
-            return Trigger.ON_ROUND_END;
-        } else {
-            return Trigger.ON_ROUND_START;
-        }
+        return Trigger.ON_GAME_START;
     }
 
     @Override
     public void apply(FightState state, String source) {
 
-        if (Trigger.ON_ROUND_END == getTrigger()) {
-            setWasPrinted(false);
-            return;
-        }
-
         List<TeamAnimal> users;
         List<TeamAnimal> targets;
         String user;
+        String target;
         String animalUser = "";
+        String animalTarget = "";
 
         if (source.equals("player")) {
+            target = "Gegner";
             targets = state.getEnemyTeam();
             user = "Spieler";
             users = state.getPlayerTeam();
         } else {
+            target = "Spieler";
             targets = state.getPlayerTeam();
             user = "Gegner";
             users = state.getEnemyTeam();
         }
 
         for (TeamAnimal animal : users) {
-            if (animal.getSkill() instanceof Sting && !this.wasPrinted) {
+            if (animal.getSkill() instanceof Sting) {
                 animalUser += animal.getEmoji();
-                setWasPrinted(true);
+                animal.setSkill(new None(0, 0));
+                break;
             }
         }
 
-        for (TeamAnimal target : targets) {
-            target.setHealth(target.getHealth() - dmg);
+        boolean didOneDie = false;
+        for (TeamAnimal animal : targets) {
+            animal.setHealth(animal.getHealth() - dmg);
+            if (animal.getHealth() <= 0) {
+                animalTarget += animal.getEmoji();
+                didOneDie = true;
+            }
+        }
+
+        if (didOneDie) {
+            animalTarget += "(" + target + ") wurde/n besiegt.";
         }
 
         state.setLog(state.getLog() + "[Stich] " + animalUser + " (" + user + ") fügt allen Gegnern " + dmg
-                + " Schaden zu.\n");
+                + " Schaden zu. " + animalTarget + "\n");
 
-    }
-
-    public void setWasPrinted(boolean wasPrinted) {
-        this.wasPrinted = wasPrinted;
     }
 
 }

@@ -51,6 +51,10 @@ public class Hide implements Skill {
             user = state.getEnemyTeam().get(0);
         }
 
+        if (user.getHealth() <= 0) {
+            return;
+        }
+
         if (!isActive) {
             state.setLog(state.getLog() + "[VERSTECKEN] " + user.getEmoji() + " (" + userStr
                     + ") bekommt Angst und versteckt sich.\n");
