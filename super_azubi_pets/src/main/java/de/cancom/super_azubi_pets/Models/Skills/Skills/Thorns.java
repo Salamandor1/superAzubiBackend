@@ -53,7 +53,8 @@ public class Thorns implements Skill {
         }
         dmg = (int) (Math.round(dmg * factor));
         target.setHealth(target.getHealth() - dmg);
-        state.setLog(state.getLog() + user.getEmoji() + "(" + userStr + ") reflektiert " + dmg + " Schaden gegen "
+        state.setLog(state.getLog() + "[DORNEN] " + user.getEmoji() + "(" + userStr + ") reflektiert " + dmg
+                + " Schaden gegen "
                 + target.getEmoji() + "(" + targetStr + ").\n");
     }
 

@@ -29,7 +29,7 @@ public class Hide implements Skill {
         if (isActive) {
             return Trigger.BEFORE_ATTACK;
         } else {
-            return Trigger.ON_ATTACK;
+            return Trigger.AFTER_ATTACK;
         }
     }
 
@@ -51,8 +51,13 @@ public class Hide implements Skill {
             user = state.getEnemyTeam().get(0);
         }
 
+        if (user.getHealth() <= 0) {
+            return;
+        }
+
         if (!isActive) {
-            state.setLog(state.getLog() + user.getEmoji() + " (" + userStr + ") bekommt Angst und versteckt sich.\n");
+            state.setLog(state.getLog() + "[VERSTECKEN] " + user.getEmoji() + " (" + userStr
+                    + ") bekommt Angst und versteckt sich.\n");
             isActive = true;
             return;
         }
@@ -63,8 +68,11 @@ public class Hide implements Skill {
             state.setOutgoingDmg(0);
         }
 
-        state.setLog(state.getLog() + user.getEmoji() + " (" + userStr
-                + ") versteckt sich und greift aus dem Hinterhalt an.");
+        isActive = false;
+        didUse = true;
+
+        state.setLog(state.getLog() + "[VERSTECKEN] " + user.getEmoji() + " (" + userStr
+                + ") versteckt sich und greift aus dem Hinterhalt an.\n");
 
     }
 
