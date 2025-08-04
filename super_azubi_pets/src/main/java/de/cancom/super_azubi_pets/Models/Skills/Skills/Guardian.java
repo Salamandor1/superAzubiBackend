@@ -53,6 +53,9 @@ public class Guardian implements Skill {
             if (animal == skip) {
                 continue;
             }
+            if(animal.getHealth() <= 0) {
+                continue;
+            }
             animal.setHealth(animal.getHealth() + boost);
         }
 
