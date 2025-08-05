@@ -40,10 +40,16 @@ public class FightState {
 
     public void setIncomingDmg(int incomingDmg) {
         this.incomingDmg = incomingDmg;
+        if (incomingDmg < 0) {
+            incomingDmg = 0;
+        }
     }
 
     public void setOutgoingDmg(int outgoingDmg) {
         this.outgoingDmg = outgoingDmg;
+        if (outgoingDmg < 0) {
+            outgoingDmg = 0;
+        }
     }
 
     public void setLog(String log) {
