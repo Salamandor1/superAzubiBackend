@@ -59,6 +59,12 @@ public class Membrane implements Skill {
             preventedDmg++;
         }
 
+        if (source.equals("Spieler")) {
+            state.setIncomingDmg(dmg);
+        } else {
+            state.setOutgoingDmg(dmg);
+        }
+
         state.setLog(state.getLog() + "[MEMBRAN] (" + user.getEmoji() + ", " + source + ") - Steckt " + preventedDmg
                 + " Schaden weg.\n");
 

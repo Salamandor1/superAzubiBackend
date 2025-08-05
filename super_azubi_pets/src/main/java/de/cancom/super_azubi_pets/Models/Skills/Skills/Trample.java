@@ -52,8 +52,11 @@ public class Trample implements Skill {
             dmg = state.getIncomingDmg();
         }
 
+        if (dmg == 0) {
+            return;
+        }
+
         if (target == null) {
-            System.out.println("No Valid Animal Found.");
             return;
         }
 
