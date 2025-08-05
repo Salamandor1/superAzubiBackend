@@ -85,6 +85,7 @@ public class DataSeeder implements CommandLineRunner {
          * Thorns = [DORNEN]
          * String = [STICH]
          * Trample = [TRAMPEL]
+         * Annoying = [NERVTÖTER]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -100,7 +101,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
         standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 3, 2, 2, "[LEHRLING]"));
         standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[NONE]"));
-        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NERVTÖTER]"));
         standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[NONE]"));
         standardAnimals.add(new Animal("Igel", "🦔", 4, 1, 2, "[DORNEN]"));
         standardAnimals.add(new Animal("Frosch", "🐸", 3, 1, 2, "[NONE]"));
@@ -145,7 +146,7 @@ public class DataSeeder implements CommandLineRunner {
         // TIER 7: combined value > 14
         standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "[TRAMPEL]"));
-        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NONE]"));
+        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NERVTÖTER]"));
         standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "[NONE]"));
         standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "[DORNEN]"));
 
