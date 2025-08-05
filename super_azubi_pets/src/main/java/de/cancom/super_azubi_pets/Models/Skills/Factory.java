@@ -17,6 +17,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Shield;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Sting;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Supply;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Thorns;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Trample;
 
@@ -37,7 +38,8 @@ public class Factory {
             Map.entry("TRAMPEL", Trample::new),
             Map.entry("NERVTÖTER", Annoying::new),
             Map.entry("MEMBRAN", Membrane::new),
-            Map.entry("CHARM", Charm::new));
+            Map.entry("CHARM", Charm::new),
+            Map.entry("VORRAT", Supply::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
