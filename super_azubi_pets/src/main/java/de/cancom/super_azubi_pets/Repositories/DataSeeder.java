@@ -96,7 +96,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[TRAMPEL]"));
         standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[NONE]"));
         standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[RAGE]"));
-        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[VERSTECKEN] "));
+        standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Pfau", "🦚", 1, 3, 1, "[CHARM]"));
 
         // TIER 2: combined value 5 - 6
