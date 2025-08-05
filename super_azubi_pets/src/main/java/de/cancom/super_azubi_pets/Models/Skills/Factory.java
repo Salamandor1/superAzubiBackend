@@ -4,11 +4,13 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Annoying;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Hide;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Membrane;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.None;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Rage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Revenge;
@@ -31,7 +33,9 @@ public class Factory {
             Map.entry("VERSTECKEN", Hide::new),
             Map.entry("DORNEN", Thorns::new),
             Map.entry("STICH", Sting::new),
-            Map.entry("TRAMPEL", Trample::new));
+            Map.entry("TRAMPEL", Trample::new),
+            Map.entry("NERVTÖTER", Annoying::new),
+            Map.entry("MEMBRAN", Membrane::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);

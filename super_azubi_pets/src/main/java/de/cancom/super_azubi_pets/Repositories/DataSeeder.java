@@ -85,6 +85,8 @@ public class DataSeeder implements CommandLineRunner {
          * Thorns = [DORNEN]
          * String = [STICH]
          * Trample = [TRAMPEL]
+         * Annoying = [NERVTÖTER]
+         * Membrane = [MEMBRAN]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -98,12 +100,12 @@ public class DataSeeder implements CommandLineRunner {
 
         // TIER 2: combined value 5 - 6
         standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
-        standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 3, 2, 2, "[LEHRLING]"));
+        standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 4, 2, 2, "[LEHRLING]"));
         standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[NONE]"));
-        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NONE]"));
-        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NERVTÖTER]"));
+        standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Igel", "🦔", 4, 1, 2, "[DORNEN]"));
-        standardAnimals.add(new Animal("Frosch", "🐸", 3, 1, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Frosch", "🐸", 3, 3, 2, "[MEMBRAN]"));
 
         // TIER 3: combined value 7 - 8
         standardAnimals.add(new Animal("Thaddäus", "🦑", 5, 2, 3, "[MUT]"));
@@ -111,7 +113,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Kamel", "🐪", 3, 5, 3, "[SCHILD]"));
         standardAnimals.add(new Animal("Biene", "🐝", 1, 6, 3, "[BESCHÜTZER]"));
         standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3, "[RAGE]"));
-        standardAnimals.add(new Animal("Wal", "🐋", 6, 1, 3, "[NONE]"));
+        standardAnimals.add(new Animal("Wal", "🐋", 6, 1, 3, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Gute Fee", "🧚‍♀️", 4, 3, 3, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[NONE]"));
 
@@ -145,8 +147,8 @@ public class DataSeeder implements CommandLineRunner {
         // TIER 7: combined value > 14
         standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "[TRAMPEL]"));
-        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NONE]"));
-        standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "[NONE]"));
+        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NERVTÖTER]"));
+        standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "[DORNEN]"));
 
         for (Animal animal : standardAnimals) {
