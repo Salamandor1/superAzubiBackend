@@ -65,12 +65,13 @@ public class Charm implements Skill {
             from = "Gegner";
             to = "Spieler";
         }
-        state.setIncomingDmg(0);
-        state.setOutgoingDmg(0);
 
         if (targets.size() < 2) {
             return;
         }
+
+        state.setIncomingDmg(0);
+        state.setOutgoingDmg(0);
 
         int index = (int) (Math.random() * (targets.size() - 1)) + 1;
         TeamAnimal target = targets.get(index);

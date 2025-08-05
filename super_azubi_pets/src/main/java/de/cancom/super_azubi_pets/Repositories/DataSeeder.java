@@ -89,6 +89,7 @@ public class DataSeeder implements CommandLineRunner {
          * Membrane = [MEMBRAN]
          * Charm = [CHARM]
          * Supply = [VORRAT]
+         * Feed = [FÜTTERN]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -103,7 +104,7 @@ public class DataSeeder implements CommandLineRunner {
         // TIER 2: combined value 5 - 6
         standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
         standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 4, 2, 2, "[LEHRLING]"));
-        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[FÜTTERN]"));
         standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NERVTÖTER]"));
         standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Igel", "🦔", 4, 1, 2, "[DORNEN]"));
@@ -117,7 +118,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3, "[RAGE]"));
         standardAnimals.add(new Animal("Wal", "🐋", 6, 1, 3, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Gute Fee", "🧚‍♀️", 4, 3, 3, "[VERSTECKEN]"));
-        standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[NONE]"));
+        standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[FÜTTERN]"));
 
         // TIER 4: combined value 9 - 10
         standardAnimals.add(new Animal("Gorilla", "🦍", 5, 5, 4, "[RAGE]"));
