@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.Game;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Services.GameService;
 import de.cancom.super_azubi_pets.Services.LogService;
 import de.cancom.super_azubi_pets.Services.TeamAnimalService;
@@ -89,6 +90,8 @@ public class DataSeeder implements CommandLineRunner {
          * Membrane = [MEMBRAN]
          * Charm = [CHARM]
          * Supply = [VORRAT]
+         * Feed = [FÜTTERN]
+         * Undead = [UNTOT]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -103,7 +106,7 @@ public class DataSeeder implements CommandLineRunner {
         // TIER 2: combined value 5 - 6
         standardAnimals.add(new Animal("Biber", "🦫", 3, 2, 2, "[BLOCK]"));
         standardAnimals.add(new Animal("Rabe", "🐦‍⬛", 4, 2, 2, "[LEHRLING]"));
-        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[NONE]"));
+        standardAnimals.add(new Animal("Wurm", "🪱", 2, 3, 2, "[FÜTTERN]"));
         standardAnimals.add(new Animal("Fliege", "🪰", 1, 4, 2, "[NERVTÖTER]"));
         standardAnimals.add(new Animal("Fisch", "🐟", 2, 4, 2, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Igel", "🦔", 4, 1, 2, "[DORNEN]"));
@@ -117,7 +120,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Ameise", "🐜", 2, 5, 3, "[RAGE]"));
         standardAnimals.add(new Animal("Wal", "🐋", 6, 1, 3, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Gute Fee", "🧚‍♀️", 4, 3, 3, "[VERSTECKEN]"));
-        standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[NONE]"));
+        standardAnimals.add(new Animal("Spinne", "🕷️", 2, 6, 3, "[FÜTTERN]"));
 
         // TIER 4: combined value 9 - 10
         standardAnimals.add(new Animal("Gorilla", "🦍", 5, 5, 4, "[RAGE]"));
@@ -126,7 +129,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Stier", "🐃", 2, 7, 4, "[RACHE]"));
         standardAnimals.add(new Animal("Snowy", "⛄", 8, 2, 4, "[SCHILD]"));
         standardAnimals.add(new Animal("Skorpion", "🦂", 3, 7, 4, "[STICH]"));
-        standardAnimals.add(new Animal("Zombie", "🧟‍♂️", 4, 6, 4, "[NONE]"));
+        standardAnimals.add(new Animal("Zombie", "🧟‍♂️", 4, 6, 4, "[UNTOT]"));
 
         // TIER 5: combined value 11 - 12
         standardAnimals.add(new Animal("Schlange", "🐍", 10, 1, 5, "[SCHILD]"));
@@ -135,7 +138,7 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Kugelfisch", "🐡", 2, 10, 5, "[RACHE]"));
         standardAnimals.add(new Animal("Adler", "🦅", 4, 7, 5, "[LEHRLING]"));
         standardAnimals.add(new Animal("Geist", "👻", 10, 2, 5, "[CHARM]"));
-        standardAnimals.add(new Animal("Vampir", "🧛", 6, 5, 5, "[NONE]"));
+        standardAnimals.add(new Animal("Vampir", "🧛", 6, 5, 5, "[UNTOT]"));
 
         // TIER 6: combined value 13 - 14
         standardAnimals.add(new Animal("Elefant", "🐘", 8, 5, 6, "[LEHRLING]"));
@@ -162,7 +165,19 @@ public class DataSeeder implements CommandLineRunner {
 
     private void refeedGames(List<Game> games) {
         for (Game game : games) {
+            if (isTeamEmpty(game.getTeam().getAllAnimals())) {
+                continue;
+            }
             gameService.saveGame(game);
         }
+    }
+
+    private boolean isTeamEmpty(List<TeamAnimal> team) {
+        for (TeamAnimal animal : team) {
+            if (animal != null) {
+                return false;
+            }
+        }
+        return true;
     }
 }
