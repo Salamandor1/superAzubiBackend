@@ -88,13 +88,14 @@ public class DataSeeder implements CommandLineRunner {
          * Annoying = [NERVTÖTER]
          * Membrane = [MEMBRAN]
          * Charm = [CHARM]
+         * Supply = [VORRAT]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
         // TIER 1: combined value 2 - 4
         standardAnimals.add(new Animal("Faultier", "🦥", 1, 1, 1, "[MUT]"));
         standardAnimals.add(new Animal("Pferd", "🐴", 2, 2, 1, "[TRAMPEL]"));
-        standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[NONE]"));
+        standardAnimals.add(new Animal("Eichhörnchen", "🐿️", 2, 1, 1, "[VORRAT]"));
         standardAnimals.add(new Animal("Mücke", "🦟", 3, 1, 1, "[RAGE]"));
         standardAnimals.add(new Animal("Hase", "🐰", 1, 2, 1, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Pfau", "🦚", 1, 3, 1, "[CHARM]"));
