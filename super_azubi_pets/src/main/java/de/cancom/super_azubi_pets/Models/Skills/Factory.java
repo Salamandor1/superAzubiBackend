@@ -7,6 +7,7 @@ import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Annoying;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Apprentice;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Block;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Charm;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Courage;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Guardian;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Hide;
@@ -35,7 +36,8 @@ public class Factory {
             Map.entry("STICH", Sting::new),
             Map.entry("TRAMPEL", Trample::new),
             Map.entry("NERVTÖTER", Annoying::new),
-            Map.entry("MEMBRAN", Membrane::new));
+            Map.entry("MEMBRAN", Membrane::new),
+            Map.entry("CHARM", Charm::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);
