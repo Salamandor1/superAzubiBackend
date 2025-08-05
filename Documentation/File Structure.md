@@ -1,4 +1,4 @@
-# Model View Controllertasks
+# Model View Controller
 
 ## What is Model View Controller?
 
@@ -6,7 +6,7 @@ Model View Controller is a software design pattern that is often used to seperat
 
 E.g., if there is something wrong with the API endpoints, one only has to look through the Controller Class in which the endpoints are.
 
-Based on this, this project is seperated into these types of classes explained below:
+Based on this, this project is seperated into these types of classes and are located in the folder with the matching name:
 
 
 ## Model
@@ -31,4 +31,8 @@ These classes hold the API endpoints
 
 ## DTO
 
-DTOs (Data Transfger Objects) are used in endpoints to send and return data. This way, one can control how much information of a database entry can be returned. Not always do we want to share all the info saved in a database table. To only provide the necessary information, a DTO can be useful
+DTOs (Data Transfer Objects) are used in endpoints to send and return data. This way, one can control how much information of a database entry can be returned. Not always do we want to share all the info saved in a database table. To only provide the necessary information, a DTO can be useful
+
+## Additional: EmbeddedIds
+
+In SpringBoot, when the primary key of your database entity consists of multiple attributes, you can write a class that consists of these attributes and use this class as the type of your primary key. These data structures are called Embedded Id.
