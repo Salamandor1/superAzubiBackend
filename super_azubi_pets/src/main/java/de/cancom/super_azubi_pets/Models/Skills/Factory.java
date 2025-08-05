@@ -21,6 +21,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Skills.Sting;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Supply;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Thorns;
 import de.cancom.super_azubi_pets.Models.Skills.Skills.Trample;
+import de.cancom.super_azubi_pets.Models.Skills.Skills.Undead;
 
 public class Factory {
 
@@ -41,7 +42,8 @@ public class Factory {
             Map.entry("MEMBRAN", Membrane::new),
             Map.entry("CHARM", Charm::new),
             Map.entry("VORRAT", Supply::new),
-            Map.entry("FÜTTERN", Feed::new));
+            Map.entry("FÜTTERN", Feed::new),
+            Map.entry("UNTOT", Undead::new));
 
     public static Skill createSkill(String skill, TeamAnimal user) {
         skill = trim(skill);

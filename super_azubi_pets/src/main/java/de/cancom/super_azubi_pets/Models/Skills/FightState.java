@@ -97,6 +97,12 @@ public class FightState {
         for (int i = 0; i < playerTeam.size(); i++) {
             addToMap(playerTeam.get(i), fight.getPlayerTeam().getSlotByIndex(i));
         }
+        if (fight.getNpcTeam().getAllAnimals().isEmpty() || enemyTeam.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < enemyTeam.size(); i++) {
+            addToMap(enemyTeam.get(i), fight.getNpcTeam().getSlotByIndex(i));
+        }
     }
 
 }
