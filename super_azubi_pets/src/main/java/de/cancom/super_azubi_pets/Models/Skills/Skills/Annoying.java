@@ -1,5 +1,8 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
@@ -46,26 +49,38 @@ public class Annoying implements Skill {
             charges--;
         }
 
-        TeamAnimal user;
+        List<TeamAnimal> userTeam = new ArrayList<>();
+        TeamAnimal user = new TeamAnimal();
         TeamAnimal target;
         String who;
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
+            userTeam = state.getPlayerTeam();
             target = state.getEnemyTeam().get(0);
             source = "Spieler";
             who = "Gegner";
         } else {
-            user = state.getEnemyTeam().get(0);
+            userTeam = state.getEnemyTeam();
             target = state.getPlayerTeam().get(0);
             source = "Gegner";
             who = "Spieler";
         }
 
+        if (target.getSkill() instanceof None) {
+            return;
+        }
+
+        for (TeamAnimal animal : userTeam) {
+            if (animal.getSkill() == this) {
+                user = animal;
+                break;
+            }
+        }
+
         target.setSkill(new None(0, 0));
 
         state.setLog(state.getLog() + "[NERVTÖTER] (" + user.getEmoji() + ", " + source
-                + ") - verhindert den Einsatz der Fähigkeit von " + target.getEmoji() + "(" + who + ").");
+                + ") - verhindert den Einsatz der Fähigkeit von " + target.getEmoji() + "(" + who + ").\n");
 
     }
 

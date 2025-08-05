@@ -11,6 +11,9 @@ public class Membrane implements Skill {
 
     public Membrane(int level, int tier) {
         this.shield = Math.round((level / 4) * tier);
+        if (shield <= 1) {
+            shield = 2;
+        }
     }
 
     @Override
@@ -57,7 +60,7 @@ public class Membrane implements Skill {
         }
 
         state.setLog(state.getLog() + "[MEMBRAN] (" + user.getEmoji() + ", " + source + ") - Steckt " + preventedDmg
-                + " Schaden weg.");
+                + " Schaden weg.\n");
 
     }
 
