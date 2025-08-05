@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import de.cancom.super_azubi_pets.Models.Animal;
 import de.cancom.super_azubi_pets.Models.Game;
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Services.GameService;
 import de.cancom.super_azubi_pets.Services.LogService;
 import de.cancom.super_azubi_pets.Services.TeamAnimalService;
@@ -164,7 +165,19 @@ public class DataSeeder implements CommandLineRunner {
 
     private void refeedGames(List<Game> games) {
         for (Game game : games) {
+            if (isTeamEmpty(game.getTeam().getAllAnimals())) {
+                continue;
+            }
             gameService.saveGame(game);
         }
+    }
+
+    private boolean isTeamEmpty(List<TeamAnimal> team) {
+        for (TeamAnimal animal : team) {
+            if (animal != null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

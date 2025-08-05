@@ -46,6 +46,10 @@ public class Feed implements Skill {
             targets = state.getEnemyTeam();
         }
 
+        if (user.getHealth() > 0) {
+            return;
+        }
+
         if (targets.size() < 2) {
             return;
         }
