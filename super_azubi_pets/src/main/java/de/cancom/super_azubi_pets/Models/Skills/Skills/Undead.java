@@ -40,8 +40,8 @@ public class Undead implements Skill {
 
         TeamAnimal original = state.getMap().get(user);
 
-        user.setHealth(original.getHealth());
-        user.setAttack(original.getAttack());
+        user.setHealth((int) Math.round(original.getHealth() / 2.0));
+        user.setAttack((int) Math.round(original.getAttack() / 2.0));
         user.setSkill(new None(0, 0));
 
         state.setLog(state.getLog() + "[UNTOT](" + user.getEmoji() + ", " + source + ") - wird wiederbelebt!\n");
