@@ -39,12 +39,18 @@ public class Trample implements Skill {
         int dmg;
 
         if (source.equals("player")) {
+            if (user != state.getPlayerTeam().get(0)) {
+                return;
+            }
             source = "enemy";
             from = "Spieler";
             to = "Gegner";
             target = getNext(state.getEnemyTeam());
             dmg = state.getOutgoingDmg();
         } else {
+            if (user != state.getEnemyTeam().get(0)) {
+                return;
+            }
             source = "player";
             from = "Gegner";
             to = "Spieler";

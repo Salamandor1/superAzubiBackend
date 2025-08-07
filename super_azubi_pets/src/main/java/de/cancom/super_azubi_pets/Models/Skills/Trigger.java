@@ -37,7 +37,12 @@ public enum Trigger {
     ON_FRIEND_DEATH,
     ON_ENEMY_DEATH,
     ON_HEALTH_THRESHOLD,
-    ON_DAMAGE,
+    ON_DAMAGE {
+        @Override
+        public List<TeamAnimal> trim(List<TeamAnimal> team) {
+            return List.of(team.get(0));
+        }
+    },
     NONE,
 
     ;

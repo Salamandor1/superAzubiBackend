@@ -44,8 +44,14 @@ public class Hide implements Skill {
 
         if (source.equals("player")) {
             userStr = "Spieler";
+            if (state.getIncomingDmg() <= 0) {
+                return;
+            }
         } else {
             userStr = "Gegner";
+            if (state.getOutgoingDmg() <= 0) {
+                return;
+            }
         }
 
         if (user.getHealth() <= 0) {
