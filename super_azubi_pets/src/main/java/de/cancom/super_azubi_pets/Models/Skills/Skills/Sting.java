@@ -54,13 +54,11 @@ public class Sting implements Skill {
             targets = state.getPlayerTeam();
         }
 
+        String log = state.getLog();
+
         for (TeamAnimal target : targets) {
             target.setHealth(target.getHealth() - dmg);
             skill = target.getSkill();
-
-            if (skill.getTrigger() == Trigger.ON_DAMAGE) {
-                skill.apply(state, newSource, target);
-            }
 
             if (target.getHealth() <= 0) {
                 died += target.getEmoji();
@@ -76,8 +74,9 @@ public class Sting implements Skill {
             died = "\n";
         }
 
-        state.setLog(state.getLog() + "[STICH](" + user.getEmoji() + ", " + from + ") - fügt allen Gegnern " + dmg
-                + " Schaden zu. " + died);
+        state.setLog(
+                log + "[STICH](" + user.getEmoji() + ", " + from + ") - reduziert ❤️ aller Gegner um " + dmg
+                        + ". " + died + "\n" + state.getLog());
 
     }
 

@@ -66,6 +66,8 @@ public class Revenge implements Skill {
         int index = (int) (Math.random() * (targets.size() - 1)) + 1;
         target = targets.get(index);
 
+        String log = state.getLog();
+
         Skill skill = target.getSkill();
         if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
             skill.apply(state, newSource, target);
@@ -79,15 +81,15 @@ public class Revenge implements Skill {
 
         target.setHealth(target.getHealth() - damage);
 
-        state.setLog(state.getLog() + "[RACHE](" + user.getEmoji() + ", " + from + ") - rächt sich und fügt "
-                + target.getEmoji() + "(" + to + ") " + damage + " Schaden zu. ");
+        state.setLog(log + "[RACHE](" + user.getEmoji() + ", " + from + ") - rächt sich und fügt "
+                + target.getEmoji() + "(" + to + ") " + damage + " Schaden zu. " + state.getLog());
 
         if (skill.getTrigger() == Trigger.ON_DAMAGE) {
             skill.apply(state, newSource, target);
         }
 
         if (target.getHealth() <= 0) {
-            state.setLog(state.getLog() + target.getEmoji() + "stirbt.");
+            state.setLog(state.getLog() + target.getEmoji() + "(" + to + ") wurde besiegt.");
             if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
                 skill.apply(state, newSource, target);
             }

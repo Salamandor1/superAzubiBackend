@@ -117,12 +117,14 @@ public class Charm implements Skill {
         if (source.equals("player")) {
             Skill skill2 = state.getEnemyTeam().get(0).getSkill();
             state.setOutgoingDmg(state.getOutgoingDmg() * 2);
+            state.setLog(state.getLog() + "\n");
             if (skill2 instanceof Charm) {
                 skill2.apply(state, "enemy", state.getEnemyTeam().get(0));
             }
         } else {
             Skill skill2 = state.getPlayerTeam().get(0).getSkill();
             state.setIncomingDmg(state.getIncomingDmg() * 2);
+            state.setLog(state.getLog() + "\n");
             if (skill2 instanceof Charm) {
                 skill2.apply(state, "player", state.getPlayerTeam().get(0));
             }
@@ -132,7 +134,7 @@ public class Charm implements Skill {
         state.setOutgoingDmg(0);
 
         if (target.getHealth() <= 0) {
-            state.setLog(state.getLog() + target.getEmoji() + " wurde besiegt.\n");
+            state.setLog(state.getLog() + target.getEmoji() + "(" + to + ") wurde besiegt.\n");
             if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
                 skill.apply(state, newSource, target);
             }
