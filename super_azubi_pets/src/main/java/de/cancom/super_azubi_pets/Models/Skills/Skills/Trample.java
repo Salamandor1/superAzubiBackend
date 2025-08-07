@@ -77,14 +77,18 @@ public class Trample implements Skill {
         state.setLog(state.getLog() + "[TRAMPEL] " + user.getEmoji() + "(" + from + ") verursacht ebenfalls " + dmg
                 + " Schaden bei " + target.getEmoji() + "(" + to + "). ");
 
+        Skill skill = target.getSkill();
+
         if (target.getHealth() <= 0) {
             state.setLog(state.getLog() + target.getEmoji() + " wurde besiegt.\n");
-            Skill skill = target.getSkill();
             if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
                 skill.apply(state, source, target);
             }
         } else {
             state.setLog(state.getLog() + "\n");
+            if (skill.getTrigger() == Trigger.ON_DAMAGE) {
+                skill.apply(state, source, target);
+            }
         }
 
     }

@@ -50,30 +50,6 @@ public class Charm implements Skill {
     @Override
     public void apply(FightState state, String source, TeamAnimal user) {
 
-        if (state.getPlayerTeam().get(0) == user) {
-            if (state.getEnemyTeam().get(0).getSkill() instanceof Charm) {
-                if (this.charges > 0 &&
-                        ((Charm) state.getEnemyTeam().get(0).getSkill()).getCharges() > 0) {
-                    applyBoth(state, user, state.getEnemyTeam().get(0));
-                    return;
-                }
-            }
-        }
-
-        if (state.getEnemyTeam().get(0) == user) {
-            if (state.getPlayerTeam().get(0).getSkill() instanceof Charm) {
-                if (this.charges > 0 &&
-                        ((Charm) state.getEnemyTeam().get(0).getSkill()).getCharges() > 0) {
-                    applyBoth(state, state.getPlayerTeam().get(0), user);
-                    return;
-                }
-            }
-        }
-
-        if (charges <= 0) {
-            return;
-        }
-
         List<TeamAnimal> targets;
         String from;
         String to;
@@ -88,7 +64,7 @@ public class Charm implements Skill {
             from = "Spieler";
             to = "Gegner";
             newSource = "enemy";
-            state.setOutgoingDmg((int) (Math.round(targets.get(0).getAttack() / 2.0)));
+            state.setOutgoingDmg((int) (Math.round(state.getIncomingDmg() / 2.0)));
         } else {
             if (state.getOutgoingDmg() <= 0) {
                 return;
@@ -97,7 +73,7 @@ public class Charm implements Skill {
             from = "Gegner";
             to = "Spieler";
             newSource = "player";
-            state.setIncomingDmg((int) (Math.round(targets.get(0).getAttack() / 2.0)));
+            state.setIncomingDmg((int) (Math.round(state.getOutgoingDmg() / 2.0)));
         }
 
         if (targets.size() < 2) {
@@ -106,12 +82,20 @@ public class Charm implements Skill {
             charges--;
         }
 
+        if (charges < 1) {
+            user.setSkill(new None(0, 0));
+        }
+
         int index = (int) (Math.random() * (targets.size() - 1)) + 1;
         TeamAnimal target = targets.get(index);
 
         Skill skill = target.getSkill();
         if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
-            skill.apply(state, newSource, target);
+            if (skill instanceof Charm) {
+
+            } else {
+                skill.apply(state, newSource, target);
+            }
         }
 
         if (source.equals("player")) {
@@ -130,6 +114,20 @@ public class Charm implements Skill {
             skill.apply(state, newSource, target);
         }
 
+        if (source.equals("player")) {
+            Skill skill2 = state.getEnemyTeam().get(0).getSkill();
+            state.setOutgoingDmg(state.getOutgoingDmg() * 2);
+            if (skill2 instanceof Charm) {
+                skill2.apply(state, "enemy", state.getEnemyTeam().get(0));
+            }
+        } else {
+            Skill skill2 = state.getPlayerTeam().get(0).getSkill();
+            state.setIncomingDmg(state.getIncomingDmg() * 2);
+            if (skill2 instanceof Charm) {
+                skill2.apply(state, "player", state.getPlayerTeam().get(0));
+            }
+        }
+
         state.setIncomingDmg(0);
         state.setOutgoingDmg(0);
 
@@ -141,68 +139,6 @@ public class Charm implements Skill {
         } else {
             state.setLog(state.getLog() + "\n");
         }
-
-    }
-
-    private void applyBoth(FightState state, TeamAnimal player, TeamAnimal enemy) {
-
-        state.setOutgoingDmg((int) (Math.round(enemy.getAttack() / 2.0)));
-        state.setIncomingDmg((int) (Math.round(player.getAttack() / 2.0)));
-
-        List<TeamAnimal> playerTeam = state.getPlayerTeam();
-        List<TeamAnimal> enemyTeam = state.getEnemyTeam();
-
-        if (playerTeam.size() >= 2) {
-            ((Charm) player.getSkill()).reduceCharges();
-            int index = (int) (Math.random() * (enemyTeam.size() - 1)) + 1;
-            TeamAnimal target = enemyTeam.get(index);
-            Skill skill = target.getSkill();
-            if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
-                skill.apply(state, "enemy", target);
-            }
-            target.setHealth(target.getHealth() - state.getOutgoingDmg());
-            state.setLog(state.getLog() + "[CHARM](" + player.getEmoji() + ", Spieler) - leitet "
-                    + state.getOutgoingDmg() + " Schaden an " + target.getEmoji() + "(Gegner) weiter. ");
-            if (target.getHealth() <= 0) {
-                state.setLog(state.getLog() + target.getEmoji() + "wurde besiegt.\n");
-                if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
-                    skill.apply(state, "enemy", target);
-                }
-            } else {
-                state.setLog(state.getLog() + "\n");
-                if (skill.getTrigger() == Trigger.ON_DAMAGE) {
-                    skill.apply(state, "enemy", target);
-                }
-            }
-        }
-
-        state.setOutgoingDmg(0);
-
-        if (enemyTeam.size() >= 2) {
-            ((Charm) enemy.getSkill()).reduceCharges();
-            int index = (int) (Math.random() * (playerTeam.size() - 1)) + 1;
-            TeamAnimal target = playerTeam.get(index);
-            Skill skill = target.getSkill();
-            if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
-                skill.apply(state, "player", target);
-            }
-            target.setHealth(target.getHealth() - state.getIncomingDmg());
-            state.setLog(state.getLog() + "[CHARM](" + player.getEmoji() + ", Gegner) - leitet "
-                    + state.getIncomingDmg() + " Schaden an " + target.getEmoji() + "(Spieler) weiter. ");
-            if (target.getHealth() <= 0) {
-                state.setLog(state.getLog() + target.getEmoji() + "wurde besiegt.\n");
-                if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
-                    skill.apply(state, "player", target);
-                }
-            } else {
-                state.setLog(state.getLog() + "\n");
-                if (skill.getTrigger() == Trigger.ON_DAMAGE) {
-                    skill.apply(state, "player", target);
-                }
-            }
-        }
-
-        state.setIncomingDmg(0);
 
     }
 

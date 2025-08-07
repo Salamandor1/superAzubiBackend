@@ -29,7 +29,7 @@ public class Annoying implements Skill {
 
     @Override
     public String getDescription() {
-        return "Deaktiviert die Fähigkeit des Gegners.";
+        return "Deaktiviert die Fähigkeit eines oder mehrerer Gegner.";
     }
 
     @Override
@@ -40,20 +40,17 @@ public class Annoying implements Skill {
     @Override
     public void apply(FightState state, String source, TeamAnimal user) {
 
-        if (charges <= 0) {
-            return;
-        }
         TeamAnimal target;
-        String who;
+        String to;
 
         if (source.equals("player")) {
             target = state.getEnemyTeam().get(0);
             source = "Spieler";
-            who = "Gegner";
+            to = "Gegner";
         } else {
             target = state.getPlayerTeam().get(0);
             source = "Gegner";
-            who = "Spieler";
+            to = "Spieler";
         }
 
         if (target.getSkill() instanceof None || target.getSkill() == null) {
@@ -62,10 +59,14 @@ public class Annoying implements Skill {
             charges--;
         }
 
+        if (charges < 1) {
+            user.setSkill(new None(0, 0));
+        }
+
         target.setSkill(new None(0, 0));
 
         state.setLog(state.getLog() + "[NERVTÖTER] (" + user.getEmoji() + ", " + source
-                + ") - verhindert den Einsatz der Fähigkeit von " + target.getEmoji() + "(" + who + ").\n");
+                + ") - verhindert den Einsatz der Fähigkeit von " + target.getEmoji() + "(" + to + ").\n");
 
     }
 
