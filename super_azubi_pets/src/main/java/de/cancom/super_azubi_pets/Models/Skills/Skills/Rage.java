@@ -20,7 +20,7 @@ public class Rage implements Skill {
 
     @Override
     public Trigger getTrigger() {
-        return Trigger.AFTER_ATTACK;
+        return Trigger.ON_DAMAGE;
     }
 
     @Override
@@ -29,23 +29,26 @@ public class Rage implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
-        TeamAnimal target;
+        int dmg;
         if (source.equals("player")) {
-            target = state.getPlayerTeam().get(0);
+            dmg = state.getIncomingDmg();
         } else {
-            target = state.getEnemyTeam().get(0);
+            dmg = state.getOutgoingDmg();
         }
-        if (target.getHealth() <= 0) {
+        if (user.getHealth() <= 0) {
             return;
         }
-        target.setAttack(target.getAttack() + boost);
+        if (dmg < 1) {
+            return;
+        }
+        user.setAttack(user.getAttack() + boost);
         if (source.equals("player")) {
-            state.setLog(state.getLog() + "[RAGE] (" + target.getEmoji() + ", Spieler) - Angriff wurde um "
+            state.setLog(state.getLog() + "[RAGE] (" + user.getEmoji() + ", Spieler) - Angriff wurde um "
                     + boost + " erhöht.\n");
         } else {
-            state.setLog(state.getLog() + "[RAGE] (" + target.getEmoji() + ", Gegner) - Angriff wurde um "
+            state.setLog(state.getLog() + "[RAGE] (" + user.getEmoji() + ", Gegner) - Angriff wurde um "
                     + boost + " erhöht.\n");
         }
     }

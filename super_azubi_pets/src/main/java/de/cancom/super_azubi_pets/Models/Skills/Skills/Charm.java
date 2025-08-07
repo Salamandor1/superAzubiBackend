@@ -40,7 +40,7 @@ public class Charm implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (charges <= 0) {
             return;
@@ -48,42 +48,63 @@ public class Charm implements Skill {
             charges--;
         }
 
-        TeamAnimal user;
         List<TeamAnimal> targets;
         String from;
         String to;
         int dmg;
+        String newSource;
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             targets = state.getEnemyTeam();
             from = "Spieler";
             to = "Gegner";
+            newSource = "enemy";
+            state.setIncomingDmg(0);
+            state.setOutgoingDmg((int) (Math.round(targets.get(0).getAttack() / 2.0)));
         } else {
-            user = state.getEnemyTeam().get(0);
             targets = state.getPlayerTeam();
             from = "Gegner";
             to = "Spieler";
+            newSource = "player";
+            state.setIncomingDmg((int) (Math.round(targets.get(0).getAttack() / 2.0)));
+            state.setOutgoingDmg(0);
         }
 
         if (targets.size() < 2) {
             return;
         }
 
-        state.setIncomingDmg(0);
-        state.setOutgoingDmg(0);
-
         int index = (int) (Math.random() * (targets.size() - 1)) + 1;
         TeamAnimal target = targets.get(index);
-        dmg = (int) (Math.round(targets.get(0).getAttack() / 2.0));
+
+        Skill skill = target.getSkill();
+        if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
+            skill.apply(state, newSource, target);
+        }
+
+        if (source.equals("player")) {
+            dmg = state.getIncomingDmg();
+        } else {
+            dmg = state.getOutgoingDmg();
+        }
+
+        state.setIncomingDmg(0);
+        state.setOutgoingDmg(0);
 
         target.setHealth(target.getHealth() - dmg);
 
         state.setLog(state.getLog() + "[CHARM](" + user.getEmoji() + ", " + from + ") - leitet " + dmg + " Schaden an "
                 + target.getEmoji() + " (" + to + ") weiter.");
 
+        if (skill.getTrigger() == Trigger.ON_DAMAGE) {
+            skill.apply(state, newSource, target);
+        }
+
         if (target.getHealth() <= 0) {
             state.setLog(state.getLog() + target.getEmoji() + " wurde besiegt.");
+            if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
+                skill.apply(state, newSource, target);
+            }
         }
 
         state.setLog(state.getLog() + "\n");

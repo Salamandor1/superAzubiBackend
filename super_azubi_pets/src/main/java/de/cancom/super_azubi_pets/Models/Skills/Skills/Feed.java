@@ -31,17 +31,14 @@ public class Feed implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
-        TeamAnimal user;
         List<TeamAnimal> targets;
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             source = "Spieler";
             targets = state.getPlayerTeam();
         } else {
-            user = state.getEnemyTeam().get(0);
             source = "Gegner";
             targets = state.getEnemyTeam();
         }

@@ -9,7 +9,7 @@ import de.cancom.super_azubi_pets.Models.Skills.Trigger;
 
 public class Revenge implements Skill {
 
-    private final int damage;
+    private int damage;
 
     public Revenge(int level, int tier) {
         this.damage = 5 + ((level / 4) * (tier / 2));
@@ -27,43 +27,72 @@ public class Revenge implements Skill {
 
     @Override
     public Trigger getTrigger() {
-        return Trigger.ON_ATTACK;
+        return Trigger.ON_DAMAGE;
     }
 
     @Override
-    public void apply(FightState state, String source) {
-        String log = "[RACHE] (";
+    public void apply(FightState state, String source, TeamAnimal user) {
+
+        if (user.getHealth() <= 0) {
+            return;
+        }
+
+        List<TeamAnimal> targets;
+        TeamAnimal target;
+        String from;
+        String to;
+        String newSource;
+
         if (source.equals("player")) {
-            if (state.getEnemyTeam().size() < 2) {
-                return;
-            }
-            log += state.getPlayerTeam().get(0).getEmoji() + ", Spieler) - fügt einem zufälligen Gegner (";
-            log += apply(state.getEnemyTeam());
+            from = "Spieler";
+            to = "Gegner";
+            newSource = "enemy";
+            targets = state.getEnemyTeam();
+            state.setIncomingDmg(0);
+            state.setOutgoingDmg(damage);
         } else {
-            if (state.getPlayerTeam().size() < 2) {
-                return;
+            from = "Gegner";
+            to = "Spieler";
+            newSource = "player";
+            targets = state.getPlayerTeam();
+            state.setIncomingDmg(damage);
+            state.setOutgoingDmg(0);
+        }
+
+        if (targets.size() < 2) {
+            return;
+        }
+
+        int index = (int) (Math.random() * (targets.size() - 1)) + 1;
+        target = targets.get(index);
+
+        Skill skill = target.getSkill();
+        if (skill.getTrigger() == Trigger.BEFORE_ATTACK || skill.getTrigger() == Trigger.ON_ATTACK) {
+            skill.apply(state, newSource, target);
+        }
+
+        if (source.equals("player")) {
+            damage = state.getOutgoingDmg();
+        } else {
+            damage = state.getIncomingDmg();
+        }
+
+        target.setHealth(target.getHealth() - damage);
+
+        state.setLog(state.getLog() + "[RACHE](" + user.getEmoji() + ", " + from + ") - rächt sich und fügt "
+                + target.getEmoji() + "(" + to + ") " + damage + " Schaden zu. ");
+
+        if (skill.getTrigger() == Trigger.ON_DAMAGE) {
+            skill.apply(state, newSource, target);
+        }
+
+        if (target.getHealth() <= 0) {
+            state.setLog(state.getLog() + target.getEmoji() + "stirbt.");
+            if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
+                skill.apply(state, newSource, target);
             }
-            log += state.getEnemyTeam().get(0).getEmoji() + ", Gegner) - fügt einem zufälligen Gegner (";
-            log += apply(state.getPlayerTeam());
-        }
-        state.setLog(state.getLog() + log);
-    }
-
-    public String apply(List<TeamAnimal> team) {
-
-        if (team.size() < 2) {
-            return "";
         }
 
-        int index = (int) (Math.random() * (team.size() - 1)) + 1;
-
-        team.get(index).setHealth(team.get(index).getHealth() - damage);
-        if (team.get(index).getHealth() <= 0) {
-            return team.get(index).getEmoji() + ") " + damage + " Schaden zu. " + team.get(index).getEmoji()
-                    + " wurde besiegt.\n";
-        }
-
-        return team.get(index).getEmoji() + ") " + damage + " Schaden zu.\n";
-
+        state.setLog(state.getLog() + "\n");
     }
 }

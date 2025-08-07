@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
 import de.cancom.super_azubi_pets.Models.Skills.Trigger;
@@ -30,21 +31,16 @@ public class Block implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
-        int dmg = 1;
+    public void apply(FightState state, String source, TeamAnimal user) {
+        int dmg;
 
         if (isSourcePlayer(source)) {
-            dmg = state.getEnemyTeam().get(0).getAttack();
+            dmg = state.getIncomingDmg();
         } else {
-            dmg = state.getPlayerTeam().get(0).getAttack();
+            dmg = state.getOutgoingDmg();
         }
 
-        if (dmg == 1) {
-            if (isSourcePlayer(source)) {
-                state.setIncomingDmg(dmg);
-            } else {
-                state.setOutgoingDmg(dmg);
-            }
+        if (dmg < 1) {
             return;
         }
 
@@ -58,13 +54,11 @@ public class Block implements Skill {
         }
         if (isSourcePlayer(source)) {
             state.setIncomingDmg(dmg - blockedDmg);
-            state.setLog(state.getLog() + "[BLOCK] (" + state.getPlayerTeam().get(0).getEmoji()
-                    + ", Spieler) - Schaden wurde um " + blockedDmg + " reduziert.\n");
         } else {
             state.setOutgoingDmg(dmg - blockedDmg);
-            state.setLog(state.getLog() + "[BLOCK] (" + state.getEnemyTeam().get(0).getEmoji()
-                    + ", Gegner) - Schaden wurde um " + blockedDmg + " reduziert.\n");
         }
+        state.setLog(state.getLog() + "[BLOCK] (" + user.getEmoji()
+                + ", Spieler) - Schaden wurde um " + blockedDmg + " reduziert.\n");
     }
 
     public boolean isSourcePlayer(String source) {

@@ -29,26 +29,23 @@ public class Hide implements Skill {
         if (isActive) {
             return Trigger.BEFORE_ATTACK;
         } else {
-            return Trigger.AFTER_ATTACK;
+            return Trigger.ON_DAMAGE;
         }
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (didUse) {
             return;
         }
 
         String userStr = "";
-        TeamAnimal user;
 
         if (source.equals("player")) {
             userStr = "Spieler";
-            user = state.getPlayerTeam().get(0);
         } else {
             userStr = "Gegner";
-            user = state.getEnemyTeam().get(0);
         }
 
         if (user.getHealth() <= 0) {

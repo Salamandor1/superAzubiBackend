@@ -1,8 +1,5 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
@@ -41,40 +38,28 @@ public class Annoying implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (charges <= 0) {
             return;
-        } else {
-            charges--;
         }
-
-        List<TeamAnimal> userTeam = new ArrayList<>();
-        TeamAnimal user = new TeamAnimal();
         TeamAnimal target;
         String who;
 
         if (source.equals("player")) {
-            userTeam = state.getPlayerTeam();
             target = state.getEnemyTeam().get(0);
             source = "Spieler";
             who = "Gegner";
         } else {
-            userTeam = state.getEnemyTeam();
             target = state.getPlayerTeam().get(0);
             source = "Gegner";
             who = "Spieler";
         }
 
-        if (target.getSkill() instanceof None) {
+        if (target.getSkill() instanceof None || target.getSkill() == null) {
             return;
-        }
-
-        for (TeamAnimal animal : userTeam) {
-            if (animal.getSkill() == this) {
-                user = animal;
-                break;
-            }
+        } else {
+            charges--;
         }
 
         target.setSkill(new None(0, 0));

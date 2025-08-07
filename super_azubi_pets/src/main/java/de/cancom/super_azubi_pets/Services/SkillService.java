@@ -26,12 +26,12 @@ public class SkillService {
         List<TeamAnimal> toCheckEnemyTeam = trigger.trim(state.getEnemyTeam());
         for (TeamAnimal animal : toCheckPlayerTeam) {
             if (hasSkill(animal) && animal.getSkill() != null && animal.getSkill().getTrigger() == trigger) {
-                animal.getSkill().apply(state, "player");
+                animal.getSkill().apply(state, "player", animal);
             }
         }
         for (TeamAnimal animal : toCheckEnemyTeam) {
             if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
-                animal.getSkill().apply(state, "enemy");
+                animal.getSkill().apply(state, "enemy", animal);
             }
         }
     }

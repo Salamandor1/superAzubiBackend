@@ -17,6 +17,9 @@ public class Apprentice implements Skill {
             case 6:
                 this.boost = 3;
                 break;
+            case 7:
+                this.boost = 4;
+                break;
             default:
                 this.boost = 1;
         }
@@ -38,20 +41,20 @@ public class Apprentice implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
         if (source.equals("enemy")) {
             return;
         }
-        TeamAnimal fightAnimal = state.getPlayerTeam().get(0);
-        if (fightAnimal.getHealth() > 0 || fightAnimal.getLevel() >= 20) {
+
+        if (user.getHealth() > 0 || user.getLevel() >= 20) {
             return;
         }
 
-        TeamAnimal origin = state.getMap().get(fightAnimal);
+        TeamAnimal origin = state.getMap().get(user);
         origin.setLevel(origin.getLevel() + 1);
         origin.setHealth(origin.getHealth() + boost);
         origin.setAttack(origin.getAttack() + boost);
-        state.setLog(state.getLog() + "[LEHRLING] (" + fightAnimal.getEmoji()
+        state.setLog(state.getLog() + "[LEHRLING] (" + user.getEmoji()
                 + ", Spieler) - Level um 1 und alle Werte permanent um " + boost + " erhöht.\n");
         return;
 

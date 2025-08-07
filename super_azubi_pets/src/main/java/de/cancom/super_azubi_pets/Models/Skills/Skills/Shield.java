@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
 import de.cancom.super_azubi_pets.Models.Skills.Trigger;
@@ -40,16 +41,16 @@ public class Shield implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
         if (this.charges > 0) {
             this.charges--;
             if (source.equals("player")) {
                 state.setIncomingDmg(0);
-                state.setLog(state.getLog() + "[SCHILD] (" + state.getPlayerTeam().get(0).getEmoji()
+                state.setLog(state.getLog() + "[SCHILD] (" + user.getEmoji()
                         + ", Spieler" + ") - Schaden wird verhindert.\n");
             } else {
                 state.setOutgoingDmg(0);
-                state.setLog(state.getLog() + "[SCHILD] (" + state.getEnemyTeam().get(0).getEmoji()
+                state.setLog(state.getLog() + "[SCHILD] (" + user.getEmoji()
                         + ", Gegner" + ") - Schaden wird verhindert.\n");
             }
         }
