@@ -12,7 +12,6 @@ RUN if [ "${INSTALL_MAVEN}" = "true" ]; then su vscode -c "umask 0002 && . /usr/
 # Build-Phase
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-<<<<<<< HEAD
 COPY pom.xml .
 COPY src ./src
 RUN ./mvnw clean package -DskipTests
@@ -24,5 +23,6 @@ COPY --from=build /app/target/*.jar app.jar
 ENV PORT=8080
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
 
 
