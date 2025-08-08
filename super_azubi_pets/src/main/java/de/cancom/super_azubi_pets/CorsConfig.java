@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:4200", "https://superfrontend.onrender.com") // URL deines Frontends bei Render
+                    .allowedOrigins("http://localhost:4200", "https://superfrontend.onrender.com", "https://super-azubi-frontend.vercel.app/") // URL des Frontends
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*");
             }
