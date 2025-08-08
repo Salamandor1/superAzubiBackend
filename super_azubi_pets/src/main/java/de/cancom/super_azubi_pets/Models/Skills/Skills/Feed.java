@@ -55,7 +55,7 @@ public class Feed implements Skill {
         do {
             int index = (int) (Math.random() * targets.size());
             target = targets.get(index);
-        } while (target != user);
+        } while (target == user);
 
         if (target.getHealth() > 0) {
             target.setHealth(target.getHealth() + tier);
