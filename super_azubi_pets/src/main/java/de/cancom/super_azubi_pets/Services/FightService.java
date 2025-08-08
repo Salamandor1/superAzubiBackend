@@ -302,7 +302,7 @@ public class FightService {
         log += die(playerAnimal, state, "player");
         log += die(enemyAnimal, state, "enemy");
 
-        return log + "\n";
+        return log;
     }
 
     private String die(TeamAnimal animal, FightState state, String who) {

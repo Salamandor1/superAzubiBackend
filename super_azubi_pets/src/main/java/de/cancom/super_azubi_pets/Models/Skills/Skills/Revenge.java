@@ -82,14 +82,14 @@ public class Revenge implements Skill {
         target.setHealth(target.getHealth() - damage);
 
         state.setLog(log + "[RACHE](" + user.getEmoji() + ", " + from + ") - rächt sich und fügt "
-                + target.getEmoji() + "(" + to + ") " + damage + " Schaden zu. " + state.getLog());
+                + target.getEmoji() + "(" + to + ") " + damage + " Schaden zu.\n" + state.getLog());
 
         if (skill.getTrigger() == Trigger.ON_DAMAGE) {
             skill.apply(state, newSource, target);
         }
 
         if (target.getHealth() <= 0) {
-            state.setLog(state.getLog() + target.getEmoji() + "(" + to + ") wurde besiegt.");
+            state.setLog(state.getLog() + target.getEmoji() + "(" + to + ") wurde besiegt.\n");
             if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
                 skill.apply(state, newSource, target);
             }

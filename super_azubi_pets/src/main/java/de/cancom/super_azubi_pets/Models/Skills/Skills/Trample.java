@@ -12,7 +12,7 @@ public class Trample implements Skill {
     private final double factor;
 
     public Trample(int level, int tier) {
-        this.factor = 0.1 + Math.round((level * tier) / 240.0);
+        this.factor = 0.2 + (tier / 10.0) + (level / 100.0);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Trample implements Skill {
 
         dmg = (int) (Math.round(dmg * factor));
 
-        if (dmg <= 0) {
+        if (dmg < 1) {
             dmg = 1;
         }
 

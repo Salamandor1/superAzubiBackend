@@ -12,12 +12,14 @@ public class Sting implements Skill {
     private final int dmg;
 
     public Sting(int level, int tier) {
-        int dmg = (int) (Math.round((level * tier) / 5.0));
+        int dmg = (tier / 2) + (int) (Math.round(tier * (level / 10.0)));
         if (dmg <= 0) {
-            this.dmg = 1;
-        } else {
-            this.dmg = dmg;
+            dmg = 1;
         }
+        if (dmg > 15) {
+            dmg = 15;
+        }
+        this.dmg = dmg;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Sting implements Skill {
 
         state.setLog(
                 log + "[STICH](" + user.getEmoji() + ", " + from + ") - reduziert ❤️ aller Gegner um " + dmg
-                        + ". " + died + "\n" + state.getLog());
+                        + ". " + died + state.getLog());
 
     }
 
