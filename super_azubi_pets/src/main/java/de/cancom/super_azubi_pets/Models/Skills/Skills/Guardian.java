@@ -31,37 +31,35 @@ public class Guardian implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
+
+        if (user.getHealth() > 0) {
+            return;
+        }
+
+        List<TeamAnimal> targets;
 
         if (source.equals("player")) {
-            state.setLog(state.getLog() + apply(state.getPlayerTeam(), "Spieler"));
+            source = "Player";
+            targets = state.getPlayerTeam();
         } else {
-            state.setLog(state.getLog() + apply(state.getEnemyTeam(), "Gegner"));
+            source = "Gegner";
+            targets = state.getEnemyTeam();
         }
 
-    }
-
-    private String apply(List<TeamAnimal> team, String source) {
-
-        TeamAnimal skip = team.get(0);
-
-        if (skip.getHealth() > 0) {
-            return "";
-        }
-
-        for (TeamAnimal animal : team) {
-            if (animal == skip) {
+        for (TeamAnimal animal : targets) {
+            if (animal == user) {
                 continue;
             }
-            if(animal.getHealth() <= 0) {
+            if (animal.getHealth() <= 0) {
                 continue;
             }
             animal.setHealth(animal.getHealth() + boost);
         }
 
-        return "[BESCHÜTZER] (" + skip.getEmoji() + ", " + source
+        state.setLog(state.getLog() + "[BESCHÜTZER] (" + user.getEmoji() + ", " + source
                 + ") - Gesundheit aller verbleibenden Teammitglieder um " + boost
-                + " erhöht.\n";
+                + " erhöht.\n");
 
     }
 }

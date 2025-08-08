@@ -32,21 +32,18 @@ public class Membrane implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (shield <= 0) {
             return;
         }
 
         int dmg;
-        TeamAnimal user;
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             dmg = state.getIncomingDmg();
             source = "Spieler";
         } else {
-            user = state.getEnemyTeam().get(0);
             dmg = state.getOutgoingDmg();
             source = "Gegner";
         }

@@ -12,12 +12,14 @@ public class Sting implements Skill {
     private final int dmg;
 
     public Sting(int level, int tier) {
-        int dmg = (int) (Math.round((level * tier) / 5.0));
+        int dmg = (tier / 2) + (int) (Math.round(tier * (level / 10.0)));
         if (dmg <= 0) {
-            this.dmg = 1;
-        } else {
-            this.dmg = dmg;
+            dmg = 1;
         }
+        if (dmg > 15) {
+            dmg = 15;
+        }
+        this.dmg = dmg;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class Sting implements Skill {
 
     @Override
     public String getDescription() {
-        return "Damages all enemy animals every round.";
+        return "Damages all enemy animals once the fight starts.";
     }
 
     @Override
@@ -36,50 +38,47 @@ public class Sting implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
-        List<TeamAnimal> users;
         List<TeamAnimal> targets;
-        String user;
-        String target;
-        String animalUser = "";
-        String animalTarget = "";
+        String from;
+        String newSource;
+        String died = "";
+        Skill skill;
 
         if (source.equals("player")) {
-            target = "Gegner";
+            from = "Spieler";
+            newSource = "enemy";
             targets = state.getEnemyTeam();
-            user = "Spieler";
-            users = state.getPlayerTeam();
         } else {
-            target = "Spieler";
+            from = "Gegner";
+            newSource = "player";
             targets = state.getPlayerTeam();
-            user = "Gegner";
-            users = state.getEnemyTeam();
         }
 
-        for (TeamAnimal animal : users) {
-            if (animal.getSkill() instanceof Sting) {
-                animalUser += animal.getEmoji();
-                animal.setSkill(new None(0, 0));
-                break;
+        String log = state.getLog();
+
+        for (TeamAnimal target : targets) {
+            target.setHealth(target.getHealth() - dmg);
+            skill = target.getSkill();
+
+            if (target.getHealth() <= 0) {
+                died += target.getEmoji();
+                if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
+                    skill.apply(state, newSource, target);
+                }
             }
         }
 
-        boolean didOneDie = false;
-        for (TeamAnimal animal : targets) {
-            animal.setHealth(animal.getHealth() - dmg);
-            if (animal.getHealth() <= 0) {
-                animalTarget += animal.getEmoji();
-                didOneDie = true;
-            }
+        if (!died.equals("")) {
+            died += " wurde/n besiegt.\n";
+        } else {
+            died = "\n";
         }
 
-        if (didOneDie) {
-            animalTarget += "(" + target + ") wurde/n besiegt.";
-        }
-
-        state.setLog(state.getLog() + "[STICH] " + animalUser + " (" + user + ") fügt allen Gegnern " + dmg
-                + " Schaden zu. " + animalTarget + "\n");
+        state.setLog(
+                log + "[STICH](" + user.getEmoji() + ", " + from + ") - reduziert ❤️ aller Gegner um " + dmg
+                        + ". " + died + state.getLog());
 
     }
 

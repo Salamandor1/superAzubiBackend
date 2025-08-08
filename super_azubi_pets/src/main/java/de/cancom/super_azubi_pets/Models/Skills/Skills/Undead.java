@@ -26,15 +26,11 @@ public class Undead implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
-
-        TeamAnimal user;
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             source = "Spieler";
         } else {
-            user = state.getEnemyTeam().get(0);
             source = "Gegner";
         }
 

@@ -31,17 +31,15 @@ public class Feed implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
-        TeamAnimal user;
         List<TeamAnimal> targets;
+        TeamAnimal target;
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             source = "Spieler";
             targets = state.getPlayerTeam();
         } else {
-            user = state.getEnemyTeam().get(0);
             source = "Gegner";
             targets = state.getEnemyTeam();
         }
@@ -54,10 +52,14 @@ public class Feed implements Skill {
             return;
         }
 
-        int index = (int) (Math.random() * (targets.size() - 1)) + 1;
-        TeamAnimal target = targets.get(index);
+        do {
+            int index = (int) (Math.random() * targets.size());
+            target = targets.get(index);
+        } while (target == user);
 
-        target.setHealth(target.getHealth() + tier);
+        if (target.getHealth() > 0) {
+            target.setHealth(target.getHealth() + tier);
+        }
 
         state.setLog(state.getLog() + "[FÜTTERN](" + user.getEmoji() + ", " + source + ") - füttert "
                 + target.getEmoji() + " und erhöht dessen ❤️ dauerhaft um " + tier + ".\n");

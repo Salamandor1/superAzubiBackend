@@ -12,7 +12,7 @@ public class Trample implements Skill {
     private final double factor;
 
     public Trample(int level, int tier) {
-        this.factor = 0.1 + Math.round((level * tier) / 240.0);
+        this.factor = 0.2 + (tier / 10.0) + (level / 100.0);
     }
 
     @Override
@@ -31,23 +31,29 @@ public class Trample implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
 
-        String targetPlayer;
-        TeamAnimal user;
+        String from;
+        String to;
         TeamAnimal target;
         int dmg;
 
         if (source.equals("player")) {
-            source = "Spieler";
-            targetPlayer = "Gegner";
-            user = state.getPlayerTeam().get(0);
+            if (user != state.getPlayerTeam().get(0)) {
+                return;
+            }
+            source = "enemy";
+            from = "Spieler";
+            to = "Gegner";
             target = getNext(state.getEnemyTeam());
             dmg = state.getOutgoingDmg();
         } else {
-            source = "Gegner";
-            targetPlayer = "Spieler";
-            user = state.getEnemyTeam().get(0);
+            if (user != state.getEnemyTeam().get(0)) {
+                return;
+            }
+            source = "player";
+            from = "Gegner";
+            to = "Spieler";
             target = getNext(state.getPlayerTeam());
             dmg = state.getIncomingDmg();
         }
@@ -62,19 +68,28 @@ public class Trample implements Skill {
 
         dmg = (int) (Math.round(dmg * factor));
 
-        if (dmg <= 0) {
+        if (dmg < 1) {
             dmg = 1;
         }
 
         target.setHealth(target.getHealth() - dmg);
 
-        String append = "";
-        if (target.getHealth() <= 0) {
-            append = target.getEmoji() + " stirbt.";
-        }
+        state.setLog(state.getLog() + "[TRAMPEL] " + user.getEmoji() + "(" + from + ") verursacht ebenfalls " + dmg
+                + " Schaden bei " + target.getEmoji() + "(" + to + "). ");
 
-        state.setLog(state.getLog() + "[TRAMPEL] " + user.getEmoji() + "(" + source + ") verursacht ebenfalls " + dmg
-                + " Schaden bei " + target.getEmoji() + "(" + targetPlayer + "). " + append + "\n");
+        Skill skill = target.getSkill();
+
+        if (target.getHealth() <= 0) {
+            state.setLog(state.getLog() + target.getEmoji() + " wurde besiegt.\n");
+            if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
+                skill.apply(state, source, target);
+            }
+        } else {
+            state.setLog(state.getLog() + "\n");
+            if (skill.getTrigger() == Trigger.ON_DAMAGE) {
+                skill.apply(state, source, target);
+            }
+        }
 
     }
 

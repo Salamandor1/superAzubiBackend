@@ -29,16 +29,18 @@ public class Supply implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
-
-        TeamAnimal user;
+    public void apply(FightState state, String source, TeamAnimal user) {
 
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             source = "Spieler";
+            if (state.getIncomingDmg() <= 0) {
+                return;
+            }
         } else {
-            user = state.getEnemyTeam().get(0);
             source = "Gegner";
+            if (state.getOutgoingDmg() <= 0) {
+                return;
+            }
         }
 
         if (user.getHealth() <= 0) {

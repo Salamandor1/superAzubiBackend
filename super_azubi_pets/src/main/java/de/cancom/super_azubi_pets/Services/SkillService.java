@@ -21,27 +21,29 @@ public class SkillService {
         }
     }
 
-    public void checkSkills(Trigger trigger, FightState state) {
-        List<TeamAnimal> toCheckPlayerTeam = trigger.trim(state.getPlayerTeam());
-        List<TeamAnimal> toCheckEnemyTeam = trigger.trim(state.getEnemyTeam());
-        for (TeamAnimal animal : toCheckPlayerTeam) {
-            if (hasSkill(animal) && animal.getSkill() != null && animal.getSkill().getTrigger() == trigger) {
-                animal.getSkill().apply(state, "player");
-            }
-        }
-        for (TeamAnimal animal : toCheckEnemyTeam) {
-            if (hasSkill(animal) && animal.getSkill().getTrigger() == trigger) {
-                animal.getSkill().apply(state, "enemy");
-            }
-        }
-    }
-
     public Skill getSkill(TeamAnimal animal) {
         return Factory.createSkill(animal.getSkillDescription(), animal);
     }
 
     public boolean hasSkill(TeamAnimal animal) {
         return animal.getSkillDescription().length() > 3;
+    }
+
+    public void checkTrigger(Trigger trigger, TeamAnimal user, FightState state, String source) {
+        Skill skill = user.getSkill();
+        if (skill.getTrigger() == trigger && skill != null) {
+            skill.apply(state, source, user);
+        }
+    }
+
+    public void triggerAllSkills(Trigger trigger, FightState state, List<TeamAnimal> playerTeam,
+            List<TeamAnimal> enemyTeam) {
+        for (TeamAnimal user : playerTeam) {
+            checkTrigger(trigger, user, state, "player");
+        }
+        for (TeamAnimal user : enemyTeam) {
+            checkTrigger(trigger, user, state, "enemy");
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package de.cancom.super_azubi_pets.Models.Skills.Skills;
 
+import de.cancom.super_azubi_pets.Models.TeamAnimal;
 import de.cancom.super_azubi_pets.Models.Skills.FightState;
 import de.cancom.super_azubi_pets.Models.Skills.Skill;
 import de.cancom.super_azubi_pets.Models.Skills.Trigger;
@@ -25,6 +26,6 @@ public class None implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
+    public void apply(FightState state, String source, TeamAnimal user) {
     }
 }

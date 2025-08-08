@@ -29,36 +29,46 @@ public class Thorns implements Skill {
     }
 
     @Override
-    public void apply(FightState state, String source) {
-        TeamAnimal user;
+    public void apply(FightState state, String source, TeamAnimal user) {
         TeamAnimal target;
-        String userStr = "";
-        String targetStr = "";
+        String from;
+        String to;
         int dmg;
+        String newSource;
         if (source.equals("player")) {
-            user = state.getPlayerTeam().get(0);
             target = state.getEnemyTeam().get(0);
             dmg = state.getIncomingDmg();
-            userStr = "Spieler";
-            targetStr = "Gegner";
+            from = "Spieler";
+            to = "Gegner";
+            newSource = "enemy";
         } else {
             user = state.getEnemyTeam().get(0);
             target = state.getPlayerTeam().get(0);
             dmg = state.getOutgoingDmg();
-            userStr = "Gegner";
-            targetStr = "Spieler";
+            from = "Gegner";
+            to = "Spieler";
+            newSource = "player";
         }
         if (target.getHealth() <= 0) {
             return;
         }
         dmg = (int) (Math.round(dmg * factor));
-        if(dmg < 1) {
+        if (dmg < 1) {
             dmg = 1;
         }
         target.setHealth(target.getHealth() - dmg);
-        state.setLog(state.getLog() + "[DORNEN] " + user.getEmoji() + "(" + userStr + ") reflektiert " + dmg
-                + " Schaden gegen "
-                + target.getEmoji() + "(" + targetStr + ").\n");
+        state.setLog(state.getLog() + "[DORNEN] " + user.getEmoji() + "(" + from + ") reflektiert " + dmg
+                + " Schaden gegen " + target.getEmoji() + "(" + to + "). ");
+
+        if (target.getHealth() <= 0) {
+            state.setLog(state.getLog() + target.getEmoji() + "wurde besiegt.\n");
+            Skill skill = target.getSkill();
+            if (skill.getTrigger() == Trigger.ON_OWN_DEATH) {
+                skill.apply(state, newSource, target);
+            }
+        } else {
+            state.setLog(state.getLog() + "\n");
+        }
     }
 
 }

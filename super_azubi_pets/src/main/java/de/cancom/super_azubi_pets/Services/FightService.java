@@ -80,8 +80,9 @@ public class FightService {
         skillService.initSkills(playerTeam);
         skillService.initSkills(enemyTeam);
 
-        // trigger = gamestart
-        log += nextTrigger(Trigger.ON_GAME_START, state) + "\n";
+        // Trigger.ON_GAME_START
+        skillService.triggerAllSkills(Trigger.ON_GAME_START, state, playerTeam, enemyTeam);
+        log += state.getLog();
 
         while (true) {
 
@@ -106,15 +107,21 @@ public class FightService {
             }
             log += "--------------- Runde " + round + " ---------------\n";
             log += getCurrentTeamsDisplay(playerTeam, enemyTeam);
-            log += nextTrigger(Trigger.ON_ROUND_START, state);
+            // Trigger.ON_ROUND_START
+            skillService.triggerAllSkills(Trigger.ON_ROUND_START, state, playerTeam, enemyTeam);
+            log += state.getLog();
             log += attack(game, state) + "\n";
             round++;
-            log += nextTrigger(Trigger.ON_ROUND_END, state);
+            // Trigger.ON_ROUND_END
+            skillService.triggerAllSkills(Trigger.ON_ROUND_END, state, playerTeam, enemyTeam);
+            log += state.getLog();
         } // while
 
         // Update Game-Object and save game to database
         endFight(game);
-        log += nextTrigger(Trigger.ON_GAME_END, state);
+        // Trigger.ON_GAME_END
+        skillService.triggerAllSkills(Trigger.ON_GAME_END, state, playerTeam, enemyTeam);
+        log += state.getLog();
 
         // Update Log-Object and save to database
         Log logObj = createLogObject(fight, log);
@@ -247,7 +254,6 @@ public class FightService {
     private String attack(Game game, FightState state) {
         List<TeamAnimal> playerTeam = state.getPlayerTeam();
         List<TeamAnimal> enemyTeam = state.getEnemyTeam();
-        Trigger trigger = null;
         String log = "";
 
         // team to animal
@@ -258,12 +264,16 @@ public class FightService {
         state.setOutgoingDmg(playerAnimal.getAttack());
         state.setIncomingDmg(enemyAnimal.getAttack());
 
-        // trigger: before attack
-        log += nextTrigger(Trigger.BEFORE_ATTACK, state);
+        // Trigger.BEFORE_ATTACK
+        skillService.checkTrigger(Trigger.BEFORE_ATTACK, playerAnimal, state, "player");
+        skillService.checkTrigger(Trigger.BEFORE_ATTACK, enemyAnimal, state, "enemy");
+        log += state.getLog();
+
+        // Trigger.ON_ATTACK
+        skillService.checkTrigger(Trigger.ON_ATTACK, playerAnimal, state, "player");
+        skillService.checkTrigger(Trigger.ON_ATTACK, enemyAnimal, state, "enemy");
 
         // apply damage
-        trigger = Trigger.ON_ATTACK;
-        skillService.checkSkills(trigger, state);
         playerAnimal.setHealth(playerAnimal.getHealth() - state.getIncomingDmg());
         enemyAnimal.setHealth(enemyAnimal.getHealth() - state.getOutgoingDmg());
         log += playerAnimal.getEmoji() + playerAnimal.getName() + " (Spieler) verursacht " + state.getOutgoingDmg()
@@ -274,33 +284,39 @@ public class FightService {
                 + playerAnimal.getEmoji() + playerAnimal.getName()
                 + " (Spieler).\n";
         log += state.getLog();
-        log += nextTrigger(Trigger.ON_DAMAGE, state);
-        log += nextTrigger(Trigger.ON_HEALTH_THRESHOLD, state);
 
-        // trigger: after attack
-        trigger = Trigger.AFTER_ATTACK;
-        skillService.checkSkills(trigger, state);
+        // Trigger.ON_DAMAGE
+        if (state.getIncomingDmg() > 0) {
+            skillService.checkTrigger(Trigger.ON_DAMAGE, playerAnimal, state, "player");
+        }
+        if (state.getOutgoingDmg() > 0) {
+            skillService.checkTrigger(Trigger.ON_DAMAGE, enemyAnimal, state, "enemy");
+        }
         log += state.getLog();
 
-        log += die(enemyAnimal, state, "Gegner");
-        log += die(playerAnimal, state, "Spieler");
-        // trigger : death
-        log += nextTrigger(Trigger.ON_FRIEND_DEATH, state);
-        log += nextTrigger(Trigger.ON_OWN_DEATH, state);
-        log += nextTrigger(Trigger.ON_ENEMY_DEATH, state);
+        // Trigger.AFTER_ATTACK
+        skillService.checkTrigger(Trigger.AFTER_ATTACK, playerAnimal, state, "player");
+        skillService.checkTrigger(Trigger.AFTER_ATTACK, enemyAnimal, state, "enemy");
+        log += state.getLog();
 
-        return log + "\n";
-    }
+        log += die(playerAnimal, state, "player");
+        log += die(enemyAnimal, state, "enemy");
 
-    private String nextTrigger(Trigger trigger, FightState state) {
-        skillService.checkSkills(trigger, state);
-        return state.getLog();
+        return log;
     }
 
     private String die(TeamAnimal animal, FightState state, String who) {
+        String from;
+        if (who.equals("player")) {
+            from = "Spieler";
+        } else {
+            from = "Gegner";
+        }
         String log = "";
         if (animal.getHealth() <= 0) {
-            log += animal.getEmoji() + " (" + who + ") wurde besiegt!\n";
+            log += animal.getEmoji() + " (" + from + ") wurde besiegt!\n";
+            skillService.checkTrigger(Trigger.ON_OWN_DEATH, animal, state, who);
+            log += state.getLog();
         }
         return log;
     }
