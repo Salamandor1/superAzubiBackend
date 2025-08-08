@@ -34,6 +34,7 @@ public class Feed implements Skill {
     public void apply(FightState state, String source, TeamAnimal user) {
 
         List<TeamAnimal> targets;
+        TeamAnimal target;
 
         if (source.equals("player")) {
             source = "Spieler";
@@ -51,10 +52,14 @@ public class Feed implements Skill {
             return;
         }
 
-        int index = (int) (Math.random() * (targets.size() - 1)) + 1;
-        TeamAnimal target = targets.get(index);
+        do {
+            int index = (int) (Math.random() * targets.size());
+            target = targets.get(index);
+        } while (target != user);
 
-        target.setHealth(target.getHealth() + tier);
+        if (target.getHealth() > 0) {
+            target.setHealth(target.getHealth() + tier);
+        }
 
         state.setLog(state.getLog() + "[FÜTTERN](" + user.getEmoji() + ", " + source + ") - füttert "
                 + target.getEmoji() + " und erhöht dessen ❤️ dauerhaft um " + tier + ".\n");
