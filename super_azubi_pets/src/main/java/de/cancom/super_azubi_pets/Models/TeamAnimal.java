@@ -85,7 +85,7 @@ public class TeamAnimal {
         this.attack = attack;
         // attack cannot be less than 1
         if (this.attack < 0) {
-            this.attack = 0;
+            this.attack = 1;
         }
         // attack cannot be more than 50
         if (this.attack > 50) {
