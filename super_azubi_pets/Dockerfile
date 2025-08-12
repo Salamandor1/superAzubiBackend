@@ -12,9 +12,14 @@ RUN if [ "${INSTALL_MAVEN}" = "true" ]; then su vscode -c "umask 0002 && . /usr/
 # Build-Phase
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY super_azubi_pets/pom.xml .
-COPY super_azubi_pets/src ./src
-RUN mvn clean package -DskipTests
+
+COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
+COPY src ./src
+
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
 
 # Laufzeit-Phase
 FROM eclipse-temurin:21-jre
