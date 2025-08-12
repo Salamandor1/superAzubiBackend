@@ -92,6 +92,8 @@ public class DataSeeder implements CommandLineRunner {
          * Supply = [VORRAT]
          * Feed = [FÜTTERN]
          * Undead = [UNTOT]
+         * Stupid = [UNFÄHIG]
+         * None = [NONE]
          */
 
         List<Animal> standardAnimals = new ArrayList<>();
@@ -150,13 +152,15 @@ public class DataSeeder implements CommandLineRunner {
         standardAnimals.add(new Animal("Oger", "🧌", 5, 9, 6, "[TRAMPEL]"));
 
         // TIER 7: combined value > 14
-        standardAnimals.add(new Animal("Goekdeniz", "🤡", 15, 1, 7, "[VERSTECKEN]"));
+        standardAnimals.add(new Animal("Goekdeniz", "🤡", 10, 1, 7, "[VERSTECKEN]"));
         standardAnimals.add(new Animal("Joshua", "🤑", 1, 15, 7, "[TRAMPEL]"));
-        standardAnimals.add(new Animal("Matthias", "😎", 10, 6, 7, "[NERVTÖTER]"));
+        standardAnimals.add(new Animal("Matthias", "😎", 10, 5, 7, "[NERVTÖTER]"));
         standardAnimals.add(new Animal("Meryem", "🧠", 6, 10, 7, "[MEMBRAN]"));
         standardAnimals.add(new Animal("Tobias", "💩", 8, 8, 7, "[DORNEN]"));
         standardAnimals.add(new Animal("Duc", "🐣", 9, 6, 7, "[LEHRLING]"));
         standardAnimals.add(new Animal("Yuri", "🧜‍♂️", 6, 9, 7, "[RAGE]"));
+        standardAnimals.add(new Animal("Hamadi", "🧐", 9, 4, 7, "[UNTOT]"));
+        standardAnimals.add(new Animal("Volker", "🫃", 50, 0, 7, "[NONE]"));
 
         for (Animal animal : standardAnimals) {
             animalRepository.save(animal);
