@@ -1,16 +1,19 @@
 {
-  "name": "Java 21 + Spring Boot + PostgreSQL",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "mounts": [
+	"name": "Java 21 + Spring Boot + PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind",
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind"
 	],
-  "forwardPorts": [8080, 5432],
-  //"postCreateCommand": "mvn clean install",
-  "customizations": {
+	"forwardPorts": [
+		8080,
+		5432
+	],
+	//"postCreateCommand": "mvn clean install",
+	"customizations": {
 		"vscode": {
 			"extensions": [
 				"johnpapa.vscode-peacock",
@@ -18,10 +21,9 @@
 				"vscjava.vscode-java-pack"
 			],
 			"settings": {
-				"peacock.remoteColor": "#ff69b4",
 				"editor.formatOnSave": true,
 				"java.saveActions.organizeImports": true
 			}
 		}
-  }
+	}
 }
